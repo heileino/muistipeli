@@ -1,2 +1,2 @@
 # muistipeli
-Tähän tulee yleistä tietoa Muistipelistä.
+Tähän tulee yleistä tietoa Muistipeli-ohjelmasta.
