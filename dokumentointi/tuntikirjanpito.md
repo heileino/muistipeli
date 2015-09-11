@@ -18,3 +18,9 @@ ma 7.9.2015
 
 ti 8.9.2015
 	(1h) ensimmäisen luokkakaavion tekeminen
+ke 9.9.2015
+	(2h) koodausta
+to 10.9.2015
+	(5h) koodausta
+pe 11.9.2015
+	(4h) koodausta
