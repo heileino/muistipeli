@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class PelimoottoriTest {
+public class PelaajaTest {
 
-    Pelimoottori pelimoottori;
+    Pelaaja pelaaja;
 
-    public PelimoottoriTest() {
+    public PelaajaTest() {
     }
 
     @BeforeClass
@@ -33,7 +33,7 @@ public class PelimoottoriTest {
 
     @Before
     public void setUp() {
-        pelimoottori = new Pelimoottori();
+        pelaaja = new Pelaaja();
     }
 
     @After
@@ -41,19 +41,13 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void konstruktoriAsettaaPisteetOikein() {
-        assertTrue(pelimoottori.getPisteet() == 0);
+    public void kostruktoriAsettaaYritystenMaaranOikein() {
+        assertEquals(0, pelaaja.getYritykset());
     }
 
     @Test
-    public void konstruktoriLuoPoytaOlionOikein() {
-        assertEquals(Pelipoyta.class, pelimoottori.getPoyta().getClass());
-    }
-       
-    
-    @Test
-    public void lisaaPisteToimiiOikein() {
-        pelimoottori.lisaaPiste();
-        assertTrue(pelimoottori.getPisteet() == 1);
+    public void lisaaYritysToimiiOikein() {
+        pelaaja.lisaaYritys();
+        assertEquals(1, pelaaja.getYritykset());
     }
 }

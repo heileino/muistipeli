@@ -51,6 +51,6 @@ public class Kortti {
     }
 
     public String toString() {
-        return "kortti" + tunnus;
+        return "kortti_" + tunnus;
     }
 }

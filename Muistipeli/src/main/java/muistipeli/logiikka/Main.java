@@ -5,6 +5,8 @@
  */
 package muistipeli.logiikka;
 
+import kayttoliittyma.Tekstikayttoliittyma;
+
 /**
  * Main-luokka toimii alkuvaiheessa lähinnä testaamisen apuna
  *
@@ -13,8 +15,10 @@ package muistipeli.logiikka;
 public class Main {
 
     public static void main(String[] args) {
-        Pelimoottori moottori = new Pelimoottori();
-        moottori.pelaa();
+        Pelipoyta poyta = new Pelipoyta();
+        Tekstikayttoliittyma tkayttis = new Tekstikayttoliittyma(poyta);
+//        Pelimoottori moottori = new Pelimoottori();
+//        moottori.pelaa();
 
     }
 

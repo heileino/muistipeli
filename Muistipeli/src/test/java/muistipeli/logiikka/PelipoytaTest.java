@@ -17,65 +17,106 @@ import static org.junit.Assert.*;
  * @author heikki
  */
 public class PelipoytaTest {
-
+    
     Pelipoyta poyta;
-
+    
     public PelipoytaTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
         poyta = new Pelipoyta();
         poyta.taytaPoyta();
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
     public void konstruktoriLuoOikeanKokoisenTaulukon() {
-        assertEquals(20, poyta.getTaulukko().length);
+        assertEquals(16, poyta.getTaulukko().length);
     }
-
+    
+    @Test
+    public void konstruktoriAsettaaKorttejaJaljellaOikein() {
+        assertEquals(16, poyta.getKorttejaJaljella());
+    }
+    
     @Test
     public void taulukonEnsimmainenAlkioTaytettyOikein() {
-        assertEquals("kortti0", poyta.getTaulukko()[0].toString());
+        assertEquals("kortti_1", poyta.getTaulukko()[0].toString());
     }
-
+    
     @Test
     public void taulukonViimeinenAlkioTaytettyOikein() {
-
-        assertEquals("kortti9", poyta.getTaulukko()[19].toString());
+        assertEquals("kortti_8", poyta.getTaulukko()[15].toString());
     }
-
+    
     @Test
-    public void taulukonEnsimmaisellaJAYhdennellatoistaKortillaSamaTunnus() {
-
-        assertTrue(poyta.getTaulukko()[0].toString().equals(poyta.getTaulukko()[10].toString()));
+    public void taulukonEnsimmaisellaJAYhdeksannellaKortillaSamaTunnus() {
+        assertTrue(poyta.getTaulukko()[0].toString().equals(poyta.getTaulukko()[8].toString()));
     }
-
+    
     @Test
-    public void taulukonKymmenennellaJaKahdennellakymmenellaKortillaSamaTunnus() {
-        assertTrue(poyta.getTaulukko()[9].toString().equals(poyta.getTaulukko()[19].toString()));
+    public void taulukonKahdeksannellaJaKuudennellatoistaKortillaSamaTunnus() {
+        assertTrue(poyta.getTaulukko()[7].toString().equals(poyta.getTaulukko()[15].toString()));
     }
-
+    
     @Test
     public void onkoSamaAntaaSamoillaKorteillaToden() {
-        assertTrue(poyta.onkoSama(0, 10));
+        assertTrue(poyta.onkoSama(1, 9));
     }
-
+    
     @Test
     public void onkoSamaAntaaEripareillaEpatoden() {
-        assertFalse(poyta.onkoSama(4, 10));
+        assertFalse(poyta.onkoSama(2, 3));
     }
-
+    
+    @Test
+    public void paljastaKorttiToimiiOikein() {
+        poyta.paljastaKortti(1);
+        assertTrue(poyta.getTaulukko()[0].getNakyvyys());
+    }
+    
+    @Test
+    public void piilotaKorttiToimiiOikein() {
+        poyta.paljastaKortti(16);
+        poyta.piilotaKortti(16);
+        assertFalse(poyta.getTaulukko()[15].getNakyvyys());
+    }
+    
+    @Test
+    public void vahennaKorttejaJaljellaToimiiOikein() {
+        poyta.vahennaKorttejaJaljella();
+        assertEquals(14, poyta.getKorttejaJaljella());
+    }
+    
+    @Test
+    public void onkoJoLoydettyToimiiKunKorttiEiOleLoytynyt() {
+        Kortti testikortti = poyta.getTaulukko()[0];
+        assertFalse(poyta.onkoJoLoydetty(testikortti));
+    }
+    
+    @Test
+    public void onkoJoLoydettyToimiiKunKorttiOnLoytynyt() {
+        Kortti testikortti = poyta.getTaulukko()[15];
+        poyta.lisaaKorttiLoytyneisiin(testikortti);
+        assertTrue(poyta.onkoJoLoydetty(testikortti));
+    }
+    
+    @Test
+    public void lisaaKorttiLoytyneisiinToimiiOikein() {
+        Kortti testikortti = poyta.getTaulukko()[7];
+        poyta.lisaaKorttiLoytyneisiin(testikortti);
+        assertEquals(testikortti, poyta.getLoydetytKortit().get(0));
+    }
 }

@@ -24,3 +24,12 @@ to 10.9.2015
 	(5h) koodausta
 pe 11.9.2015
 	(4h) koodausta
+
+
+viikko 3:
+ke 16.9.2015
+	(4h) suunnittelua ja koodausta
+to 17.9.2015
+	(4h) koodausta ja luokkakaavion päivitystä
+pe 18.9.2015
+	(6h) koodausta
