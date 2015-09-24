@@ -1,5 +1,4 @@
-Viikko 1:
-
+﻿Viikko 1:
 ke 2.9.2015
 	(3h) aiheen pohdinta, valinta ja hahmottelu
 	
@@ -12,7 +11,6 @@ pe 4.9.2015
 
 
 viikko 2:
-
 ma 7.9.2015
 	(2h) ympäristön asentamista useammalle koneelle
 
@@ -33,3 +31,8 @@ to 17.9.2015
 	(4h) koodausta ja luokkakaavion päivitystä
 pe 18.9.2015
 	(6h) koodausta
+
+
+viikko 4:
+ke 23.9.2015
+	(3h) graafisen käyttöliittymän suunnittelua ja gui-builderin käytön opettelua
