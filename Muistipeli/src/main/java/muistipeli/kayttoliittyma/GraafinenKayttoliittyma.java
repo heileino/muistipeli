@@ -16,69 +16,82 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import muistipeli.logiikka.*;
 
 /**
  *
  * @author Heikki Leinonen
  */
 public class GraafinenKayttoliittyma implements Runnable {
-    
+
     private JFrame frame;
-    
+    private Pelipoyta pelipoyta;
+    private Pelaaja pelaaja;
+    private JButton[] peliruudukko;
+
+    public GraafinenKayttoliittyma() {
+        pelipoyta = new Pelipoyta();
+        pelaaja = new Pelaaja();
+        peliruudukko = new JButton[16];
+    }
+
     @Override
     public void run() {
         frame = new JFrame("Muistipeli");
-        frame.setPreferredSize(new Dimension(700, 400));
-        
+        frame.setPreferredSize(new Dimension(500, 400));
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+
         luoKomponentit(frame.getContentPane());
-        
+
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     private void luoKomponentit(Container container) {
         JPanel peliPaneeli = new JPanel(new GridLayout(4, 4));
-        container.add(peliPaneeli);
         piirraPeliruudut(peliPaneeli);
-        
+
         JPanel hallintaPaneeli = new JPanel();
         hallintaPaneeli.setLayout(new BoxLayout(hallintaPaneeli, BoxLayout.PAGE_AXIS));
-        container.add(hallintaPaneeli, BorderLayout.EAST);
+
         piirraHallintaruutu(hallintaPaneeli);
-        
+
+        container.add(peliPaneeli);
+        container.add(hallintaPaneeli, BorderLayout.EAST);
+
     }
-    
+
     public JFrame getFrame() {
         return frame;
     }
-    
+
     public void piirraPeliruudut(JPanel paneeli) {
-        JButton nappi;
-        for (int i = 0; i < 16; i++) {
-            nappi = new JButton("" + (i + 1));
-            paneeli.add(nappi);
+
+        for (int i = 0; i < peliruudukko.length; i++) {
+            this.peliruudukko[i] = new JButton("" + (i + 1));
+            paneeli.add(peliruudukko[i]);
+            peliruudukko[i].addActionListener(new KlikkaustenKuuntelija(this.pelipoyta, this.peliruudukko));
         }
     }
-    
+
     public void piirraHallintaruutu(JPanel paneeli) {
         JButton aloitaNappi;
-        aloitaNappi = new JButton("Aloita");
+        aloitaNappi = new JButton("Aloita uusi peli");
         aloitaNappi.setBackground(Color.GREEN);
         paneeli.add(aloitaNappi);
-        
+
         JButton lopetaNappi;
         lopetaNappi = new JButton("Lopeta");
         lopetaNappi.setBackground(Color.RED);
         paneeli.add(lopetaNappi);
-        
+
         JLabel yritykset;
-        yritykset = new JLabel("Yrityksiä: ");
+        yritykset = new JLabel("Yrityksiä: " + pelaaja.getYritykset());
         paneeli.add(yritykset);
-        
+
         JLabel korttejaJaljella;
-        korttejaJaljella = new JLabel("Kortteja jäljellä: ");
+        korttejaJaljella = new JLabel("Kortteja jäljellä: " + pelipoyta.getKorttejaJaljella());
         paneeli.add(korttejaJaljella);
     }
 }
