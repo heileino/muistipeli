@@ -6,7 +6,7 @@
 package muistipeli.logiikka;
 
 /**
- * Kortti-luokkaa kuvaa yksittäisen muistikortin ominaisuuksia
+ * Luokka kuvaa yksittäisen muistikortin ominaisuuksia.
  *
  * @author Heikki Leinonen
  */
@@ -15,22 +15,35 @@ public class Kortti {
     int tunnus;
     boolean nakyy; // kertoo onko kortti käännetty kuvapuolelle vai ei
 
+    /**
+     * Konstruktori asettaa kortin näkyvyydeksi epätoden ja asettaa kortin
+     * tunnukseksi parametrina saadun arvon.
+     *
+     * @param tunnus korttiparin yksilöivä tunnus
+     */
     public Kortti(int tunnus) {
         nakyy = false;
         this.tunnus = tunnus;
     }
 
+    /**
+     * Metodi asettaa kyseisen kortin kuvapuolen näkyvyyden todeksi.
+     */
     public void naytaKuvapuoli() {
 
         if (nakyy) {
             // virhe, tämä kortti on jo käännetty
 
         } else {
+            // vaihda kortin kuvapuoli näkymään
             nakyy = true;
         }
 
     }
 
+    /**
+     * Metodi asettaa kyseisen kortin selkäpuolen näkyvyyden epätodeksi;
+     */
     public void naytaSelkapuoli() {
 
         if (nakyy) {

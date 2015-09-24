@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Pelipoyta-luokka luo pelialustan, jossa muistikortit sijaitsevat
- *
+ * Luokka luo pelialustan. Lisäksi luokka tarjoaa metodeja, joilla pelialusta täytetään korteilla. 
+ * 
  * @author Heikki Leinonen
  */
 public class Pelipoyta {
@@ -30,6 +30,12 @@ public class Pelipoyta {
 
     }
 
+    /**
+     * Metodi täyttää pelialustaa kuvaavan taulukon Kortti-luokan ilmentymillä.
+     * 
+     */
+    
+    
     public void taytaPoyta() {
         // Täytetään taulukko kahdessa osassa siten, että saman tunnuksen sisältäviä kortteja tulee taulukkoon kaksi.
         for (int i = 0; i < taulukko.length / 2; i++) {
@@ -39,15 +45,33 @@ public class Pelipoyta {
             taulukko[i] = new Kortti((i - taulukko.length / 2) + 1);
         }
     }
+    
+    /**
+     * Metodi sekoittaa taulukon sisältämät Kortti-luokan ilmentymät satunnaiseen järjestykseen
+     */
 
     public void sekoitaPoyta() {
         Collections.shuffle(Arrays.asList(taulukko));
     }
 
+    /**
+     * 
+     * Metodi testaa sisältävätkö parametrina saadut taulukkopaikat saman korttitunnuksen.
+     * @param paikka1 ensimmäisen valitun paikan numero
+     * @param paikka2 toisen valitun paikan numero
+     * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
+     */
+    
     public boolean onkoSama(int paikka1, int paikka2) {
         return this.taulukko[paikka1 - 1].tunnus == this.taulukko[paikka2 - 1].tunnus;
     }
 
+    
+    /**
+     * Metodi kääntää valitun paikan kortin kuvapuolen esiin
+     * @param numero valittu taulukon paikkanumero 
+     */
+    
     public void paljastaKortti(int numero) {
         taulukko[numero - 1].naytaKuvapuoli();
     }

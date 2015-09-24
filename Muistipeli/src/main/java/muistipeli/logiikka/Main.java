@@ -5,7 +5,9 @@
  */
 package muistipeli.logiikka;
 
-import kayttoliittyma.Tekstikayttoliittyma;
+import javax.swing.SwingUtilities;
+import muistipeli.kayttoliittyma.GraafinenKayttoliittyma;
+import muistipeli.kayttoliittyma.Tekstikayttoliittyma;
 
 /**
  * Main-luokka toimii alkuvaiheessa lähinnä testaamisen apuna
@@ -16,7 +18,9 @@ public class Main {
 
     public static void main(String[] args) {
         Pelipoyta poyta = new Pelipoyta();
-        Tekstikayttoliittyma tkayttis = new Tekstikayttoliittyma(poyta);
+        GraafinenKayttoliittyma gui = new GraafinenKayttoliittyma();
+        SwingUtilities.invokeLater(gui);
+//        Tekstikayttoliittyma tkayttis = new Tekstikayttoliittyma(poyta);
 //        Pelimoottori moottori = new Pelimoottori();
 //        moottori.pelaa();
 
