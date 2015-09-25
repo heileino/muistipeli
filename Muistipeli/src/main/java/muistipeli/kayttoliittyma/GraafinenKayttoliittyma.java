@@ -19,7 +19,7 @@ import javax.swing.WindowConstants;
 import muistipeli.logiikka.*;
 
 /**
- *
+ * Luokka tarjoaa muistipelille graafisen käyttöliittymän.
  * @author Heikki Leinonen
  */
 public class GraafinenKayttoliittyma implements Runnable {
@@ -37,6 +37,10 @@ public class GraafinenKayttoliittyma implements Runnable {
 
     @Override
     public void run() {
+        
+        pelipoyta.taytaPoyta();
+        pelipoyta.sekoitaKortit();
+        
         frame = new JFrame("Muistipeli");
         frame.setPreferredSize(new Dimension(500, 400));
 
@@ -93,5 +97,15 @@ public class GraafinenKayttoliittyma implements Runnable {
         JLabel korttejaJaljella;
         korttejaJaljella = new JLabel("Kortteja jäljellä: " + pelipoyta.getKorttejaJaljella());
         paneeli.add(korttejaJaljella);
+    }
+    
+    /**
+     * Metodi luo uuden pelipöydän, täyttää sen ja sekoittaa kortit eli valmistelee pelipöydän uutta peliä varten.
+     */
+    public void aloitaUudelleen(){
+        this.pelipoyta=new Pelipoyta();
+        this.pelipoyta.taytaPoyta();
+        this.pelipoyta.sekoitaKortit();
+        
     }
 }

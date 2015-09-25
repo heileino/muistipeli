@@ -30,6 +30,9 @@ public class Tekstikayttoliittyma {
     }
 
     public void kaynnistaPeli() {
+        pelipoyta.taytaPoyta();
+        pelipoyta.taytaPoyta();
+
         tulostaPoytaKonsoliin();
 
         do {

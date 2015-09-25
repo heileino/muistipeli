@@ -119,4 +119,9 @@ public class PelipoytaTest {
         poyta.lisaaKorttiLoytyneisiin(testikortti);
         assertEquals(testikortti, poyta.getLoydetytKortit().get(0));
     }
+    
+    @Test
+    public void alustaKorttejaJaljellaToimiiOikein(){
+        assertEquals(16, poyta.getKorttejaJaljella());
+    }
 }

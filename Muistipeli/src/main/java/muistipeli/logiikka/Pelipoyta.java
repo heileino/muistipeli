@@ -11,75 +11,86 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Luokka luo pelialustan. Lisäksi luokka tarjoaa metodeja, joilla pelialusta täytetään korteilla. 
- * 
+ * Luokka luo pelialustan. Lisäksi se tarjoaa metodeja, joilla pelialusta
+ * täytetään korteilla.
+ *
  * @author Heikki Leinonen
  */
 public class Pelipoyta {
 
-    private Kortti[] taulukko;
+    private Kortti[] korttitaulukko;
     private int korttejaJaljella;
     private List<Kortti> loydetytKortit;
 
+    /**
+     * Konstruktori luo uuden korttitaulukon ja uuden löydettyjen korttien
+     * listan. Lisäksi se alustaa korttien määrää laskevan ilmentymämuuttujan
+     * korttitaulukon pituuden arvolla.
+     */
     public Pelipoyta() {
-        taulukko = new Kortti[16]; // Luodaan pöydälle tilaa 16:lle kortille
-        korttejaJaljella = 16;
+        korttitaulukko = new Kortti[16];
+        korttejaJaljella = korttitaulukko.length;
         loydetytKortit = new ArrayList<>();
-        taytaPoyta(); // täytetään pöytä ensin korttien numerojärjestyksessä
-        sekoitaPoyta(); // sekoitetaan korttien paikat
-
     }
 
     /**
-     * Metodi täyttää pelialustaa kuvaavan taulukon Kortti-luokan ilmentymillä.
-     * 
+     * Metodi täyttää pelialustaa kuvaavan korttitaulukon Kortti-luokan
+     * ilmentymillä.
+     *
+     * @see muistipeli.logiikka.Kortti
      */
-    
-    
     public void taytaPoyta() {
-        // Täytetään taulukko kahdessa osassa siten, että saman tunnuksen sisältäviä kortteja tulee taulukkoon kaksi.
-        for (int i = 0; i < taulukko.length / 2; i++) {
-            taulukko[i] = new Kortti(i + 1);
+        // Täytetään korttitaulukko kahdessa osassa siten, että saman tunnuksen sisältäviä kortteja tulee taulukkoon kaksi.
+        for (int i = 0; i < korttitaulukko.length / 2; i++) {
+            korttitaulukko[i] = new Kortti(i + 1);
         }
-        for (int i = taulukko.length / 2; i < taulukko.length; i++) {
-            taulukko[i] = new Kortti((i - taulukko.length / 2) + 1);
+        for (int i = korttitaulukko.length / 2; i < korttitaulukko.length; i++) {
+            korttitaulukko[i] = new Kortti((i - korttitaulukko.length / 2) + 1);
         }
     }
-    
+
     /**
-     * Metodi sekoittaa taulukon sisältämät Kortti-luokan ilmentymät satunnaiseen järjestykseen
+     * Metodi sekoittaa taulukon sisältämät Kortti-luokan ilmentymät
+     * satunnaiseen järjestykseen
      */
-
-    public void sekoitaPoyta() {
-        Collections.shuffle(Arrays.asList(taulukko));
+    public void sekoitaKortit() {
+        Collections.shuffle(Arrays.asList(korttitaulukko));
     }
 
     /**
-     * 
-     * Metodi testaa sisältävätkö parametrina saadut taulukkopaikat saman korttitunnuksen.
+     *
+     * Metodi testaa sisältävätkö parametrina saadut taulukkopaikat saman
+     * korttitunnuksen.
+     *
      * @param paikka1 ensimmäisen valitun paikan numero
      * @param paikka2 toisen valitun paikan numero
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
-    
     public boolean onkoSama(int paikka1, int paikka2) {
-        return this.taulukko[paikka1 - 1].tunnus == this.taulukko[paikka2 - 1].tunnus;
+        return this.korttitaulukko[paikka1 - 1].tunnus == this.korttitaulukko[paikka2 - 1].tunnus;
     }
 
-    
     /**
-     * Metodi kääntää valitun paikan kortin kuvapuolen esiin
-     * @param numero valittu taulukon paikkanumero 
+     * Metodi kääntää valitussa paikassa olevan kortin kuvapuolen esiin
+     *
+     * @param numero valittu taulukon paikkanumero
      */
-    
     public void paljastaKortti(int numero) {
-        taulukko[numero - 1].naytaKuvapuoli();
+        korttitaulukko[numero - 1].naytaKuvapuoli();
     }
 
+    /**
+     * Metodi kääntää valitussa paikassa olevan kortin selkäpuolen esiin.
+     *
+     * @param numero valittu taulukon paikkanumero
+     */
     public void piilotaKortti(int numero) {
-        taulukko[numero - 1].naytaSelkapuoli();
+        korttitaulukko[numero - 1].naytaSelkapuoli();
     }
 
+    /**
+     * Metodi vähentää taulukosta löydetyn parin korttejaJaljella
+     */
     public void vahennaKorttejaJaljella() {
         this.korttejaJaljella = this.korttejaJaljella - 2;
     }
@@ -92,16 +103,23 @@ public class Pelipoyta {
         this.loydetytKortit.add(kortti);
     }
 
+    /**
+     * Metodi vaihtaa jäljellä olevien korttien määrää laskevan muuttujan arvon takaisin alkuarvoonsa, eli
+     * korttitaulukon koon mukaiseksi arvoksi.
+     */
+    public void alustaKorttejaJaljella() {
+        this.korttejaJaljella = this.korttitaulukko.length;
+    }
+
     public int getKorttejaJaljella() {
         return this.korttejaJaljella;
     }
 
     public Kortti[] getTaulukko() {
-        return this.taulukko;
+        return this.korttitaulukko;
     }
 
     public List<Kortti> getLoydetytKortit() {
         return this.loydetytKortit;
     }
-
 }
