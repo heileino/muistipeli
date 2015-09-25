@@ -35,4 +35,8 @@ pe 18.9.2015
 
 viikko 4:
 ke 23.9.2015
-	(3h) graafisen käyttöliittymän suunnittelua ja gui-builderin käytön opettelua
+	(3h) graafisen käyttöliittymän suunnittelua
+to 24.9.2015
+	(5h) graafisen käyttöliittymän rakentamista ja javadocin aloitus
+pe 25.9.2015
+	(3h) javadocin kirjoittelua ja yleistä koodausta
