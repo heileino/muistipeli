@@ -39,4 +39,4 @@ ke 23.9.2015
 to 24.9.2015
 	(5h) graafisen käyttöliittymän rakentamista ja javadocin aloitus
 pe 25.9.2015
-	(3h) javadocin kirjoittelua ja yleistä koodausta
+	(3,5h) javadocin kirjoittelua ja yleistä koodausta
