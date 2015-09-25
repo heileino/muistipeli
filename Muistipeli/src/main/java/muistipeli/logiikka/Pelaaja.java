@@ -6,8 +6,9 @@
 package muistipeli.logiikka;
 
 /**
- * Luokan ilmentymät esittävät Muistipelin pelaajaa ja ylläpitävät
- * tilastoa arvausyritysten määrästä.
+ * Luokan ilmentymät esittävät Muistipelin pelaajaa ja ylläpitävät tilastoa
+ * arvausyritysten määrästä.
+ *
  * @author Heikki Leinonen
  */
 public class Pelaaja {
@@ -17,12 +18,10 @@ public class Pelaaja {
     /**
      * Konstruktori asettaa pelaajan yritysmäärään arvoon 0.
      */
-    
     public Pelaaja() {
         this.yritykset = 0;
     }
 
-    
     /**
      * Metodi lisää pelaajalle yhden yrityksen lisää.
      */

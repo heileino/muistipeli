@@ -29,6 +29,10 @@ public class GraafinenKayttoliittyma implements Runnable {
     private Pelaaja pelaaja;
     private JButton[] peliruudukko;
 
+    
+    /**
+     * Konstruktori luo uuden pelipöydän, pelaajan ja peliruudukon.
+     */
     public GraafinenKayttoliittyma() {
         pelipoyta = new Pelipoyta();
         pelaaja = new Pelaaja();

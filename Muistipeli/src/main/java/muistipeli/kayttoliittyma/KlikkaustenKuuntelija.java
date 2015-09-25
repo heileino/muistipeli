@@ -11,8 +11,9 @@ import javax.swing.JButton;
 import muistipeli.logiikka.*;
 
 /**
+ * Luokka toteuttaa käyttäjän klikkaamien painikkeiden toiminnot.
  *
- * @author Heikki
+ * @author Heikki Leinonen
  */
 public class KlikkaustenKuuntelija implements ActionListener {
 
@@ -22,7 +23,6 @@ public class KlikkaustenKuuntelija implements ActionListener {
     public KlikkaustenKuuntelija(Pelipoyta pelipoyta, JButton[] peliruudukko) {
         this.pelipoyta = pelipoyta;
         this.peliruudukko = peliruudukko;
-
     }
 
     @Override
@@ -33,5 +33,4 @@ public class KlikkaustenKuuntelija implements ActionListener {
             }
         }
     }
-
 }
