@@ -27,9 +27,26 @@ public class KlikkaustenKuuntelija implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        int korttejaValittu=1;
+        int korttipaikka1 = -1;
+        int korttipaikka2 =-2;
+        
         for (int i = 0; i < peliruudukko.length; i++) {
             if (peliruudukko[i] == ae.getSource()) {
+                pelipoyta.paljastaKortti(i+1);
+                korttejaValittu++;
+                if(korttejaValittu==1){
+                    korttipaikka1=i;
+                } else{
+                    korttipaikka2=i;
+                }
                 peliruudukko[i].setText(pelipoyta.getTaulukko()[i].toString());
+                if(korttejaValittu>1){
+                    if(pelipoyta.onkoSama(korttipaikka1, korttipaikka2)){
+                        pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko(korttipaikka1));
+                        pelipoyta.lisaaKorttiLoytyneisiin(korttipaikka2);
+                    }
+                }
             }
         }
     }
