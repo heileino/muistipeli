@@ -19,35 +19,43 @@ public class KlikkaustenKuuntelija implements ActionListener {
 
     private Pelipoyta pelipoyta;
     private JButton[] peliruudukko;
+    private JButton lopetaNappi;
 
-    public KlikkaustenKuuntelija(Pelipoyta pelipoyta, JButton[] peliruudukko) {
+    public KlikkaustenKuuntelija(Pelipoyta pelipoyta, JButton[] peliruudukko, JButton lopetaNappi) {
         this.pelipoyta = pelipoyta;
         this.peliruudukko = peliruudukko;
+        this.lopetaNappi = lopetaNappi;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        int korttejaValittu=1;
+        int korttejaValittu = 0;
         int korttipaikka1 = -1;
-        int korttipaikka2 =-2;
-        
-        for (int i = 0; i < peliruudukko.length; i++) {
-            if (peliruudukko[i] == ae.getSource()) {
-                pelipoyta.paljastaKortti(i+1);
-                korttejaValittu++;
-                if(korttejaValittu==1){
-                    korttipaikka1=i;
-                } else{
-                    korttipaikka2=i;
-                }
-                peliruudukko[i].setText(pelipoyta.getTaulukko()[i].toString());
-                if(korttejaValittu>1){
-                    if(pelipoyta.onkoSama(korttipaikka1, korttipaikka2)){
-                        pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko(korttipaikka1));
-                        pelipoyta.lisaaKorttiLoytyneisiin(korttipaikka2);
+        int korttipaikka2 = -2;
+
+        if (ae.getSource() == this.lopetaNappi) {
+            System.exit(0);
+        }
+            for (int i = 0; i < peliruudukko.length; i++) {
+                if (ae.getSource() == peliruudukko[i]) {
+                    pelipoyta.paljastaKortti(i + 1);
+                    korttejaValittu++;
+                    if (korttejaValittu == 1) {
+                        korttipaikka1 = i;
+                    } else {
+                        korttipaikka2 = i;
+                    }
+                    peliruudukko[i].setText(pelipoyta.getTaulukko()[i].toString());
+                    if (korttejaValittu > 1) {
+                        if (pelipoyta.onkoSama(korttipaikka1, korttipaikka2)) {
+                            pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko()[korttipaikka1]);
+                            pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko()[korttipaikka2]);
+
+                        }
                     }
                 }
             }
-        }
+        
+
     }
 }

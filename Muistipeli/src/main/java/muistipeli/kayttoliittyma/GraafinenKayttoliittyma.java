@@ -28,6 +28,7 @@ public class GraafinenKayttoliittyma implements Runnable {
     private Pelipoyta pelipoyta;
     private Pelaaja pelaaja;
     private JButton[] peliruudukko;
+    JButton lopetaNappi;
 
     
     /**
@@ -37,6 +38,7 @@ public class GraafinenKayttoliittyma implements Runnable {
         pelipoyta = new Pelipoyta();
         pelaaja = new Pelaaja();
         peliruudukko = new JButton[16];
+        lopetaNappi = new JButton();
     }
 
     @Override
@@ -79,7 +81,7 @@ public class GraafinenKayttoliittyma implements Runnable {
         for (int i = 0; i < peliruudukko.length; i++) {
             this.peliruudukko[i] = new JButton("" + (i + 1));
             paneeli.add(peliruudukko[i]);
-            peliruudukko[i].addActionListener(new KlikkaustenKuuntelija(this.pelipoyta, this.peliruudukko));
+            peliruudukko[i].addActionListener(new KlikkaustenKuuntelija(this.pelipoyta, this.peliruudukko, this.lopetaNappi));
         }
     }
 
@@ -89,7 +91,7 @@ public class GraafinenKayttoliittyma implements Runnable {
         aloitaNappi.setBackground(Color.GREEN);
         paneeli.add(aloitaNappi);
 
-        JButton lopetaNappi;
+        
         lopetaNappi = new JButton("Lopeta");
         lopetaNappi.setBackground(Color.RED);
         paneeli.add(lopetaNappi);
