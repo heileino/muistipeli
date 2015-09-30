@@ -32,4 +32,8 @@ public class Pelaaja {
     public int getYritykset() {
         return this.yritykset;
     }
+
+    public String getYrityksetTekstina() {
+        return "Yrityksiä: " + this.getYritykset();
+    }
 }

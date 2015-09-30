@@ -168,30 +168,13 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 if (this.valitutKortit.size() > 1) {
                     break;
                 }
-
-//                if (this.jarjestysNumero % 2 == 0) {
-//                    if (i == this.valintaIndeksi1) {
-//                        
-//                    } else {
-//                        this.valintaIndeksi2 = i;
-//                        this.jarjestysNumero++;
-//                        Kortti valittuKortti = pelipoyta.getTaulukko()[i];
-//
-//                        peliruudukko[i].setText(valittuKortti.toString());
-//                    }
-//
-//                } else {
-//                    this.valintaIndeksi1 = i;
-//                    this.jarjestysNumero++;
-//                    Kortti valittuKortti = pelipoyta.getTaulukko()[i];
-//
-//                    peliruudukko[i].setText(valittuKortti.toString());
-//                }
             }
-
         }
 
         if (this.valitutKortit.size() > 1) {
+
+            this.pelaaja.lisaaYritys();
+            this.yritysLabel.setText("" + pelaaja.getYritykset());
 
             Kortti kortti1 = this.valitutKortit.get(0);
             Kortti kortti2 = this.valitutKortit.get(1);
@@ -209,10 +192,14 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 JOptionPane.showMessageDialog(getFrame(), "Jatka");
                 peliruudukko[pelipoyta.getKortinIndeksi(kortti1)].setText("" + (pelipoyta.getKortinIndeksi(kortti1) + 1));
                 peliruudukko[pelipoyta.getKortinIndeksi(kortti2)].setText("" + (pelipoyta.getKortinIndeksi(kortti2) + 1));
+                kortti1.naytaSelkapuoli();
+                kortti2.naytaSelkapuoli();
                 this.valitutKortit = new ArrayList<>();
             }
 
+            if (pelipoyta.getKorttejaJaljella() < 2) {
+                JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelaaja.getYritykset() + " yritystä.");
+            }
         }
-
     }
 }
