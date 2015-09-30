@@ -20,6 +20,7 @@ import muistipeli.logiikka.*;
 
 /**
  * Luokka tarjoaa muistipelille graafisen käyttöliittymän.
+ *
  * @author Heikki Leinonen
  */
 public class GraafinenKayttoliittyma implements Runnable {
@@ -28,9 +29,9 @@ public class GraafinenKayttoliittyma implements Runnable {
     private Pelipoyta pelipoyta;
     private Pelaaja pelaaja;
     private JButton[] peliruudukko;
-    JButton lopetaNappi;
+    private JButton lopetaNappi;
+    private JButton aloitaNappi;
 
-    
     /**
      * Konstruktori luo uuden pelipöydän, pelaajan ja peliruudukon.
      */
@@ -39,14 +40,15 @@ public class GraafinenKayttoliittyma implements Runnable {
         pelaaja = new Pelaaja();
         peliruudukko = new JButton[16];
         lopetaNappi = new JButton();
+        aloitaNappi = new JButton();
     }
 
     @Override
     public void run() {
-        
+
         pelipoyta.taytaPoyta();
         pelipoyta.sekoitaKortit();
-        
+
         frame = new JFrame("Muistipeli");
         frame.setPreferredSize(new Dimension(500, 400));
 
@@ -81,20 +83,22 @@ public class GraafinenKayttoliittyma implements Runnable {
         for (int i = 0; i < peliruudukko.length; i++) {
             this.peliruudukko[i] = new JButton("" + (i + 1));
             paneeli.add(peliruudukko[i]);
-            peliruudukko[i].addActionListener(new KlikkaustenKuuntelija(this.pelipoyta, this.peliruudukko, this.lopetaNappi));
+            peliruudukko[i].addActionListener(new KlikkaustenKuuntelija(this.pelipoyta, this.peliruudukko));
         }
     }
 
     public void piirraHallintaruutu(JPanel paneeli) {
-        JButton aloitaNappi;
-        aloitaNappi = new JButton("Aloita uusi peli");
+
+        aloitaNappi.setText("Aloita uusi peli");
         aloitaNappi.setBackground(Color.GREEN);
         paneeli.add(aloitaNappi);
+        aloitaNappi.addActionListener(null);
 
-        
-        lopetaNappi = new JButton("Lopeta");
+        lopetaNappi.setText("Lopeta");
         lopetaNappi.setBackground(Color.RED);
         paneeli.add(lopetaNappi);
+
+        lopetaNappi.addActionListener(new LopetaKuuntelija());
 
         JLabel yritykset;
         yritykset = new JLabel("Yrityksiä: " + pelaaja.getYritykset());
@@ -104,14 +108,15 @@ public class GraafinenKayttoliittyma implements Runnable {
         korttejaJaljella = new JLabel("Kortteja jäljellä: " + pelipoyta.getKorttejaJaljella());
         paneeli.add(korttejaJaljella);
     }
-    
+
     /**
-     * Metodi luo uuden pelipöydän, täyttää sen ja sekoittaa kortit eli valmistelee pelipöydän uutta peliä varten.
+     * Metodi luo uuden pelipöydän, täyttää sen ja sekoittaa kortit eli
+     * valmistelee pelipöydän uutta peliä varten.
      */
-    public void aloitaUudelleen(){
-        this.pelipoyta=new Pelipoyta();
+    public void aloitaUudelleen() {
+        this.pelipoyta = new Pelipoyta();
         this.pelipoyta.taytaPoyta();
         this.pelipoyta.sekoitaKortit();
-        
+
     }
 }

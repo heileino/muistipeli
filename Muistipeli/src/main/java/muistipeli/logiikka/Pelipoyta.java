@@ -21,6 +21,7 @@ public class Pelipoyta {
     private Kortti[] korttitaulukko;
     private int korttejaJaljella;
     private List<Kortti> loydetytKortit;
+    private List<Integer> valitutKorttiIndeksit;
 
     /**
      * Konstruktori luo uuden korttitaulukon ja uuden löydettyjen korttien
@@ -31,6 +32,7 @@ public class Pelipoyta {
         korttitaulukko = new Kortti[16];
         korttejaJaljella = korttitaulukko.length;
         loydetytKortit = new ArrayList<>();
+        valitutKorttiIndeksit = new ArrayList<>();
     }
 
     /**
@@ -69,6 +71,10 @@ public class Pelipoyta {
     public boolean onkoSama(int paikka1, int paikka2) {
         return this.korttitaulukko[paikka1 - 1].tunnus == this.korttitaulukko[paikka2 - 1].tunnus;
     }
+    
+    public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2){
+        return kortti1.getTunnus()==kortti2.getTunnus();
+    }
 
     /**
      * Metodi kääntää valitussa paikassa olevan kortin kuvapuolen esiin
@@ -104,8 +110,8 @@ public class Pelipoyta {
     }
 
     /**
-     * Metodi vaihtaa jäljellä olevien korttien määrää laskevan muuttujan arvon takaisin alkuarvoonsa, eli
-     * korttitaulukon koon mukaiseksi arvoksi.
+     * Metodi vaihtaa jäljellä olevien korttien määrää laskevan muuttujan arvon
+     * takaisin alkuarvoonsa, eli korttitaulukon koon mukaiseksi arvoksi.
      */
     public void alustaKorttejaJaljella() {
         this.korttejaJaljella = this.korttitaulukko.length;
@@ -121,5 +127,24 @@ public class Pelipoyta {
 
     public List<Kortti> getLoydetytKortit() {
         return this.loydetytKortit;
+    }
+
+    public void valitseKortti(int indeksi) {
+        Kortti valittuKortti = this.korttitaulukko[indeksi];
+        if (onkoJoLoydetty(valittuKortti)) {
+
+        }
+    }
+
+    public void lisaaKorttiValittuihin(int indeksi) {
+        this.valitutKorttiIndeksit.add(indeksi);
+    }
+
+    public List<Integer> getKorttejaValittu() {
+        return this.valitutKorttiIndeksit;
+    }
+
+    public void tyhjaaValitutKortit() {
+        this.valitutKorttiIndeksit = new ArrayList<>();
     }
 }
