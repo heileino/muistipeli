@@ -71,9 +71,9 @@ public class Pelipoyta {
     public boolean onkoSama(int paikka1, int paikka2) {
         return this.korttitaulukko[paikka1 - 1].tunnus == this.korttitaulukko[paikka2 - 1].tunnus;
     }
-    
-    public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2){
-        return kortti1.getTunnus()==kortti2.getTunnus();
+
+    public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2) {
+        return kortti1.getTunnus() == kortti2.getTunnus();
     }
 
     /**
@@ -121,6 +121,10 @@ public class Pelipoyta {
         return this.korttejaJaljella;
     }
 
+    public String getKorttejaJaljellaTekstina() {
+        return "Kortteja jäljellä: " + getKorttejaJaljella();
+    }
+
     public Kortti[] getTaulukko() {
         return this.korttitaulukko;
     }
@@ -146,5 +150,14 @@ public class Pelipoyta {
 
     public void tyhjaaValitutKortit() {
         this.valitutKorttiIndeksit = new ArrayList<>();
+    }
+
+    public int getKortinIndeksi(Kortti kortti) {
+        for (int i = 0; i < this.korttitaulukko.length; i++) {
+            if (this.korttitaulukko[i].equals(kortti)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
