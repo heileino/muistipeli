@@ -33,7 +33,7 @@ public class KorttiTest {
 
     @Before
     public void setUp() {
-        kortti = new Kortti(5);
+        kortti = new Kortti("5");
     }
 
     @After
@@ -42,7 +42,7 @@ public class KorttiTest {
 
     @Test
     public void konstruktoriAsettaaTunnuksenOikein() {
-        assertTrue(kortti.tunnus == 5);
+        assertEquals("5", kortti.getTunnus());
     }
 
     @Test

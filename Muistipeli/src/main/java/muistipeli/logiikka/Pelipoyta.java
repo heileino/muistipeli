@@ -44,10 +44,10 @@ public class Pelipoyta {
     public void taytaPoyta() {
         // Täytetään korttitaulukko kahdessa osassa siten, että saman tunnuksen sisältäviä kortteja tulee taulukkoon kaksi.
         for (int i = 0; i < korttitaulukko.length / 2; i++) {
-            korttitaulukko[i] = new Kortti(i + 1);
+            korttitaulukko[i] = new Kortti("" + (i + 1));
         }
         for (int i = korttitaulukko.length / 2; i < korttitaulukko.length; i++) {
-            korttitaulukko[i] = new Kortti((i - korttitaulukko.length / 2) + 1);
+            korttitaulukko[i] = new Kortti("" + ((i - korttitaulukko.length / 2) + 1));
         }
     }
 
@@ -69,11 +69,11 @@ public class Pelipoyta {
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
     public boolean onkoSama(int indeksi1, int indeksi2) {
-        return this.korttitaulukko[indeksi1].tunnus == this.korttitaulukko[indeksi2].tunnus;
+        return this.korttitaulukko[indeksi1].tunnus.equals(this.korttitaulukko[indeksi2].tunnus);
     }
 
     public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2) {
-        return kortti1.getTunnus() == kortti2.getTunnus();
+        return kortti1.getTunnus().equals(kortti2.getTunnus());
     }
 
     /**
@@ -120,7 +120,6 @@ public class Pelipoyta {
     public int getKorttejaJaljella() {
         return this.korttejaJaljella;
     }
-    
 
     public String getKorttejaJaljellaTekstina() {
         return "Kortteja jäljellä: " + getKorttejaJaljella();
@@ -140,7 +139,6 @@ public class Pelipoyta {
 //
 //        }
 //    }
-
     public void lisaaTaulukonIndeksiValittuihin(int indeksi) {
         this.valitutIndeksit.add(indeksi);
     }

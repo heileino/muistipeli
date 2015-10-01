@@ -12,7 +12,7 @@ package muistipeli.logiikka;
  */
 public class Kortti {
 
-    int tunnus;
+    String tunnus;
     boolean nakyy; // kertoo onko kortti käännetty kuvapuolelle vai ei
 
     /**
@@ -21,7 +21,7 @@ public class Kortti {
      *
      * @param tunnus korttiparin yksilöivä tunnus
      */
-    public Kortti(int tunnus) {
+    public Kortti(String tunnus){
         nakyy = false;
         this.tunnus = tunnus;
     }
@@ -47,15 +47,10 @@ public class Kortti {
         return this.nakyy;
     }
 
-    public void setTunnus(int tunnus) {
-        this.tunnus = tunnus;
-    }
-
-    public int getTunnus() {
+    public String getTunnus() {
         return tunnus;
     }
 
-    
     public String toString() {
         return "kortti_" + tunnus;
     }

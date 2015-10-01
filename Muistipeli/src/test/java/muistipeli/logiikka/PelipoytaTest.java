@@ -159,13 +159,19 @@ public class PelipoytaTest {
     public void getKorttejaJaljellaTekstinaToimiiOikein() {
         assertEquals("Kortteja jäljellä: 16", poyta.getKorttejaJaljellaTekstina());
     }
-    
+
     @Test
-    public void tyhjaaValitutIndeksitToimiiOikein(){        
+    public void tyhjaaValitutIndeksitToimiiOikein() {
         poyta.lisaaTaulukonIndeksiValittuihin(0);
         poyta.lisaaTaulukonIndeksiValittuihin(1);
         poyta.tyhjaaValitutIndeksit();
         assertTrue(poyta.getValitutIndeksit().isEmpty());
     }
-    
+
+    @Test
+    public void getKortinIndeksiToimiiOikein() {
+        Kortti kortti = poyta.getTaulukko()[2];
+        assertTrue(poyta.getKortinIndeksi(kortti) == 2);
+    }
+
 }
