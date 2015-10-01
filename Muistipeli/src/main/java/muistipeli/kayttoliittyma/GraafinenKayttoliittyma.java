@@ -37,11 +37,8 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private JButton aloitaNappi;
     private JPanel peliPaneeli;
     private JPanel hallintaPaneeli;
-    private int valintaIndeksi1, valintaIndeksi2;
-    private int jarjestysNumero;
     private JLabel yritysLabel;
     private JLabel korttejaJaljellaLabel;
-    private List<Kortti> valitutKortit;
 
     /**
      * Konstruktori luo uuden pelipöydän, pelaajan ja peliruudukon.
@@ -54,12 +51,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         aloitaNappi = new JButton();
         peliPaneeli = new JPanel();
         hallintaPaneeli = new JPanel();
-        valintaIndeksi1 = -1;
-        valintaIndeksi2 = -2;
-        jarjestysNumero = 1;
         yritysLabel = new JLabel();
         korttejaJaljellaLabel = new JLabel();
-        this.valitutKortit = new ArrayList<>();
+
     }
 
     @Override
@@ -155,51 +149,59 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
             if (e.getSource() == peliruudukko[i]) {
 
-                Kortti valinta = pelipoyta.getTaulukko()[i];
+                Kortti valittuKortti = pelipoyta.getTaulukko()[i];
 
-                if (valinta.getNakyvyys()) {
+                if (valittuKortti.getNakyvyys()) {
                     JOptionPane.showMessageDialog(getFrame(), "Virhe! Valitse jokin toinen kortti");
                 } else {
-                    this.valitutKortit.add(valinta);
+                    pelipoyta.lisaaTaulukonIndeksiValittuihin(i);
                     this.pelipoyta.paljastaKortti(i);
-                    peliruudukko[i].setText(valinta.toString());
+                    peliruudukko[i].setText(valittuKortti.toString());
                 }
 
-                if (this.valitutKortit.size() > 1) {
+                if (pelipoyta.getValitutIndeksit().size() > 1) {
+                    tarkastaValitutKortit();
+
                     break;
+
                 }
             }
         }
 
-        if (this.valitutKortit.size() > 1) {
+    }
 
-            this.pelaaja.lisaaYritys();
-            this.yritysLabel.setText(pelaaja.getYrityksetTekstina());
+    /**
+     * Tutkitaan valittuja kortteja ja päätetään pelin sääntöjen mukaan
+     * jatkotoimenpiteistä.
+     */
+    public void tarkastaValitutKortit() {
+        this.pelaaja.lisaaYritys();
+        this.yritysLabel.setText(pelaaja.getYrityksetTekstina());
 
-            Kortti kortti1 = this.valitutKortit.get(0);
-            Kortti kortti2 = this.valitutKortit.get(1);
+        Kortti kortti1 = pelipoyta.getTaulukko()[pelipoyta.getValitutIndeksit().get(0)];
+        Kortti kortti2 = pelipoyta.getTaulukko()[pelipoyta.getValitutIndeksit().get(1)];
 
-            if (pelipoyta.onkoSamaKortti(kortti1, kortti2)) {
-                pelipoyta.lisaaKorttiLoytyneisiin(kortti1);
-                pelipoyta.lisaaKorttiLoytyneisiin(kortti2);
+        if (pelipoyta.onkoSamaKortti(kortti1, kortti2)) {
+            pelipoyta.lisaaKorttiLoytyneisiin(kortti1);
+            pelipoyta.lisaaKorttiLoytyneisiin(kortti2);
 
-                pelipoyta.vahennaKorttejaJaljella();
-                this.korttejaJaljellaLabel.setText(this.pelipoyta.getKorttejaJaljellaTekstina());
-                JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
-                this.valitutKortit = new ArrayList<>();
+            pelipoyta.vahennaKorttejaJaljella();
+            this.korttejaJaljellaLabel.setText(this.pelipoyta.getKorttejaJaljellaTekstina());
+            JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
-            } else {
-                JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
-                peliruudukko[pelipoyta.getKortinIndeksi(kortti1)].setText("" + (pelipoyta.getKortinIndeksi(kortti1) + 1));
-                peliruudukko[pelipoyta.getKortinIndeksi(kortti2)].setText("" + (pelipoyta.getKortinIndeksi(kortti2) + 1));
-                pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti1));
-                pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti2));
-                this.valitutKortit = new ArrayList<>();
-            }
+        } else {
+            JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
+            peliruudukko[pelipoyta.getKortinIndeksi(kortti1)].setText("" + (pelipoyta.getKortinIndeksi(kortti1) + 1));
+            peliruudukko[pelipoyta.getKortinIndeksi(kortti2)].setText("" + (pelipoyta.getKortinIndeksi(kortti2) + 1));
+            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti1));
+            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti2));
 
-            if (pelipoyta.getKorttejaJaljella() < 2) {
-                JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelaaja.getYritykset() + " yritystä.");
-            }
         }
+
+        if (pelipoyta.getKorttejaJaljella() < 2) {
+            JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelaaja.getYritykset() + " yritystä.");
+        }
+
+        pelipoyta.tyhjaaValitutIndeksit();
     }
 }
