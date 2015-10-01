@@ -85,7 +85,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         piirraPeliruudut(peliPaneeli);
 
         hallintaPaneeli.setLayout(new BoxLayout(hallintaPaneeli, BoxLayout.PAGE_AXIS));
-        piirraHallintaruutu(hallintaPaneeli);
+        piirraHallintapaneeli(hallintaPaneeli);
 
         container.add(peliPaneeli);
         container.add(hallintaPaneeli, BorderLayout.EAST);
@@ -105,7 +105,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
     }
 
-    public void piirraHallintaruutu(JPanel paneeli) {
+    public void piirraHallintapaneeli(JPanel paneeli) {
 
         aloitaNappi.setText("Aloita uusi peli");
         aloitaNappi.setBackground(Color.GREEN);
@@ -118,7 +118,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
         lopetaNappi.addActionListener(this);
 
-        yritysLabel.setText("Yrityksiä: " + pelaaja.getYritykset());
+        yritysLabel.setText(pelaaja.getYrityksetTekstina());
         paneeli.add(yritysLabel);
 
         korttejaJaljellaLabel.setText(pelipoyta.getKorttejaJaljellaTekstina());
@@ -127,7 +127,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
     /**
      * Metodi luo uuden pelipöydän, täyttää sen ja sekoittaa kortit eli
-     * valmistelee pelipöydän uutta peliä varten.
+     * valmistelee pelipöydän uutta peliä varten. EI TOIMI VIELÄ!
      */
     public void aloitaUudelleen() {
 //        this.pelipoyta = new Pelipoyta();
@@ -158,10 +158,10 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 Kortti valinta = pelipoyta.getTaulukko()[i];
 
                 if (valinta.getNakyvyys()) {
-                    JOptionPane.showMessageDialog(getFrame(), "Et voi valita samaa korttia");
+                    JOptionPane.showMessageDialog(getFrame(), "Virhe! Valitse jokin toinen kortti");
                 } else {
                     this.valitutKortit.add(valinta);
-                    valinta.naytaKuvapuoli();
+                    this.pelipoyta.paljastaKortti(i);
                     peliruudukko[i].setText(valinta.toString());
                 }
 
@@ -174,7 +174,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         if (this.valitutKortit.size() > 1) {
 
             this.pelaaja.lisaaYritys();
-            this.yritysLabel.setText("" + pelaaja.getYritykset());
+            this.yritysLabel.setText(pelaaja.getYrityksetTekstina());
 
             Kortti kortti1 = this.valitutKortit.get(0);
             Kortti kortti2 = this.valitutKortit.get(1);
@@ -189,11 +189,11 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 this.valitutKortit = new ArrayList<>();
 
             } else {
-                JOptionPane.showMessageDialog(getFrame(), "Jatka");
+                JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
                 peliruudukko[pelipoyta.getKortinIndeksi(kortti1)].setText("" + (pelipoyta.getKortinIndeksi(kortti1) + 1));
                 peliruudukko[pelipoyta.getKortinIndeksi(kortti2)].setText("" + (pelipoyta.getKortinIndeksi(kortti2) + 1));
-                kortti1.naytaSelkapuoli();
-                kortti2.naytaSelkapuoli();
+                pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti1));
+                pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti2));
                 this.valitutKortit = new ArrayList<>();
             }
 

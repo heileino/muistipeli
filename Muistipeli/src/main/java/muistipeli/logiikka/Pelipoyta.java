@@ -21,7 +21,7 @@ public class Pelipoyta {
     private Kortti[] korttitaulukko;
     private int korttejaJaljella;
     private List<Kortti> loydetytKortit;
-    private List<Integer> valitutKorttiIndeksit;
+    private List<Integer> valitutIndeksit;
 
     /**
      * Konstruktori luo uuden korttitaulukon ja uuden löydettyjen korttien
@@ -32,7 +32,7 @@ public class Pelipoyta {
         korttitaulukko = new Kortti[16];
         korttejaJaljella = korttitaulukko.length;
         loydetytKortit = new ArrayList<>();
-        valitutKorttiIndeksit = new ArrayList<>();
+        valitutIndeksit = new ArrayList<>();
     }
 
     /**
@@ -64,12 +64,12 @@ public class Pelipoyta {
      * Metodi testaa sisältävätkö parametrina saadut taulukkopaikat saman
      * korttitunnuksen.
      *
-     * @param paikka1 ensimmäisen valitun paikan numero
-     * @param paikka2 toisen valitun paikan numero
+     * @param indeksi1 ensimmäisen valitun paikan numero
+     * @param indeksi2 toisen valitun paikan numero
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
-    public boolean onkoSama(int paikka1, int paikka2) {
-        return this.korttitaulukko[paikka1 - 1].tunnus == this.korttitaulukko[paikka2 - 1].tunnus;
+    public boolean onkoSama(int indeksi1, int indeksi2) {
+        return this.korttitaulukko[indeksi1].tunnus == this.korttitaulukko[indeksi2].tunnus;
     }
 
     public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2) {
@@ -79,19 +79,19 @@ public class Pelipoyta {
     /**
      * Metodi kääntää valitussa paikassa olevan kortin kuvapuolen esiin
      *
-     * @param numero valittu taulukon paikkanumero
+     * @param indeksi valittu taulukon paikkanumero
      */
-    public void paljastaKortti(int numero) {
-        korttitaulukko[numero - 1].naytaKuvapuoli();
+    public void paljastaKortti(int indeksi) {
+        korttitaulukko[indeksi].naytaKuvapuoli();
     }
 
     /**
      * Metodi kääntää valitussa paikassa olevan kortin selkäpuolen esiin.
      *
-     * @param numero valittu taulukon paikkanumero
+     * @param indeksi valittu taulukon paikkanumero
      */
-    public void piilotaKortti(int numero) {
-        korttitaulukko[numero - 1].naytaSelkapuoli();
+    public void piilotaKortti(int indeksi) {
+        korttitaulukko[indeksi].naytaSelkapuoli();
     }
 
     /**
@@ -120,6 +120,7 @@ public class Pelipoyta {
     public int getKorttejaJaljella() {
         return this.korttejaJaljella;
     }
+    
 
     public String getKorttejaJaljellaTekstina() {
         return "Kortteja jäljellä: " + getKorttejaJaljella();
@@ -133,23 +134,23 @@ public class Pelipoyta {
         return this.loydetytKortit;
     }
 
-    public void valitseKortti(int indeksi) {
-        Kortti valittuKortti = this.korttitaulukko[indeksi];
-        if (onkoJoLoydetty(valittuKortti)) {
+//    public void valitseKortti(int indeksi) {
+//        Kortti valittuKortti = this.korttitaulukko[indeksi];
+//        if (onkoJoLoydetty(valittuKortti)) {
+//
+//        }
+//    }
 
-        }
+    public void lisaaTaulukonIndeksiValittuihin(int indeksi) {
+        this.valitutIndeksit.add(indeksi);
     }
 
-    public void lisaaKorttiValittuihin(int indeksi) {
-        this.valitutKorttiIndeksit.add(indeksi);
+    public List<Integer> getValitutIndeksit() {
+        return this.valitutIndeksit;
     }
 
-    public List<Integer> getKorttejaValittu() {
-        return this.valitutKorttiIndeksit;
-    }
-
-    public void tyhjaaValitutKortit() {
-        this.valitutKorttiIndeksit = new ArrayList<>();
+    public void tyhjaaValitutIndeksit() {
+        this.valitutIndeksit = new ArrayList<>();
     }
 
     public int getKortinIndeksi(Kortti kortti) {

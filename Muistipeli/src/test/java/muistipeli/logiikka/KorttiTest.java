@@ -51,7 +51,7 @@ public class KorttiTest {
     }
 
     @Test
-    public void naytaKuvapuoliMetodiKaantaaKuvapuolen() {
+    public void naytaKuvapuoliKaantaaKuvapuolen() {
         kortti.naytaKuvapuoli();
         assertTrue(kortti.nakyy);
     }
@@ -62,5 +62,10 @@ public class KorttiTest {
         kortti.naytaSelkapuoli();
         assertFalse(kortti.nakyy);
 
+    }
+
+    @Test
+    public void toStringToimiiOikein() {
+        assertEquals("kortti_" + kortti.getTunnus(), kortti.toString());
     }
 }

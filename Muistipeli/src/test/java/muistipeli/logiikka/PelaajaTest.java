@@ -50,4 +50,9 @@ public class PelaajaTest {
         pelaaja.lisaaYritys();
         assertEquals(1, pelaaja.getYritykset());
     }
+
+    @Test
+    public void getYrityksetTekstinaToimiiOikein() {
+        assertEquals("Yrityksiä: " + pelaaja.getYritykset(), pelaaja.getYrityksetTekstina());
+    }
 }

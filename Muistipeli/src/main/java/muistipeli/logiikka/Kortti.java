@@ -30,15 +30,7 @@ public class Kortti {
      * Metodi asettaa kyseisen kortin kuvapuolen näkyvyyden todeksi.
      */
     public void naytaKuvapuoli() {
-
-        if (nakyy) {
-            // virhe, tämä kortti on jo käännetty
-
-        } else {
-            // vaihda kortin kuvapuoli näkymään
-            nakyy = true;
-        }
-
+        nakyy = true;
     }
 
     /**
@@ -63,6 +55,7 @@ public class Kortti {
         return tunnus;
     }
 
+    
     public String toString() {
         return "kortti_" + tunnus;
     }
