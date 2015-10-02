@@ -29,19 +29,23 @@ import muistipeli.logiikka.*;
 public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
     private JFrame frame;
-    private Pelipoyta pelipoyta;
-    private Pelaaja pelaaja;
+    //private Pelipoyta pelipoyta;
+    //private Pelaaja pelaaja;
+    private Pelimoottori pelimoottori;
     private JButton[] peliruudukko;
     private JButton aloitaNappi, lopetaNappi;
     private JPanel peliPaneeli, hallintaPaneeli;
     private JLabel yritysLabel, korttejaJaljellaLabel;
+    private int ikkunanLeveys;
+    private int ikkunanKorkeus;
 
     /**
      * Konstruktori luo uuden pelipöydän, pelaajan ja peliruudukon.
      */
     public GraafinenKayttoliittyma() {
-        pelipoyta = new Pelipoyta();
-        pelaaja = new Pelaaja();
+        //pelipoyta = new Pelipoyta();
+        //pelaaja = new Pelaaja();
+        pelimoottori = new Pelimoottori();
         peliruudukko = new JButton[16];
         lopetaNappi = new JButton();
         aloitaNappi = new JButton();
@@ -49,17 +53,18 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         hallintaPaneeli = new JPanel();
         yritysLabel = new JLabel();
         korttejaJaljellaLabel = new JLabel();
+        ikkunanLeveys = 700;
+        ikkunanKorkeus = 450;
 
     }
 
     @Override
     public void run() {
 
-        pelipoyta.taytaPoyta();
-        pelipoyta.sekoitaKortit();
+        pelimoottori.alustaPoytaPelikuntoon();
 
         frame = new JFrame("Muistipeli");
-        frame.setPreferredSize(new Dimension(500, 400));
+        frame.setPreferredSize(new Dimension(ikkunanLeveys, ikkunanKorkeus));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,10 +118,10 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
         lopetaNappi.addActionListener(this);
 
-        yritysLabel.setText(pelaaja.getYrityksetTekstina());
+        yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
         paneeli.add(yritysLabel);
 
-        korttejaJaljellaLabel.setText(pelipoyta.getKorttejaJaljellaTekstina());
+        korttejaJaljellaLabel.setText(pelimoottori.getKorttejaJaljellaTekstina());
         paneeli.add(korttejaJaljellaLabel);
     }
 
@@ -137,40 +142,40 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
             if (e.getSource() == peliruudukko[i]) {
 
-                if (!pelipoyta.onkoKorttiValittavissa(i)) {
+                if (!pelimoottori.onkoKorttiValittavissa(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta! Valitse toinen kortti");
                 } else {
-                    pelipoyta.valitseKortti(i);
-                    peliruudukko[i].setText(pelipoyta.getKorttiTaulukosta(i).toString());
+                    pelimoottori.valitseKortti(i);
+                    peliruudukko[i].setText(pelimoottori.getKortti(i).toString());
                 }
 
-                if (pelipoyta.montakoValittu() > 1) {
-                    pelipoyta.lisaaValintayritys();
+                if (pelimoottori.montakoValittu() > 1) {
+                    pelimoottori.lisaaValintayritys();
 
-                    JButton valittuNappi1 = peliruudukko[pelipoyta.getValitutIndeksit().get(0)];
-                    JButton valittuNappi2 = peliruudukko[pelipoyta.getValitutIndeksit().get(1)];
+                    JButton valittuNappi1 = peliruudukko[pelimoottori.getValitutIndeksit().get(0)];
+                    JButton valittuNappi2 = peliruudukko[pelimoottori.getValitutIndeksit().get(1)];
 
-                    if (pelipoyta.loytyikoPari()) {
+                    if (pelimoottori.loytyikoPari()) {
                         JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
                         lisaaTekstiaNappiin(valittuNappi1, "");
                         lisaaTekstiaNappiin(valittuNappi2, "");
                     } else {
                         JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
 
-                        lisaaTekstiaNappiin(valittuNappi1, "" + (pelipoyta.getValitutIndeksit().get(0) + 1));
-                        lisaaTekstiaNappiin(valittuNappi2, "" + (pelipoyta.getValitutIndeksit().get(1) + 1));
+                        lisaaTekstiaNappiin(valittuNappi1, "" + (pelimoottori.getValitutIndeksit().get(0) + 1));
+                        lisaaTekstiaNappiin(valittuNappi2, "" + (pelimoottori.getValitutIndeksit().get(1) + 1));
                     }
 
-                    pelipoyta.tyhjaaValitutIndeksit();
+                    pelimoottori.tyhjaaValitutIndeksit();
                     break;
                 }
             }
         }
-        this.yritysLabel.setText(pelipoyta.getYritystenMaaraTekstina());
-        this.korttejaJaljellaLabel.setText(this.pelipoyta.getKorttejaJaljellaTekstina());
+        this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
+        this.korttejaJaljellaLabel.setText(pelimoottori.getKorttejaJaljellaTekstina());
 
-        if (!pelipoyta.jatketaankoPelia()) {
-            JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelipoyta.getYritystenMaaraLukuna() + " yritystä.");
+        if (!pelimoottori.jatketaankoPelia()) {
+            JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelimoottori.getYritystenMaaraLukuna() + " yritystä.");
         }
 
     }

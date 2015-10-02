@@ -7,7 +7,7 @@ package muistipeli.main;
 
 import javax.swing.SwingUtilities;
 import muistipeli.kayttoliittyma.GraafinenKayttoliittyma;
-import muistipeli.kayttoliittyma.Tekstikayttoliittyma;
+//import muistipeli.kayttoliittyma.Tekstikayttoliittyma;
 import muistipeli.logiikka.Pelipoyta;
 
 /**
@@ -18,12 +18,9 @@ import muistipeli.logiikka.Pelipoyta;
 public class Main {
 
     public static void main(String[] args) {
-        Pelipoyta poyta = new Pelipoyta();
         GraafinenKayttoliittyma gui = new GraafinenKayttoliittyma();
         SwingUtilities.invokeLater(gui);
 //        Tekstikayttoliittyma tkayttis = new Tekstikayttoliittyma(poyta);
-//        Pelimoottori moottori = new Pelimoottori();
-//        moottori.pelaa();
 
     }
 
