@@ -40,3 +40,12 @@ to 24.9.2015
 	(5h) graafisen käyttöliittymän rakentamista ja javadocin aloitus
 pe 25.9.2015
 	(3,5h) javadocin kirjoittelua ja yleistä koodausta
+
+viikko 5:
+ti 29.9.2015
+	(5h) graafisen käyttöliittymän rakentamista
+ke 30.9.2015
+	(6h) graafisen käyttöliittymän rakentamista ja testaamista
+to 1.10.2015
+	(8h) luokkien refaktoriointia ja testien tekemistä
+

@@ -5,10 +5,10 @@
  */
 package muistipeli.logiikka;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+
 
 /**
  * Luokka luo pelialustan. Lisäksi se tarjoaa metodeja, joilla pelialusta

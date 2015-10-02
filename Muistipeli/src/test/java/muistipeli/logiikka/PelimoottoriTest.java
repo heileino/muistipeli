@@ -61,7 +61,7 @@ public class PelimoottoriTest {
 
     @Test
     public void konstruktoriLuoUudenValitutIndeksitListan() {
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(2);
+        pelimoottori.lisaaValittuihin(2);
         assertEquals((Integer) 2, pelimoottori.getValitutIndeksit().get(0));
     }
 
@@ -107,8 +107,8 @@ public class PelimoottoriTest {
 
     @Test
     public void tyhjaaValitutIndeksitToimiiOikein() {
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(0);
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(1);
+        pelimoottori.lisaaValittuihin(0);
+        pelimoottori.lisaaValittuihin(1);
         pelimoottori.tyhjaaValitutIndeksit();
         assertTrue(pelimoottori.getValitutIndeksit().isEmpty());
     }
@@ -186,7 +186,7 @@ public class PelimoottoriTest {
 
     @Test
     public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
-        while (pelimoottori.getKorttejaJaljella() > 2) {
+        while (pelimoottori.getKorttejaJaljella() > 1) {
             pelimoottori.vahennaKorttejaJaljella();
         }
         assertFalse(pelimoottori.jatketaankoPelia());
@@ -195,16 +195,16 @@ public class PelimoottoriTest {
     @Test
     public void loytyikoPariPalauttaaTodenKunPariLoytyy() {
 
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(0);
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(8);
+        pelimoottori.lisaaValittuihin(0);
+        pelimoottori.lisaaValittuihin(8);
 
         assertTrue(pelimoottori.loytyikoPari());
     }
 
     @Test
     public void loytyikoPariPalautteeEpatodenKunPariaEiLoydy() {
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(1);
-        pelimoottori.lisaaTaulukonIndeksiValittuihin(10);
+        pelimoottori.lisaaValittuihin(1);
+        pelimoottori.lisaaValittuihin(10);
 
         assertFalse(pelimoottori.loytyikoPari());
     }

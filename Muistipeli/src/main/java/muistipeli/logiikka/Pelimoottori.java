@@ -69,7 +69,7 @@ public class Pelimoottori {
         return this.loydetytKortit;
     }
 
-    public void lisaaTaulukonIndeksiValittuihin(int indeksi) {
+    public void lisaaValittuihin(int indeksi) {
         this.valitutIndeksit.add(indeksi);
     }
 
@@ -87,7 +87,7 @@ public class Pelimoottori {
     }
 
     public void valitseKortti(int i) {
-        lisaaTaulukonIndeksiValittuihin(i);
+        lisaaValittuihin(i);
         pelipoyta.paljastaKortti(i);
     }
 
