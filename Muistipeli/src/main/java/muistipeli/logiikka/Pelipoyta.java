@@ -22,6 +22,7 @@ public class Pelipoyta {
     private int korttejaJaljella;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
+    private Pelaaja pelaaja;
 
     /**
      * Konstruktori luo uuden korttitaulukon ja uuden löydettyjen korttien
@@ -33,6 +34,7 @@ public class Pelipoyta {
         korttejaJaljella = korttitaulukko.length;
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
+        this.pelaaja = new Pelaaja();
     }
 
     /**
@@ -105,8 +107,9 @@ public class Pelipoyta {
         return (this.loydetytKortit.contains(kortti));
     }
 
-    public void lisaaKorttiLoytyneisiin(Kortti kortti) {
-        this.loydetytKortit.add(kortti);
+    public void lisaaKortitLoytyneeksi(Kortti kortti1, Kortti kortti2) {
+        this.loydetytKortit.add(kortti1);
+        this.loydetytKortit.add(kortti2);
     }
 
     /**
@@ -133,12 +136,6 @@ public class Pelipoyta {
         return this.loydetytKortit;
     }
 
-//    public void valitseKortti(int indeksi) {
-//        Kortti valittuKortti = this.korttitaulukko[indeksi];
-//        if (onkoJoLoydetty(valittuKortti)) {
-//
-//        }
-//    }
     public void lisaaTaulukonIndeksiValittuihin(int indeksi) {
         this.valitutIndeksit.add(indeksi);
     }
@@ -159,4 +156,61 @@ public class Pelipoyta {
         }
         return -1;
     }
+
+    public boolean onkoKorttiValittavissa(int i) {
+        Kortti valittuKortti = getTaulukko()[i];
+        return !valittuKortti.nakyykoKuvapuoli();
+    }
+
+    public void valitseKortti(int i) {
+        lisaaTaulukonIndeksiValittuihin(i);
+        paljastaKortti(i);
+    }
+
+    public Kortti getKorttiTaulukosta(int indeksi) {
+        return this.getTaulukko()[indeksi];
+    }
+
+    public int montakoValittu() {
+        return getValitutIndeksit().size();
+    }
+
+    public void lisaaValintayritys() {
+        this.pelaaja.lisaaYritys();
+    }
+
+    public String getYritystenMaaraTekstina() {
+        return pelaaja.getYrityksetTekstina();
+    }
+
+    public int getYritystenMaaraLukuna() {
+        return pelaaja.getYritykset();
+    }
+
+    /**
+     * Tutkitaan valittuja kortteja ja tehdään pelin sääntöjen mukaisia
+     * toimenpiteitä.
+     *
+     * @return totuusarvo siitä, löytyikö pari vai ei
+     */
+    public boolean loytyikoPari() {
+        Kortti kortti1 = getKorttiTaulukosta(getValitutIndeksit().get(0));
+        Kortti kortti2 = getKorttiTaulukosta(getValitutIndeksit().get(1));
+
+        if (onkoSamaKortti(kortti1, kortti2)) {
+            lisaaKortitLoytyneeksi(kortti1, kortti2);
+            vahennaKorttejaJaljella();
+            return true;
+
+        } else {
+            piilotaKortti(getKortinIndeksi(kortti1));
+            piilotaKortti(getKortinIndeksi(kortti2));
+            return false;
+        }
+    }
+
+    public boolean jatketaankoPelia() {
+        return getKorttejaJaljella() > 2;
+    }
+
 }

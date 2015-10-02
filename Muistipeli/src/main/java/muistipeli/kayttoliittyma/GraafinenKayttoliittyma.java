@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,12 +32,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private Pelipoyta pelipoyta;
     private Pelaaja pelaaja;
     private JButton[] peliruudukko;
-    private JButton lopetaNappi;
-    private JButton aloitaNappi;
-    private JPanel peliPaneeli;
-    private JPanel hallintaPaneeli;
-    private JLabel yritysLabel;
-    private JLabel korttejaJaljellaLabel;
+    private JButton aloitaNappi, lopetaNappi;
+    private JPanel peliPaneeli, hallintaPaneeli;
+    private JLabel yritysLabel, korttejaJaljellaLabel;
 
     /**
      * Konstruktori luo uuden pelipöydän, pelaajan ja peliruudukon.
@@ -90,6 +86,11 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         return frame;
     }
 
+    /**
+     * Metodi luo muistikortteja vastaavan ruudukon JButton-olioita
+     *
+     * @param paneeli määrittää sen, mihin paikkaan peliruudut piirretään.
+     */
     public void piirraPeliruudut(JPanel paneeli) {
 
         for (int i = 0; i < peliruudukko.length; i++) {
@@ -119,21 +120,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         paneeli.add(korttejaJaljellaLabel);
     }
 
-    /**
-     * Metodi luo uuden pelipöydän, täyttää sen ja sekoittaa kortit eli
-     * valmistelee pelipöydän uutta peliä varten. EI TOIMI VIELÄ!
-     */
-    public void aloitaUudelleen() {
-//        this.pelipoyta = new Pelipoyta();
-//        this.pelipoyta.taytaPoyta();
-        this.pelipoyta.sekoitaKortit();
-        this.peliPaneeli = new JPanel(new GridLayout(4, 4));
-        piirraPeliruudut(this.peliPaneeli);
-
-        this.hallintaPaneeli = new JPanel(new BoxLayout(hallintaPaneeli, BoxLayout.PAGE_AXIS));
-
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -142,66 +128,54 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
 
         if (e.getSource() == aloitaNappi) {
-            aloitaUudelleen(); // ei toimi vielä
+            JOptionPane.showMessageDialog(getFrame(), "Valitettavasti tämä toiminto ei ole vielä käytössä :(");
+            // ei toimi vielä
+
         }
 
         for (int i = 0; i < peliruudukko.length; i++) {
 
             if (e.getSource() == peliruudukko[i]) {
 
-                Kortti valittuKortti = pelipoyta.getTaulukko()[i];
-
-                if (valittuKortti.getNakyvyys()) {
-                    JOptionPane.showMessageDialog(getFrame(), "Virhe! Valitse jokin toinen kortti");
+                if (!pelipoyta.onkoKorttiValittavissa(i)) {
+                    JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta! Valitse toinen kortti");
                 } else {
-                    pelipoyta.lisaaTaulukonIndeksiValittuihin(i);
-                    this.pelipoyta.paljastaKortti(i);
-                    peliruudukko[i].setText(valittuKortti.toString());
+                    pelipoyta.valitseKortti(i);
+                    peliruudukko[i].setText(pelipoyta.getKorttiTaulukosta(i).toString());
                 }
 
-                if (pelipoyta.getValitutIndeksit().size() > 1) {
-                    tarkastaValitutKortit();
+                if (pelipoyta.montakoValittu() > 1) {
+                    pelipoyta.lisaaValintayritys();
 
+                    JButton valittuNappi1 = peliruudukko[pelipoyta.getValitutIndeksit().get(0)];
+                    JButton valittuNappi2 = peliruudukko[pelipoyta.getValitutIndeksit().get(1)];
+
+                    if (pelipoyta.loytyikoPari()) {
+                        JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
+                        lisaaTekstiaNappiin(valittuNappi1, "");
+                        lisaaTekstiaNappiin(valittuNappi2, "");
+                    } else {
+                        JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
+
+                        lisaaTekstiaNappiin(valittuNappi1, "" + (pelipoyta.getValitutIndeksit().get(0) + 1));
+                        lisaaTekstiaNappiin(valittuNappi2, "" + (pelipoyta.getValitutIndeksit().get(1) + 1));
+                    }
+
+                    pelipoyta.tyhjaaValitutIndeksit();
                     break;
-
                 }
             }
+        }
+        this.yritysLabel.setText(pelipoyta.getYritystenMaaraTekstina());
+        this.korttejaJaljellaLabel.setText(this.pelipoyta.getKorttejaJaljellaTekstina());
+
+        if (!pelipoyta.jatketaankoPelia()) {
+            JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelipoyta.getYritystenMaaraLukuna() + " yritystä.");
         }
 
     }
 
-    /**
-     * Tutkitaan valittuja kortteja ja päätetään pelin sääntöjen mukaan
-     * jatkotoimenpiteistä.
-     */
-    public void tarkastaValitutKortit() {
-        this.pelaaja.lisaaYritys();
-        this.yritysLabel.setText(pelaaja.getYrityksetTekstina());
-
-        Kortti kortti1 = pelipoyta.getTaulukko()[pelipoyta.getValitutIndeksit().get(0)];
-        Kortti kortti2 = pelipoyta.getTaulukko()[pelipoyta.getValitutIndeksit().get(1)];
-
-        if (pelipoyta.onkoSamaKortti(kortti1, kortti2)) {
-            pelipoyta.lisaaKorttiLoytyneisiin(kortti1);
-            pelipoyta.lisaaKorttiLoytyneisiin(kortti2);
-
-            pelipoyta.vahennaKorttejaJaljella();
-            this.korttejaJaljellaLabel.setText(this.pelipoyta.getKorttejaJaljellaTekstina());
-            JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
-
-        } else {
-            JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
-            peliruudukko[pelipoyta.getKortinIndeksi(kortti1)].setText("" + (pelipoyta.getKortinIndeksi(kortti1) + 1));
-            peliruudukko[pelipoyta.getKortinIndeksi(kortti2)].setText("" + (pelipoyta.getKortinIndeksi(kortti2) + 1));
-            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti1));
-            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti2));
-
-        }
-
-        if (pelipoyta.getKorttejaJaljella() < 2) {
-            JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelaaja.getYritykset() + " yritystä.");
-        }
-
-        pelipoyta.tyhjaaValitutIndeksit();
+    public void lisaaTekstiaNappiin(JButton nappi, String teksti) {
+        nappi.setText(teksti);
     }
 }

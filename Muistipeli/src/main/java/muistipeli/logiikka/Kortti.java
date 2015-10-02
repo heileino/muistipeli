@@ -43,7 +43,7 @@ public class Kortti {
         }
     }
 
-    public boolean getNakyvyys() {
+    public boolean nakyykoKuvapuoli() {
         return this.nakyy;
     }
 

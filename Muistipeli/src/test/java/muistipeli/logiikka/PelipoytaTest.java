@@ -53,8 +53,9 @@ public class PelipoytaTest {
 
     @Test
     public void konstruktoriLuoUudenLoydetytKortitListan() {
-        Kortti kortti = poyta.getTaulukko()[0];
-        poyta.lisaaKorttiLoytyneisiin(kortti);
+        Kortti kortti1 = poyta.getTaulukko()[0];
+        Kortti kortti2 = poyta.getTaulukko()[15];
+        poyta.lisaaKortitLoytyneeksi(kortti1, kortti2);
         assertEquals("kortti_1", poyta.getLoydetytKortit().get(0).toString());
     }
 
@@ -112,14 +113,14 @@ public class PelipoytaTest {
     @Test
     public void paljastaKorttiToimiiOikein() {
         poyta.paljastaKortti(0);
-        assertTrue(poyta.getTaulukko()[0].getNakyvyys());
+        assertTrue(poyta.getTaulukko()[0].nakyykoKuvapuoli());
     }
 
     @Test
     public void piilotaKorttiToimiiOikein() {
         poyta.paljastaKortti(15);
         poyta.piilotaKortti(15);
-        assertFalse(poyta.getTaulukko()[15].getNakyvyys());
+        assertFalse(poyta.getTaulukko()[15].nakyykoKuvapuoli());
     }
 
     @Test
@@ -136,16 +137,18 @@ public class PelipoytaTest {
 
     @Test
     public void onkoJoLoydettyToimiiKunKorttiOnLoytynyt() {
-        Kortti testikortti = poyta.getTaulukko()[15];
-        poyta.lisaaKorttiLoytyneisiin(testikortti);
-        assertTrue(poyta.onkoJoLoydetty(testikortti));
+        Kortti testikortti1 = poyta.getTaulukko()[15];
+        Kortti testikortti2 = poyta.getTaulukko()[0];
+        poyta.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
+        assertTrue(poyta.onkoJoLoydetty(testikortti1));
     }
 
     @Test
     public void lisaaKorttiLoytyneisiinToimiiOikein() {
-        Kortti testikortti = poyta.getTaulukko()[7];
-        poyta.lisaaKorttiLoytyneisiin(testikortti);
-        assertEquals(testikortti, poyta.getLoydetytKortit().get(0));
+        Kortti testikortti1 = poyta.getTaulukko()[7];
+        Kortti testikortti2 = poyta.getTaulukko()[5];
+        poyta.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
+        assertEquals(testikortti1, poyta.getLoydetytKortit().get(0));
     }
 
     @Test
@@ -169,9 +172,109 @@ public class PelipoytaTest {
     }
 
     @Test
-    public void getKortinIndeksiToimiiOikein() {
+    public void getKortinIndeksiToimiiOikeinKunKorttiLoytyy() {
         Kortti kortti = poyta.getTaulukko()[2];
         assertTrue(poyta.getKortinIndeksi(kortti) == 2);
     }
 
+    @Test
+    public void getKortinIndeksiToimiiOikeinKunEiLoydaMitaan() {
+        assertTrue(poyta.getKortinIndeksi(null) == -1);
+    }
+
+    @Test
+    public void onkoKorttiValittavissaToimiiOikein() {
+        Kortti kortti1 = poyta.getKorttiTaulukosta(0);
+        kortti1.naytaKuvapuoli();
+        assertFalse(poyta.onkoKorttiValittavissa(0));
+    }
+
+    @Test
+    public void valitseKorttiToimiiOikein() {
+        poyta.valitseKortti(4);
+        assertTrue(poyta.getValitutIndeksit().get(0) == 4 && poyta.getTaulukko()[4].nakyykoKuvapuoli());
+    }
+
+    @Test
+    public void montakoValittuToimiiOikeinKunEiValittuYhtaan() {
+        assertTrue(poyta.montakoValittu() == 0);
+    }
+
+    @Test
+    public void montakoValittuToimiiOikeinKunValittuYksi() {
+        poyta.valitseKortti(0);
+        assertTrue(poyta.montakoValittu() == 1);
+    }
+
+    @Test
+    public void montakoValittuToimiiOikeinKunValittuKaksi() {
+        poyta.valitseKortti(0);
+        poyta.valitseKortti(15);
+        assertTrue(poyta.montakoValittu() == 2);
+    }
+
+    @Test
+    public void getYritystenMaaraLukunaToimiiOikein() {
+        poyta.lisaaValintayritys();
+        assertTrue(poyta.getYritystenMaaraLukuna() == 1);
+    }
+
+    @Test
+    public void lisaaValintayritysToimiiOikeinYhdellaYrityksella() {
+        poyta.lisaaValintayritys();
+        assertTrue(poyta.getYritystenMaaraLukuna() == 1);
+    }
+
+    @Test
+    public void lisaaValintayritysToimiiOikeinKolmellakymmenellaYrityksella() {
+        for (int i = 0; i < 30; i++) {
+            poyta.lisaaValintayritys();
+        }
+        assertTrue(poyta.getYritystenMaaraLukuna() == 30);
+    }
+
+    @Test
+    public void getYritystenMaaraTekstinaToimiiOikeinAlussa() {
+        assertEquals("Yrityksiä: 0", poyta.getYritystenMaaraTekstina());
+    }
+
+    @Test
+    public void getYritystenMaaraTekstinaToimiiOikeinKahdella() {
+        poyta.lisaaValintayritys();
+        poyta.lisaaValintayritys();
+
+        assertEquals("Yrityksiä: 2", poyta.getYritystenMaaraTekstina());
+    }
+
+    @Test
+    public void jatketaankoPeliaToimiiJosTulisiJatkaa() {
+
+        poyta.vahennaKorttejaJaljella();
+        assertTrue(poyta.jatketaankoPelia());
+    }
+
+    @Test
+    public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
+        while (poyta.getKorttejaJaljella() > 2) {
+            poyta.vahennaKorttejaJaljella();
+        }
+        assertFalse(poyta.jatketaankoPelia());
+    }
+
+    @Test
+    public void loytyikoPariPalauttaaTodenKunPariLoytyy() {
+
+        poyta.lisaaTaulukonIndeksiValittuihin(0);
+        poyta.lisaaTaulukonIndeksiValittuihin(8);
+
+        assertTrue(poyta.loytyikoPari());
+    }
+
+    @Test
+    public void loytyikoPariPalautteeEpatodenKunPariaEiLoydy() {
+        poyta.lisaaTaulukonIndeksiValittuihin(1);
+        poyta.lisaaTaulukonIndeksiValittuihin(10);
+
+        assertFalse(poyta.loytyikoPari());
+    }
 }

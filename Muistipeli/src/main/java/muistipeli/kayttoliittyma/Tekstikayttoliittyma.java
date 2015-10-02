@@ -76,8 +76,7 @@ public class Tekstikayttoliittyma {
             tulostaPoytaKonsoliin();
             if (pelipoyta.onkoSama(ensimmainenValinta, toinenValinta)) {
                 pelipoyta.vahennaKorttejaJaljella();
-                pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko()[ensimmainenValinta - 1]);
-                pelipoyta.lisaaKorttiLoytyneisiin(pelipoyta.getTaulukko()[toinenValinta - 1]);
+                pelipoyta.lisaaKortitLoytyneeksi(pelipoyta.getTaulukko()[ensimmainenValinta - 1], pelipoyta.getTaulukko()[toinenValinta - 1]);
                 System.out.println("Hyvä! Pari löytyi!");
             } else {
                 System.out.println("Valitettavasti paria ei löytynyt");
@@ -100,7 +99,7 @@ public class Tekstikayttoliittyma {
         System.out.println("");
         for (int i = 0; i < this.pelipoyta.getTaulukko().length / 4; i++) {
             for (int j = 0; j < this.pelipoyta.getTaulukko().length / 4; j++) {
-                if (this.pelipoyta.getTaulukko()[laskuri - 1].getNakyvyys()) { // tarkistetaan täytyykö kortti kääntää
+                if (this.pelipoyta.getTaulukko()[laskuri - 1].nakyykoKuvapuoli()) { // tarkistetaan täytyykö kortti kääntää
                     System.out.print(" " + this.pelipoyta.getTaulukko()[laskuri - 1] + " ");
                 } else {
                     System.out.print(" " + laskuri + " ");
