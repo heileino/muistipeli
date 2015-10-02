@@ -19,9 +19,9 @@ public class Kortti {
      * Konstruktori asettaa kortin näkyvyydeksi epätoden ja asettaa kortin
      * tunnukseksi parametrina saadun arvon.
      *
-     * @param tunnus korttiparin yksilöivä tunnus
+     * @param tunnus korttiparin yksilöivä String-tyyppinen tunnus
      */
-    public Kortti(String tunnus){
+    public Kortti(String tunnus) {
         nakyy = false;
         this.tunnus = tunnus;
     }
@@ -43,6 +43,11 @@ public class Kortti {
         }
     }
 
+    /**
+     * Metodi kertoo yksittäisen kortin tämän hetkisen asennon
+     *
+     * @return boolean-totuusarvo kuvapuolen näkyvyydestä
+     */
     public boolean nakyykoKuvapuoli() {
         return this.nakyy;
     }

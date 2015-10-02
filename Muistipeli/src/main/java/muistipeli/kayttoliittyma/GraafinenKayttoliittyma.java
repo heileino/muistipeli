@@ -180,6 +180,13 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
     }
 
+    /**
+     * Metodi lisää parametrina annettuun JButton-olioon toisena paremetrina
+     * saadun tekstin.
+     *
+     * @param nappi
+     * @param teksti
+     */
     public void lisaaTekstiaNappiin(JButton nappi, String teksti) {
         nappi.setText(teksti);
     }
