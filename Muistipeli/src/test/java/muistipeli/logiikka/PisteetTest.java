@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class PelaajaTest {
+public class PisteetTest {
 
-    Pelaaja pelaaja;
+    Pisteet pelaaja;
 
-    public PelaajaTest() {
+    public PisteetTest() {
     }
 
     @BeforeClass
@@ -33,7 +33,7 @@ public class PelaajaTest {
 
     @Before
     public void setUp() {
-        pelaaja = new Pelaaja();
+        pelaaja = new Pisteet();
     }
 
     @After

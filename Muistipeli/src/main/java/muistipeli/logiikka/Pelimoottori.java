@@ -1,38 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.logiikka;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Luokka huolehtii pelin kulusta. Se toimii linkkinä käyttöliittymäluokkien ja
- * Pelipoyta-luokan välillä.
+ * Luokka huolehtii pelin kulusta. Luokka toimii linkkinä käyttöliittymäluokkien
+ * ja muiden logiikka-luokkien välillä.
  *
  * @author Heikki Leinonen
  */
 public class Pelimoottori {
 
     private Pelipoyta pelipoyta;
-    private Pelaaja pelaaja;
+    private Pisteet pistelaskuri;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
     private int korttejaJaljella;
+    private ParasTulos parasTulos;
 
     /**
      * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
-     * valittujen taulukkoindeksien listan ja pelaajan. Lisäksi se alustaa
-     * jäljellä olevien kortteja laskevan muuttujan vastaamaan taulukon kokoa.
+     * valittujen taulukkoindeksien listan, pistelaskurin ja parasta tulosta
+     * säilyttävän muuttujan. Lisäksi se alustaa jäljellä olevien kortteja
+     * laskevan muuttujan vastaamaan taulukon kokoa.
      */
     public Pelimoottori() {
         pelipoyta = new Pelipoyta();
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        pelaaja = new Pelaaja();
+        pistelaskuri = new Pisteet();
         korttejaJaljella = pelipoyta.getTaulukko().length;
+        parasTulos = new ParasTulos();
     }
 
     /**
@@ -42,22 +40,24 @@ public class Pelimoottori {
     public void alustaPoytaPelikuntoon() {
         pelipoyta.taytaPoyta();
         pelipoyta.sekoitaKortit();
+        parasTulos.lataaParasTulosMuuttujaan();
     }
 
     /**
      * Metodi testaa, onko parametrina annettu kortti löydettyjen korttien
-     * listassa
+     * listassa.
      *
-     * @param kortti Pelitaulukossa oleva Kortti-luokan ilmentymä
+     * @param kortti Pelitaulukossa oleva Kortti-luokan ilmentymä.
+     *
      * @return boolean-totuusarvo siitä, onko parametrina annettu kortti jo
-     * löydettyjen korttien listassa
+     * löydettyjen korttien listassa.
      */
-    public boolean onkoJoLoydetty(Kortti kortti) {
+    public boolean onkoKorttiJoLoytyneissa(Kortti kortti) {
         return (this.loydetytKortit.contains(kortti));
     }
 
     /**
-     * Metodi lisaa valitut kortit löytyneiden korttien listalle
+     * Metodi lisää valitut kortit löytyneiden korttien listalle.
      *
      * @param kortti1 ensimmäisenä valittu kortti
      * @param kortti2 toisena valittu kortti
@@ -68,20 +68,27 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi vähentää taulukosta löydetyn parin korttejaJaljella
+     * Metodi vähentää taulukosta löydetyn parin jäljellä olevien korttien
+     * määrää ylläpitävästä laskurista
      */
     public void vahennaKorttejaJaljella() {
         this.korttejaJaljella = this.korttejaJaljella - 2;
     }
 
     /**
-     * Metodi vaihtaa jäljellä olevien korttien määrää laskevan muuttujan arvon
-     * takaisin alkuarvoonsa, eli korttitaulukon koon mukaiseksi arvoksi.
+     * Metodi palauttaa jäljellä olevien korttien määrää laskevan laskurin arvon
+     * takaisin alkuarvoonsa, eli korttitaulukon kokoa vastaavaksi arvoksi.
      */
     public void alustaKorttejaJaljella() {
         this.korttejaJaljella = pelipoyta.getTaulukko().length;
     }
 
+    /**
+     * Metodi lisää yhdellä valintakerralla valitun kortin valittujen korttien
+     * listalle.
+     *
+     * @param indeksi valitun kortin sijainti taulukossa.
+     */
     public void lisaaValittuihin(int indeksi) {
         this.valitutIndeksit.add(indeksi);
     }
@@ -102,6 +109,7 @@ public class Pelimoottori {
 
     /**
      * Metodi kertoo, kuinka monta korttia on valittu kyseisellä yrityskerralla.
+     *
      * @return int-tyypin luku, joka kertoo valittujen indeksien määrän.
      */
     public int montakoValittu() {
@@ -109,7 +117,7 @@ public class Pelimoottori {
     }
 
     public void lisaaValintayritys() {
-        this.pelaaja.lisaaYritys();
+        this.pistelaskuri.lisaaYritys();
     }
 
     /**
@@ -144,6 +152,27 @@ public class Pelimoottori {
         return getKorttejaJaljella() > 1;
     }
 
+    public void lopetaPeli() {
+        if (onUusiParasTulos()) {
+            asetaParasTulos();
+            parasTulos.lataaParasTulosMuuttujaan();
+        }
+        
+    }
+
+    /**
+     * Metodi testaa, onko pelin tulos parempi kuin nykyinen paras tulos.
+     * @return 
+     */
+    public boolean onUusiParasTulos() {
+        return getYritystenMaaraLukuna() < parasTulos.getParasTulos();
+    }
+
+    public void asetaParasTulos() {
+        parasTulos.setParasTulos(getYritystenMaaraLukuna());
+
+    }
+
     public Kortti getKortti(int indeksi) {
         return pelipoyta.getKorttiTaulukosta(indeksi);
     }
@@ -153,11 +182,11 @@ public class Pelimoottori {
     }
 
     public String getYritystenMaaraTekstina() {
-        return pelaaja.getYrityksetTekstina();
+        return pistelaskuri.getYrityksetTekstina();
     }
 
     public int getYritystenMaaraLukuna() {
-        return pelaaja.getYritykset();
+        return pistelaskuri.getYritykset();
     }
 
     public int getKorttejaJaljella() {
@@ -174,5 +203,9 @@ public class Pelimoottori {
 
     public List<Integer> getValitutIndeksit() {
         return this.valitutIndeksit;
+    }
+
+    public String getParasTulosTekstina() {
+        return "Paras tulos: " + parasTulos.getParasTulos();
     }
 }

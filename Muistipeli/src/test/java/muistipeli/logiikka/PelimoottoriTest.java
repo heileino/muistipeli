@@ -74,7 +74,7 @@ public class PelimoottoriTest {
     @Test
     public void onkoJoLoydettyToimiiKunKorttiEiOleLoytynyt() {
         Kortti testikortti = poyta.getTaulukko()[0];
-        assertFalse(pelimoottori.onkoJoLoydetty(testikortti));
+        assertFalse(pelimoottori.onkoKorttiJoLoytyneissa(testikortti));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class PelimoottoriTest {
         Kortti testikortti1 = poyta.getTaulukko()[15];
         Kortti testikortti2 = poyta.getTaulukko()[0];
         pelimoottori.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
-        assertTrue(pelimoottori.onkoJoLoydetty(testikortti1));
+        assertTrue(pelimoottori.onkoKorttiJoLoytyneissa(testikortti1));
     }
 
     @Test

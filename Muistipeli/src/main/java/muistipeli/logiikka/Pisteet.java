@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.logiikka;
 
 /**
@@ -11,14 +6,14 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class Pelaaja {
+public class Pisteet implements Comparable<Pisteet> {
 
     private int yritykset;
 
     /**
      * Konstruktori asettaa pelaajan yritysmäärään arvoon 0.
      */
-    public Pelaaja() {
+    public Pisteet() {
         this.yritykset = 0;
     }
 
@@ -35,5 +30,10 @@ public class Pelaaja {
 
     public String getYrityksetTekstina() {
         return "Yrityksiä: " + this.getYritykset();
+    }
+
+    @Override
+    public int compareTo(Pisteet t) {
+        return ((Integer) (getYritykset())).compareTo(t.getYritykset());
     }
 }
