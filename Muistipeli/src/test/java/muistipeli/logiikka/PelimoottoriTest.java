@@ -21,16 +21,7 @@ public class PelimoottoriTest {
     Pelimoottori pelimoottori;
     Pelipoyta poyta;
 
-    public PelimoottoriTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    
 
     @Before
     public void setUp() {
@@ -39,13 +30,6 @@ public class PelimoottoriTest {
         poyta.taytaPoyta();
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void konstruktoriAsettaaKorttejaJaljellaOikein() {
         assertEquals(16, pelimoottori.getKorttejaJaljella());
@@ -186,9 +170,11 @@ public class PelimoottoriTest {
 
     @Test
     public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
+
         while (pelimoottori.getKorttejaJaljella() > 1) {
             pelimoottori.vahennaKorttejaJaljella();
         }
+
         assertFalse(pelimoottori.jatketaankoPelia());
     }
 
@@ -203,10 +189,31 @@ public class PelimoottoriTest {
 
     @Test
     public void loytyikoPariPalautteeEpatodenKunPariaEiLoydy() {
+
         pelimoottori.lisaaValittuihin(1);
         pelimoottori.lisaaValittuihin(10);
 
         assertFalse(pelimoottori.loytyikoPari());
+    }
+
+    @Test
+    public void kaannaKaikkiKortitSelkapuolipuoliYlosToimiiOikein() {
+
+        boolean ok = true;
+        pelimoottori.kaannaKaikkiKortitSelkapuoliYlos();
+
+        for (int i = 0; i < pelimoottori.getPelipoyta().getTaulukko().length; i++) {
+            if (pelimoottori.getPelipoyta().getTaulukko()[i].nakyy) {
+                ok = false;
+            }
+        }
+
+        assertTrue(ok);
+    }
+
+    @Test
+    public void alustaPelipoytaKuntoonToimiiOikein() {
+        
     }
 
 }

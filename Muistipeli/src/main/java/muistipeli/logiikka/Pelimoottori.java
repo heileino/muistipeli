@@ -25,12 +25,14 @@ public class Pelimoottori {
      * laskevan muuttujan vastaamaan taulukon kokoa.
      */
     public Pelimoottori() {
+        
         pelipoyta = new Pelipoyta();
+        
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        pistelaskuri = new Pisteet();
-        korttejaJaljella = pelipoyta.getTaulukko().length;
+        korttejaJaljella = pelipoyta.getTaulukko().length;        
         parasTulos = new ParasTulos();
+        pistelaskuri = new Pisteet();
     }
 
     /**
@@ -38,6 +40,7 @@ public class Pelimoottori {
      * järjestykseen
      */
     public void alustaPoytaPelikuntoon() {
+        
         pelipoyta.taytaPoyta();
         pelipoyta.sekoitaKortit();
         parasTulos.lataaParasTulosMuuttujaan();
@@ -206,6 +209,14 @@ public class Pelimoottori {
     }
 
     public String getParasTulosTekstina() {
+        
         return "Paras tulos: " + parasTulos.getParasTulos();
+    }
+
+    public void kaannaKaikkiKortitSelkapuoliYlos() {
+
+        for (int i = 0; i < pelipoyta.getTaulukko().length; i++) {
+            pelipoyta.getTaulukko()[i].naytaSelkapuoli();
+        }
     }
 }

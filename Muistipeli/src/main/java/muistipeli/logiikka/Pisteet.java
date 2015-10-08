@@ -1,19 +1,19 @@
 package muistipeli.logiikka;
 
 /**
- * Luokan ilmentymät esittävät Muistipelin pelaajaa ja ylläpitävät tilastoa
- * arvausyritysten määrästä.
+ * Luokka ylläpitää tilastoa arvausyritysten määrästä pelin aikana.
  *
  * @author Heikki Leinonen
  */
-public class Pisteet implements Comparable<Pisteet> {
+public class Pisteet {
 
     private int yritykset;
 
     /**
-     * Konstruktori asettaa pelaajan yritysmäärään arvoon 0.
+     * Konstruktori nollaa yritysmäärälaskurin.
      */
     public Pisteet() {
+
         this.yritykset = 0;
     }
 
@@ -21,19 +21,17 @@ public class Pisteet implements Comparable<Pisteet> {
      * Metodi lisää pelaajalle yhden yrityksen lisää.
      */
     public void lisaaYritys() {
+
         this.yritykset++;
     }
 
     public int getYritykset() {
+
         return this.yritykset;
     }
 
     public String getYrityksetTekstina() {
-        return "Yrityksiä: " + this.getYritykset();
-    }
 
-    @Override
-    public int compareTo(Pisteet t) {
-        return ((Integer) (getYritykset())).compareTo(t.getYritykset());
+        return "Yrityksiä: " + this.getYritykset();
     }
 }

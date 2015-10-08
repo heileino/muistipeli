@@ -12,15 +12,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import muistipeli.logiikka.*;
 
@@ -137,8 +134,11 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
 
         if (e.getSource() == aloitaNappi) {
-            // ei toimi vielä
-            JOptionPane.showMessageDialog(getFrame(), "Valitettavasti tämä toiminto ei ole vielä käytössä :(");
+
+            this.pelimoottori = new Pelimoottori();
+            pelimoottori.alustaPoytaPelikuntoon();
+            pelimoottori.kaannaKaikkiKortitSelkapuoliYlos();
+            kaannaKaikkiKortitNurin();
 
         }
 
@@ -160,24 +160,25 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                         valinta2 = peliruudukko[pelimoottori.getValitutIndeksit().get(1)];
 
                         if (pelimoottori.loytyikoPari()) {
+
                             JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
-                            lisaaTekstiaNappiin(valinta1, "");
-                            lisaaTekstiaNappiin(valinta2, "");
+
+                            lisaaTekstiNappiin(valinta1, "");
+                            lisaaTekstiNappiin(valinta2, "");
 
                         } else {
-                            JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
-                            
-                            lisaaTekstiaNappiin(valinta1, "" + (pelimoottori.getValitutIndeksit().get(0) + 1));
-                            lisaaTekstiaNappiin(valinta2, "" + (pelimoottori.getValitutIndeksit().get(1) + 1));
 
-                             
+                            JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
+
+                            lisaaTekstiNappiin(valinta1, "" + (pelimoottori.getValitutIndeksit().get(0) + 1));
+                            lisaaTekstiNappiin(valinta2, "" + (pelimoottori.getValitutIndeksit().get(1) + 1));
+
                         }
 
                         pelimoottori.tyhjaaValitutIndeksit();
                     }
                 }
             }
-
         }
 
         this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
@@ -192,11 +193,8 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelimoottori.getYritystenMaaraLukuna() + " yritystä.");
             }
 
-            
-           
         }
 
-        return;
     }
 
     /**
@@ -206,7 +204,14 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
      * @param nappi
      * @param teksti
      */
-    public void lisaaTekstiaNappiin(JButton nappi, String teksti) {
+    public void lisaaTekstiNappiin(JButton nappi, String teksti) {
         nappi.setText(teksti);
+    }
+
+    private void kaannaKaikkiKortitNurin() {
+
+        for (int i = 0; i < peliruudukko.length; i++) {
+            lisaaTekstiNappiin(peliruudukko[i], "" + (i + 1));
+        }
     }
 }
