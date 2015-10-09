@@ -85,7 +85,7 @@ public class Pelimoottori {
     }
 
     public boolean onkoKorttiValittavissa(int i) {
-        Kortti valittuKortti = pelipoyta.getTaulukko()[i];
+        Kortti valittuKortti = pelipoyta.getKorttiTaulukosta(i);
         return !valittuKortti.nakyykoKuvapuoli();
     }
 
