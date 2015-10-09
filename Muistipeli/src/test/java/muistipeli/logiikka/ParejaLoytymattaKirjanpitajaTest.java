@@ -38,17 +38,17 @@ public class ParejaLoytymattaKirjanpitajaTest {
     }
 
     @Test
-    public void vahennaKorttejaLoytamattaToimiiOikeinKunOnMistaVahentaa() {
+    public void vahennaKorttejaLoytamattaToimiiOikein() {
         laskuri.vahennaParejaLoytymatta();
         assertEquals(7, laskuri.getParejaLoytymatta());
     }
 
-    @Test
-    public void vahennaKorttejaLoytamattaToimiiOikeinKunEiOleVahennettavaa() {
-        laskuri.setParejaLoytymatta(0);
-        laskuri.vahennaParejaLoytymatta();
-        assertTrue(laskuri.getParejaLoytymatta() == 0);
-    }
+//    @Test
+//    public void vahennaKorttejaLoytamattaToimiiOikeinKunEiOleVahennettavaa() {
+//        laskuri.setParejaLoytymatta(0);
+//        laskuri.vahennaParejaLoytymatta();
+//        assertTrue(laskuri.getParejaLoytymatta() == 0);
+//    }
 
     @Test
     public void setKorttejaLoytamattaToimiiOikeinKunLaillinenParametri() {

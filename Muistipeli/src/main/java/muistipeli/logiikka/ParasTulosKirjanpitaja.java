@@ -16,16 +16,16 @@ import java.util.Scanner;
 public class ParasTulosKirjanpitaja {
 
     private int parasTulos;
-    private String tiedostonimi;
+    private final String tiedostonimi;
     private File tiedosto;
 
     /**
      * Konstruktori valmistelee parhaan tuloksen käsittelyä tiedostosta.
      */
-    public ParasTulosKirjanpitaja() {
+    public ParasTulosKirjanpitaja(String tnimi) {
 
         this.parasTulos = 9999;
-        tiedostonimi = "parasTulos.txt";
+        this.tiedostonimi = tnimi;
 
         AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
@@ -43,17 +43,16 @@ public class ParasTulosKirjanpitaja {
     /**
      * Metodi luo uuden parasta tulosta ylläpitävän tiedoston.
      */
-    public void luoTiedosto() {
-
-        try {
-            FileWriter kirjoittaja = new FileWriter(tiedosto);
-            kirjoittaja.write("" + this.parasTulos);
-            kirjoittaja.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+//    public void luoTiedosto() {
+//
+//        try {
+//            FileWriter kirjoittaja = new FileWriter(tiedosto);
+//            kirjoittaja.write("" + this.parasTulos);
+//            kirjoittaja.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     /**
      * Metodi asettaa parametrina saadun tuloksen parhaimmaksi tulokseksi,
      * mikäli se on parempi kuin olemassa oleva paras tulos.
@@ -62,7 +61,7 @@ public class ParasTulosKirjanpitaja {
      */
     public void setParasTulos(int tulos) {
 
-        if (this.parasTulos <= tulos) {
+        if (tulos < 0 || this.parasTulos <= tulos) {
             return;
         }
 
@@ -81,14 +80,14 @@ public class ParasTulosKirjanpitaja {
      * Metodin tarkoituksena on ladata paras tulos sitä tallentavasta
      * tiedostosta ohjelman käyttöön.
      */
-    public void lataaParasTulosMuuttujaan() {
+    public void lataaParasTulos() {
 
         try {
 
             Scanner lukija = new Scanner(tiedosto);
-            if (!tiedosto.isFile()) {
-                luoTiedosto();
-            }
+//            if (!tiedosto.isFile()) {
+//                luoTiedosto();
+//            }
 
             if (lukija.hasNext()) {
                 this.parasTulos = Integer.parseInt(lukija.next());
@@ -106,10 +105,18 @@ public class ParasTulosKirjanpitaja {
 
         return this.parasTulos;
     }
+    
+    public File getTiedosto(){
+        return this.tiedosto;
+    }
+    
+    public void setTiedosto(File tiedosto){
+        this.tiedosto=tiedosto;
+    }
 
     @Override
     public String toString() {
-        if(getParasTulos()==9999){
+        if (getParasTulos() == 9999) {
             return "Paras tulos: - ";
         }
         return "Paras tulos: " + getParasTulos();

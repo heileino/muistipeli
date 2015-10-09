@@ -15,9 +15,9 @@ public class Pelimoottori {
     private YritysmaaraLaskuri yrityslaskuri;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
-    private ParejaLoytymattaKirjanpitaja korttejaLoytamatta;
+    private ParejaLoytymattaKirjanpitaja parejaLoytamatta;
     private ParasTulosKirjanpitaja parasTulos;
-    private final int PARIENMAARA=8;
+    private final int PARIENMAARA = 8;
 
     /**
      * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
@@ -30,8 +30,8 @@ public class Pelimoottori {
 
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        korttejaLoytamatta = new ParejaLoytymattaKirjanpitaja(PARIENMAARA);
-        parasTulos = new ParasTulosKirjanpitaja();
+        parejaLoytamatta = new ParejaLoytymattaKirjanpitaja(PARIENMAARA);
+        parasTulos = new ParasTulosKirjanpitaja("parasTulos.txt");
         yrityslaskuri = new YritysmaaraLaskuri();
     }
 
@@ -43,7 +43,7 @@ public class Pelimoottori {
 
         pelipoyta.asetaKortitTaulukkoon();
         pelipoyta.sekoitaTaulukonKortit();
-        parasTulos.lataaParasTulosMuuttujaan();
+        parasTulos.lataaParasTulos();
     }
 
     /**
@@ -119,7 +119,7 @@ public class Pelimoottori {
 
         if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
 //            lisaaKortitLoytyneeksi(kortti1, kortti2);
-//            vahennaLoytamattomienKorttienMaaraa();
+//            vahennaLoytamattomienParienMaaraa();
             return true;
 
         } else {
@@ -140,19 +140,11 @@ public class Pelimoottori {
      * @return palauttaa boolean totuusarvon pelin jatkumisesta
      */
     public boolean jatketaankoPelia() {
-        return korttejaLoytamatta.getParejaLoytymatta() > 1;
+        return parejaLoytamatta.getParejaLoytymatta() > 1;
     }
 
-    public void lopetaPeli() {
-        if (onUusiParasTulos()) {
-            asetaParasTulos();
-            parasTulos.lataaParasTulosMuuttujaan();
-        }
-
-    }
-    
-    public void vahennaLoytamattomienKorttienMaaraa(){
-        korttejaLoytamatta.vahennaParejaLoytymatta();
+    public void vahennaLoytamattomienParienMaaraa() {
+        parejaLoytamatta.vahennaParejaLoytymatta();
     }
 
     /**
@@ -167,6 +159,10 @@ public class Pelimoottori {
     public void asetaParasTulos() {
         parasTulos.setParasTulos(getYritystenMaaraLukuna());
 
+    }
+
+    public void lataaParasTulos() {
+        parasTulos.lataaParasTulos();
     }
 
     public Kortti getKortti(int indeksi) {
@@ -203,21 +199,19 @@ public class Pelimoottori {
         return this.parasTulos.toString();
     }
 
-    public String getKorttejaLoytamattaTekstina() {
-        return this.korttejaLoytamatta.toString();
+    public String getParejaLoytamattaTekstina() {
+        return this.parejaLoytamatta.toString();
     }
 
     public String getYritystenMaaraTekstina() {
         return this.yrityslaskuri.toString();
     }
-    
-    /*
-    Lukuja palauttavia gettereitä
-    */
-    
-    public int getParejaLoytymatta(){
-        return this.korttejaLoytamatta.getParejaLoytymatta();
-    }
-    
-}
 
+    /*
+     Lukuja palauttavia gettereitä
+     */
+    public int getParejaLoytymatta() {
+        return this.parejaLoytamatta.getParejaLoytymatta();
+    }
+
+}

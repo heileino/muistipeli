@@ -13,7 +13,7 @@ public class ParejaLoytymattaKirjanpitaja {
      * Konstruktori asettaa jäljellä olevien parien määräksi kaikkien pelissä
      * olevien korttiparien lukumäärän
      *
-     * @param maksimi kaikkien pelissä olevien korttien lukumäärä.
+     * @param maksimi kaikkien pelissä olevien korttiparien lukumäärä.
      */
     public ParejaLoytymattaKirjanpitaja(int maksimi) {
         if (maksimi > 0) {
@@ -29,9 +29,8 @@ public class ParejaLoytymattaKirjanpitaja {
      * määrää.
      */
     public void vahennaParejaLoytymatta() {
-        if (parejaJaljella > 0) {
-            parejaJaljella--;
-        }
+
+        parejaJaljella--;
 
     }
 

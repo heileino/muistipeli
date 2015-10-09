@@ -118,7 +118,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
         paneeli.add(yritysLabel);
 
-        korttejaJaljellaLabel.setText(pelimoottori.getKorttejaLoytamattaTekstina());
+        korttejaJaljellaLabel.setText(pelimoottori.getParejaLoytamattaTekstina());
         paneeli.add(korttejaJaljellaLabel);
 
         parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
@@ -164,7 +164,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
                         if (pelimoottori.loytyikoPari()) {
                             pelimoottori.lisaaKortitLoytyneeksi(kortti1, kortti2);
-                            pelimoottori.vahennaLoytamattomienKorttienMaaraa();
+                            pelimoottori.vahennaLoytamattomienParienMaaraa();
                             JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
                             lisaaTekstiNappiin(valinta1, "");
@@ -187,12 +187,12 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
 
         this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
-        this.korttejaJaljellaLabel.setText(pelimoottori.getKorttejaLoytamattaTekstina());
+        this.korttejaJaljellaLabel.setText(pelimoottori.getParejaLoytamattaTekstina());
 
         if (!pelimoottori.jatketaankoPelia()) {
             if (pelimoottori.onUusiParasTulos()) {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Teit uuden ennätyksen, " + pelimoottori.getYritystenMaaraLukuna() + " yritystä");
-                pelimoottori.lopetaPeli();
+                lopetaPeli();
                 this.parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
             } else {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelimoottori.getYritystenMaaraLukuna() + " yritystä.");
@@ -218,5 +218,14 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         for (int i = 0; i < peliruudukko.length; i++) {
             lisaaTekstiNappiin(peliruudukko[i], "" + (i + 1));
         }
+    }
+
+    public void lopetaPeli() {
+        
+        if (pelimoottori.onUusiParasTulos()) {
+            pelimoottori.asetaParasTulos();
+            pelimoottori.lataaParasTulos();
+        }
+
     }
 }

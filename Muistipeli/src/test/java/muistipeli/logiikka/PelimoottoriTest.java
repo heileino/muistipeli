@@ -139,7 +139,7 @@ public class PelimoottoriTest {
     @Test
     public void jatketaankoPeliaToimiiJosTulisiJatkaa() {
 
-        pelimoottori.vahennaLoytamattomienKorttienMaaraa();
+        pelimoottori.vahennaLoytamattomienParienMaaraa();
         assertTrue(pelimoottori.jatketaankoPelia());
     }
 
@@ -147,7 +147,7 @@ public class PelimoottoriTest {
     public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
 
         while (pelimoottori.getParejaLoytymatta() > 1) {
-            pelimoottori.vahennaLoytamattomienKorttienMaaraa();
+            pelimoottori.vahennaLoytamattomienParienMaaraa();
         }
 
         assertFalse(pelimoottori.jatketaankoPelia());
@@ -196,6 +196,74 @@ public class PelimoottoriTest {
         }
 
         assertTrue(ok);
+    }
+
+    @Test
+    public void getParasTulosTekstinaToimiiOikeinKunTulosAlkuarvo() {
+
+        assertEquals("Paras tulos: - ", pelimoottori.getParasTulosTekstina());
+    }
+
+    @Test
+    public void getParasTulosTekstinaToimiiAsetetullaArvolla() {
+
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.asetaParasTulos();
+
+        assertEquals("Paras tulos: 2", pelimoottori.getParasTulosTekstina());
+    }
+
+    @Test
+    public void getParejaLoytamattaTekstina() {
+
+        assertEquals("Pareja jäljellä: 8", pelimoottori.getParejaLoytamattaTekstina());
+    }
+
+    @Test
+    public void onUusiParasTulosToimiiOikeinKunTulosOnParas() {
+
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+
+        assertTrue(pelimoottori.onUusiParasTulos());
+    }
+
+    @Test
+    public void onUusiParasTulosToimiiOikeinKunTulosEiOleParas() {
+
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.asetaParasTulos();
+
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+
+        assertFalse(pelimoottori.onUusiParasTulos());
+    }
+
+    @Test
+    public void onUusiParasTulosToimiiOikeinKunTulosOnSamaKuinParas() {
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.lisaaValintayritys();
+        pelimoottori.asetaParasTulos();
+
+        assertFalse(pelimoottori.onUusiParasTulos());
+    }
+
+    @Test
+    public void kaannaKortitNurinToimiiOikein() {
+
+        Kortti kortti1 = pelimoottori.getKortti(0);
+        Kortti kortti2 = pelimoottori.getKortti(15);
+
+        kortti1.naytaKuvapuoli();
+        kortti2.naytaKuvapuoli();
+
+        pelimoottori.kaannaKortitNurin(kortti1, kortti2);
+        
+        assertFalse(kortti1.nakyykoKuvapuoli() || kortti2.nakyykoKuvapuoli());
     }
 
 }
