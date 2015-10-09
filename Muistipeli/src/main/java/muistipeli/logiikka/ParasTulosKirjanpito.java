@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Heikki Leinonen
  */
-public class ParasTulosKirjanpitaja {
+public class ParasTulosKirjanpito {
 
     private int parasTulos;
     private final String tiedostonimi;
@@ -23,7 +23,7 @@ public class ParasTulosKirjanpitaja {
      * Konstruktori valmistelee parhaan tuloksen käsittelyä tiedostosta.
      * @param tnimi
      */
-    public ParasTulosKirjanpitaja(String tnimi) {
+    public ParasTulosKirjanpito(String tnimi) {
 
         this.parasTulos = 9999;
         this.tiedostonimi = tnimi;

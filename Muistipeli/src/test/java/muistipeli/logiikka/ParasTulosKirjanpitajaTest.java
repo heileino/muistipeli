@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class ParasTulosKirjanpitajaTest {
 
-    ParasTulosKirjanpitaja parasTulosKp;
+    ParasTulosKirjanpito parasTulosKp;
     File testitiedosto;
     String tiedostonimi;
     int paras;
@@ -24,11 +24,11 @@ public class ParasTulosKirjanpitajaTest {
         paras = 9999;
         tiedostonimi = "testi.txt";
 
-        parasTulosKp = new ParasTulosKirjanpitaja(tiedostonimi);
+        parasTulosKp = new ParasTulosKirjanpito(tiedostonimi);
     }
 //        URL url = this.getClass().getResource("/testi.txt");
 //        testitiedosto = new File(url.getFile());
-//        parasTulos = new ParasTulosKirjanpitaja("testi.txt");
+//        parasTulos = new ParasTulosKirjanpito("testi.txt");
 
     @Test
     public void konstruktoriAsettaaParasTulosMuuttujaanOikeanArvon() {

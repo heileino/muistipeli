@@ -5,7 +5,7 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class ParejaLoytymattaKirjanpitaja {
+public class ParejaLoytymattaKirjanpito {
 
     private int parejaJaljella;
 
@@ -15,7 +15,7 @@ public class ParejaLoytymattaKirjanpitaja {
      *
      * @param maksimi kaikkien pelissä olevien korttiparien lukumäärä.
      */
-    public ParejaLoytymattaKirjanpitaja(int maksimi) {
+    public ParejaLoytymattaKirjanpito(int maksimi) {
         if (maksimi > 0) {
             parejaJaljella = maksimi;
         } else {

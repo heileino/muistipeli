@@ -15,8 +15,8 @@ public class Pelimoottori {
     private YritysmaaraLaskuri yrityslaskuri;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
-    private ParejaLoytymattaKirjanpitaja parejaLoytamatta;
-    private ParasTulosKirjanpitaja parasTulos;
+    private ParejaLoytymattaKirjanpito parejaLoytamatta;
+    private ParasTulosKirjanpito parasTulos;
     private final int PARIENMAARA = 8;
 
     /**
@@ -30,8 +30,8 @@ public class Pelimoottori {
 
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        parejaLoytamatta = new ParejaLoytymattaKirjanpitaja(PARIENMAARA);
-        parasTulos = new ParasTulosKirjanpitaja("parasTulos.txt");
+        parejaLoytamatta = new ParejaLoytymattaKirjanpito(PARIENMAARA);
+        parasTulos = new ParasTulosKirjanpito("parasTulos.txt");
         yrityslaskuri = new YritysmaaraLaskuri();
     }
 

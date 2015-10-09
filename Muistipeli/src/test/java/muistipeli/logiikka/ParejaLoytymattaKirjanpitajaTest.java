@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
  */
 public class ParejaLoytymattaKirjanpitajaTest {
 
-    ParejaLoytymattaKirjanpitaja laskuri;
+    ParejaLoytymattaKirjanpito laskuri;
 
     @Before
     public void setUp() {
-        laskuri = new ParejaLoytymattaKirjanpitaja(8);
+        laskuri = new ParejaLoytymattaKirjanpito(8);
     }
 
     @Test
@@ -27,13 +27,13 @@ public class ParejaLoytymattaKirjanpitajaTest {
 
     @Test
     public void konstruktoriAsettaaKorttejaLoytamattaOikeinKunParametriLaitonNolla() {
-        ParejaLoytymattaKirjanpitaja uusiLaskuri = new ParejaLoytymattaKirjanpitaja(0);
+        ParejaLoytymattaKirjanpito uusiLaskuri = new ParejaLoytymattaKirjanpito(0);
         assertEquals(0, uusiLaskuri.getParejaLoytymatta());
     }
 
     @Test
     public void konstruktoriAsettaaKorttejaLoytamattaOikeinKunParametriLaitonMiinusYksi() {
-        ParejaLoytymattaKirjanpitaja uusiLaskuri = new ParejaLoytymattaKirjanpitaja(-1);
+        ParejaLoytymattaKirjanpito uusiLaskuri = new ParejaLoytymattaKirjanpito(-1);
         assertEquals(0, uusiLaskuri.getParejaLoytymatta());
     }
 
