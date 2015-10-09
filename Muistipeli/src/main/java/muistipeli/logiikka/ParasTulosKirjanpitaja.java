@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Heikki Leinonen
  */
-public class ParasTulos {
+public class ParasTulosKirjanpitaja {
 
     private int parasTulos;
     private String tiedostonimi;
@@ -22,7 +22,7 @@ public class ParasTulos {
     /**
      * Konstruktori valmistelee parhaan tuloksen käsittelyä tiedostosta.
      */
-    public ParasTulos() {
+    public ParasTulosKirjanpitaja() {
 
         this.parasTulos = 9999;
         tiedostonimi = "parasTulos.txt";
@@ -54,11 +54,18 @@ public class ParasTulos {
         }
     }
 
+    /**
+     * Metodi asettaa parametrina saadun tuloksen parhaimmaksi tulokseksi,
+     * mikäli se on parempi kuin olemassa oleva paras tulos.
+     *
+     * @param tulos kuinka monella yrityksellä peli on pelattu läpi.
+     */
     public void setParasTulos(int tulos) {
 
         if (this.parasTulos <= tulos) {
             return;
         }
+
         this.parasTulos = tulos;
 
         try {
@@ -70,14 +77,19 @@ public class ParasTulos {
         }
     }
 
+    /**
+     * Metodin tarkoituksena on ladata paras tulos sitä tallentavasta
+     * tiedostosta ohjelman käyttöön.
+     */
     public void lataaParasTulosMuuttujaan() {
 
         try {
-//            File tiedosto = new File(tiedostonimi);
+
             Scanner lukija = new Scanner(tiedosto);
             if (!tiedosto.isFile()) {
                 luoTiedosto();
             }
+
             if (lukija.hasNext()) {
                 this.parasTulos = Integer.parseInt(lukija.next());
             }
@@ -91,7 +103,15 @@ public class ParasTulos {
     }
 
     public int getParasTulos() {
+
         return this.parasTulos;
     }
 
+    @Override
+    public String toString() {
+        if(getParasTulos()==9999){
+            return "Paras tulos: - ";
+        }
+        return "Paras tulos: " + getParasTulos();
+    }
 }

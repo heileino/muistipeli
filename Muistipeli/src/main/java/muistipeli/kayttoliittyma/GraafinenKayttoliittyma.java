@@ -104,7 +104,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
     public void piirraHallintapaneeli(JPanel paneeli) {
 
-        aloitaNappi.setText("Aloita uusi peli");
+        aloitaNappi.setText("Aloita uudestaan");
         aloitaNappi.setBackground(Color.GREEN);
         paneeli.add(aloitaNappi);
         aloitaNappi.addActionListener(this);
@@ -118,7 +118,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
         paneeli.add(yritysLabel);
 
-        korttejaJaljellaLabel.setText(pelimoottori.getKorttejaJaljellaTekstina());
+        korttejaJaljellaLabel.setText(pelimoottori.getKorttejaLoytamattaTekstina());
         paneeli.add(korttejaJaljellaLabel);
 
         parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
@@ -159,14 +159,19 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                         valinta1 = peliruudukko[pelimoottori.getValitutIndeksit().get(0)];
                         valinta2 = peliruudukko[pelimoottori.getValitutIndeksit().get(1)];
 
-                        if (pelimoottori.loytyikoPari()) {
+                        Kortti kortti1 = pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(0));
+                        Kortti kortti2 = pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(1));
 
+                        if (pelimoottori.loytyikoPari()) {
+                            pelimoottori.lisaaKortitLoytyneeksi(kortti1, kortti2);
+                            pelimoottori.vahennaLoytamattomienKorttienMaaraa();
                             JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
                             lisaaTekstiNappiin(valinta1, "");
                             lisaaTekstiNappiin(valinta2, "");
 
                         } else {
+                            pelimoottori.kaannaKortitNurin(kortti1, kortti2);
 
                             JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
 
@@ -182,7 +187,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
 
         this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
-        this.korttejaJaljellaLabel.setText(pelimoottori.getKorttejaJaljellaTekstina());
+        this.korttejaJaljellaLabel.setText(pelimoottori.getKorttejaLoytamattaTekstina());
 
         if (!pelimoottori.jatketaankoPelia()) {
             if (pelimoottori.onUusiParasTulos()) {

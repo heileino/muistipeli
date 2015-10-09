@@ -12,27 +12,27 @@ import java.util.List;
 public class Pelimoottori {
 
     private Pelipoyta pelipoyta;
-    private Pisteet pistelaskuri;
+    private YritysmaaraLaskuri yrityslaskuri;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
-    private int korttejaJaljella;
-    private ParasTulos parasTulos;
+    private ParejaLoytymattaKirjanpitaja korttejaLoytamatta;
+    private ParasTulosKirjanpitaja parasTulos;
+    private final int PARIENMAARA=8;
 
     /**
      * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
      * valittujen taulukkoindeksien listan, pistelaskurin ja parasta tulosta
-     * säilyttävän muuttujan. Lisäksi se alustaa jäljellä olevien kortteja
-     * laskevan muuttujan vastaamaan taulukon kokoa.
+     * säilyttävän muuttujan.
      */
     public Pelimoottori() {
-        
+
         pelipoyta = new Pelipoyta();
-        
+
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        korttejaJaljella = pelipoyta.getTaulukko().length;        
-        parasTulos = new ParasTulos();
-        pistelaskuri = new Pisteet();
+        korttejaLoytamatta = new ParejaLoytymattaKirjanpitaja(PARIENMAARA);
+        parasTulos = new ParasTulosKirjanpitaja();
+        yrityslaskuri = new YritysmaaraLaskuri();
     }
 
     /**
@@ -40,9 +40,9 @@ public class Pelimoottori {
      * järjestykseen
      */
     public void alustaPoytaPelikuntoon() {
-        
-        pelipoyta.taytaPoyta();
-        pelipoyta.sekoitaKortit();
+
+        pelipoyta.asetaKortitTaulukkoon();
+        pelipoyta.sekoitaTaulukonKortit();
         parasTulos.lataaParasTulosMuuttujaan();
     }
 
@@ -71,22 +71,6 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi vähentää taulukosta löydetyn parin jäljellä olevien korttien
-     * määrää ylläpitävästä laskurista
-     */
-    public void vahennaKorttejaJaljella() {
-        this.korttejaJaljella = this.korttejaJaljella - 2;
-    }
-
-    /**
-     * Metodi palauttaa jäljellä olevien korttien määrää laskevan laskurin arvon
-     * takaisin alkuarvoonsa, eli korttitaulukon kokoa vastaavaksi arvoksi.
-     */
-    public void alustaKorttejaJaljella() {
-        this.korttejaJaljella = pelipoyta.getTaulukko().length;
-    }
-
-    /**
      * Metodi lisää yhdellä valintakerralla valitun kortin valittujen korttien
      * listalle.
      *
@@ -107,7 +91,7 @@ public class Pelimoottori {
 
     public void valitseKortti(int i) {
         lisaaValittuihin(i);
-        pelipoyta.paljastaKortti(i);
+        pelipoyta.paljastaKortinKuva(i);
     }
 
     /**
@@ -120,7 +104,7 @@ public class Pelimoottori {
     }
 
     public void lisaaValintayritys() {
-        this.pistelaskuri.lisaaYritys();
+        yrityslaskuri.lisaaYritys();
     }
 
     /**
@@ -133,16 +117,20 @@ public class Pelimoottori {
         Kortti kortti1 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(0));
         Kortti kortti2 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(1));
 
-        if (pelipoyta.onkoSamaKortti(kortti1, kortti2)) {
-            lisaaKortitLoytyneeksi(kortti1, kortti2);
-            vahennaKorttejaJaljella();
+        if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
+//            lisaaKortitLoytyneeksi(kortti1, kortti2);
+//            vahennaLoytamattomienKorttienMaaraa();
             return true;
 
         } else {
-            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti1));
-            pelipoyta.piilotaKortti(pelipoyta.getKortinIndeksi(kortti2));
+//            kaannaKortitNurin(kortti1, kortti2);
             return false;
         }
+    }
+
+    public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
+        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti1));
+        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti2));
     }
 
     /**
@@ -152,7 +140,7 @@ public class Pelimoottori {
      * @return palauttaa boolean totuusarvon pelin jatkumisesta
      */
     public boolean jatketaankoPelia() {
-        return getKorttejaJaljella() > 1;
+        return korttejaLoytamatta.getParejaLoytymatta() > 1;
     }
 
     public void lopetaPeli() {
@@ -160,12 +148,17 @@ public class Pelimoottori {
             asetaParasTulos();
             parasTulos.lataaParasTulosMuuttujaan();
         }
-        
+
+    }
+    
+    public void vahennaLoytamattomienKorttienMaaraa(){
+        korttejaLoytamatta.vahennaParejaLoytymatta();
     }
 
     /**
      * Metodi testaa, onko pelin tulos parempi kuin nykyinen paras tulos.
-     * @return 
+     *
+     * @return
      */
     public boolean onUusiParasTulos() {
         return getYritystenMaaraLukuna() < parasTulos.getParasTulos();
@@ -184,20 +177,8 @@ public class Pelimoottori {
         return this.pelipoyta;
     }
 
-    public String getYritystenMaaraTekstina() {
-        return pistelaskuri.getYrityksetTekstina();
-    }
-
     public int getYritystenMaaraLukuna() {
-        return pistelaskuri.getYritykset();
-    }
-
-    public int getKorttejaJaljella() {
-        return this.korttejaJaljella;
-    }
-
-    public String getKorttejaJaljellaTekstina() {
-        return "Kortteja jäljellä: " + getKorttejaJaljella();
+        return yrityslaskuri.getYritysmaara();
     }
 
     public List<Kortti> getLoydetytKortit() {
@@ -208,15 +189,35 @@ public class Pelimoottori {
         return this.valitutIndeksit;
     }
 
-    public String getParasTulosTekstina() {
-        
-        return "Paras tulos: " + parasTulos.getParasTulos();
-    }
-
     public void kaannaKaikkiKortitSelkapuoliYlos() {
 
         for (int i = 0; i < pelipoyta.getTaulukko().length; i++) {
             pelipoyta.getTaulukko()[i].naytaSelkapuoli();
         }
     }
+
+    /*
+     Merkkijonoja palauttavia Gettereitä käyttöliittymiä varten.
+     */
+    public String getParasTulosTekstina() {
+        return this.parasTulos.toString();
+    }
+
+    public String getKorttejaLoytamattaTekstina() {
+        return this.korttejaLoytamatta.toString();
+    }
+
+    public String getYritystenMaaraTekstina() {
+        return this.yrityslaskuri.toString();
+    }
+    
+    /*
+    Lukuja palauttavia gettereitä
+    */
+    
+    public int getParejaLoytymatta(){
+        return this.korttejaLoytamatta.getParejaLoytymatta();
+    }
+    
 }
+

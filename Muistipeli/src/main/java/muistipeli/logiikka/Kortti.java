@@ -1,31 +1,37 @@
 package muistipeli.logiikka;
 
 /**
- * Luokka kuvaa yksittäisen muistikortin ominaisuuksia.
+ * Luokka kuvaa yksittäistä muistikorttia. Luokan kaksi keskeistä ominaisuutta
+ ovat kortin TUNNUS ja asento. Asennolla tarkoitetaan sitä, onko kortin kuva-
+ vai selkäpuoli esillä
  *
  * @author Heikki Leinonen
  */
 public class Kortti {
 
-    String tunnus;
-    boolean nakyy; // kertoo onko kortti käännetty kuvapuolelle vai ei
+    private final String TUNNUS;
+    private boolean kuvapuoliNakyy;
 
     /**
      * Konstruktori asettaa kortin näkyvyydeksi epätoden ja asettaa kortin
      * tunnukseksi parametrina saadun arvon.
      *
-     * @param tunnus korttiparin yksilöivä String-tyyppinen tunnus
+     * @param tunnus korttiparin yksilöivä merkkijono
      */
     public Kortti(String tunnus) {
-        nakyy = false;
-        this.tunnus = tunnus;
+
+        kuvapuoliNakyy = false;
+        this.TUNNUS = tunnus;
     }
 
     /**
-     * Metodi asettaa kyseisen kortin kuvapuolen näkyvyyden todeksi.
+     * Metodi asettaa kortin kuvapuolen näkyvyyden todeksi.
      */
     public void naytaKuvapuoli() {
-        nakyy = true;
+        if (!kuvapuoliNakyy) {
+            kuvapuoliNakyy = true;
+        }
+
     }
 
     /**
@@ -33,25 +39,29 @@ public class Kortti {
      */
     public void naytaSelkapuoli() {
 
-        if (nakyy) {
-            nakyy = false;
+        if (kuvapuoliNakyy) {
+            kuvapuoliNakyy = false;
         }
     }
 
     /**
-     * Metodi kertoo yksittäisen kortin tämän hetkisen asennon
+     * Metodi kertoo kortin tämän hetkisen asennon
      *
      * @return boolean-totuusarvo kuvapuolen näkyvyydestä
      */
     public boolean nakyykoKuvapuoli() {
-        return this.nakyy;
+
+        return this.kuvapuoliNakyy;
     }
 
     public String getTunnus() {
-        return tunnus;
+
+        return TUNNUS;
     }
 
+    @Override
     public String toString() {
-        return "kortti_" + tunnus;
+
+        return "kortti_" + TUNNUS;
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.logiikka;
 
 import java.util.Arrays;
@@ -10,8 +5,8 @@ import java.util.Collections;
 
 /**
  * Luokka kuvaa muistipelin pelialustaa. Pelipoytaa vastaa korteista koostuva
- * taulukko. Luokka tarjoaa erilaisia taulukkoon ja sen sisältöön liittyviä
- * metodeja.
+ * taulukko. Luokka tarjoaa erilaisia tähän taulukkoon ja sen sisältöön
+ * liittyviä metodeja.
  *
  * @author Heikki Leinonen
  */
@@ -20,11 +15,10 @@ public class Pelipoyta {
     private final Kortti[] korttitaulukko;
 
     /**
-     * Konstruktori luo uuden korttitaulukon ja uuden löydettyjen korttien
-     * listan. Lisäksi se alustaa korttien määrää laskevan ilmentymämuuttujan
-     * korttitaulukon pituuden arvolla.
+     * Konstruktori luo uuden korttitaulukon.
      */
     public Pelipoyta() {
+
         korttitaulukko = new Kortti[16];
     }
 
@@ -35,12 +29,13 @@ public class Pelipoyta {
      *
      * @see muistipeli.logiikka.Kortti
      */
-    public void taytaPoyta() {
-        // 
-        for (int i = 0; i < korttitaulukko.length / 2; i++) {
+    public void asetaKortitTaulukkoon() {
+        int puolikasTaulukonPituus=korttitaulukko.length/2;
+        for (int i = 0; i < puolikasTaulukonPituus; i++) {
             korttitaulukko[i] = new Kortti("" + (i + 1));
         }
-        for (int i = korttitaulukko.length / 2; i < korttitaulukko.length; i++) {
+        
+        for (int i = puolikasTaulukonPituus; i < korttitaulukko.length; i++) {
             korttitaulukko[i] = new Kortti("" + ((i - korttitaulukko.length / 2) + 1));
         }
     }
@@ -49,7 +44,8 @@ public class Pelipoyta {
      * Metodi sekoittaa taulukon sisältämät Kortti-luokan ilmentymät
      * satunnaiseen järjestykseen
      */
-    public void sekoitaKortit() {
+    public void sekoitaTaulukonKortit() {
+
         Collections.shuffle(Arrays.asList(korttitaulukko));
     }
 
@@ -62,8 +58,9 @@ public class Pelipoyta {
      * @param indeksi2 toisen valitun paikan numero
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
-    public boolean onkoSama(int indeksi1, int indeksi2) {
-        return this.korttitaulukko[indeksi1].tunnus.equals(this.korttitaulukko[indeksi2].tunnus);
+    public boolean onkoKorteillaSamaTunnus(int indeksi1, int indeksi2) {
+
+        return this.korttitaulukko[indeksi1].getTunnus().equals(this.korttitaulukko[indeksi2].getTunnus());
     }
 
     /**
@@ -74,16 +71,19 @@ public class Pelipoyta {
      * @param kortti2 toinen vertailtava kortti
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
-    public boolean onkoSamaKortti(Kortti kortti1, Kortti kortti2) {
+    public boolean onkoKorteillaSamaTunnus(Kortti kortti1, Kortti kortti2) {
+
         return kortti1.getTunnus().equals(kortti2.getTunnus());
     }
 
     /**
-     * Metodi kääntää valitussa paikassa olevan kortin kuvapuolen esiin
+     * Metodi kääntää valitussa paikassa taulukkoa olevan kortin kuvapuolen
+     * esiin
      *
      * @param indeksi valittu taulukon indeksi
      */
-    public void paljastaKortti(int indeksi) {
+    public void paljastaKortinKuva(int indeksi) {
+
         korttitaulukko[indeksi].naytaKuvapuoli();
     }
 
@@ -92,21 +92,32 @@ public class Pelipoyta {
      *
      * @param indeksi valittu taulukon paikkanumero
      */
-    public void piilotaKortti(int indeksi) {
+    public void piilotaKortinKuva(int indeksi) {
+
         korttitaulukko[indeksi].naytaSelkapuoli();
     }
 
     public Kortti[] getTaulukko() {
+
         return this.korttitaulukko;
     }
 
+    /**
+     * Metodi kertoo kortin sijainnin taulukossa.
+     *
+     * @param kortti
+     * @return palauttaa parametrina olevan kortin indeksin taulukossa
+     */
     public int getKortinIndeksi(Kortti kortti) {
+
+        int indeksi = -1;
+
         for (int i = 0; i < this.korttitaulukko.length; i++) {
             if (this.korttitaulukko[i].equals(kortti)) {
-                return i;
+                indeksi = i;
             }
         }
-        return -1;
+        return indeksi;
     }
 
     public Kortti getKorttiTaulukosta(int indeksi) {

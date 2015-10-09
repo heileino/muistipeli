@@ -5,10 +5,7 @@
  */
 package muistipeli.logiikka;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,26 +16,22 @@ import static org.junit.Assert.*;
 public class PelimoottoriTest {
 
     Pelimoottori pelimoottori;
-    Pelipoyta poyta;
-
-    
 
     @Before
     public void setUp() {
         pelimoottori = new Pelimoottori();
-        poyta = pelimoottori.getPelipoyta();
-        poyta.taytaPoyta();
+        pelimoottori.getPelipoyta().asetaKortitTaulukkoon();
     }
 
     @Test
-    public void konstruktoriAsettaaKorttejaJaljellaOikein() {
-        assertEquals(16, pelimoottori.getKorttejaJaljella());
+    public void konstruktoriluoUudenParejaJaljellaKirjanpitajanOikein() {
+        assertEquals(8, pelimoottori.getParejaLoytymatta());
     }
 
     @Test
     public void konstruktoriLuoUudenLoydetytKortitListan() {
-        Kortti kortti1 = poyta.getTaulukko()[0];
-        Kortti kortti2 = poyta.getTaulukko()[15];
+        Kortti kortti1 = pelimoottori.getPelipoyta().getTaulukko()[0];
+        Kortti kortti2 = pelimoottori.getPelipoyta().getTaulukko()[15];
         pelimoottori.lisaaKortitLoytyneeksi(kortti1, kortti2);
         assertEquals("kortti_1", pelimoottori.getLoydetytKortit().get(0).toString());
     }
@@ -50,43 +43,25 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void vahennaKorttejaJaljellaToimiiOikein() {
-        pelimoottori.vahennaKorttejaJaljella();
-        assertEquals(14, pelimoottori.getKorttejaJaljella());
-    }
-
-    @Test
     public void onkoJoLoydettyToimiiKunKorttiEiOleLoytynyt() {
-        Kortti testikortti = poyta.getTaulukko()[0];
+        Kortti testikortti = pelimoottori.getPelipoyta().getTaulukko()[0];
         assertFalse(pelimoottori.onkoKorttiJoLoytyneissa(testikortti));
     }
 
     @Test
     public void onkoJoLoydettyToimiiKunKorttiOnLoytynyt() {
-        Kortti testikortti1 = poyta.getTaulukko()[15];
-        Kortti testikortti2 = poyta.getTaulukko()[0];
+        Kortti testikortti1 = pelimoottori.getPelipoyta().getTaulukko()[15];
+        Kortti testikortti2 = pelimoottori.getPelipoyta().getTaulukko()[0];
         pelimoottori.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
         assertTrue(pelimoottori.onkoKorttiJoLoytyneissa(testikortti1));
     }
 
     @Test
     public void lisaaKorttiLoytyneisiinToimiiOikein() {
-        Kortti testikortti1 = poyta.getTaulukko()[7];
-        Kortti testikortti2 = poyta.getTaulukko()[5];
+        Kortti testikortti1 = pelimoottori.getPelipoyta().getTaulukko()[7];
+        Kortti testikortti2 = pelimoottori.getPelipoyta().getTaulukko()[5];
         pelimoottori.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
         assertEquals(testikortti1, pelimoottori.getLoydetytKortit().get(0));
-    }
-
-    @Test
-    public void alustaKorttejaJaljellaToimiiOikein() {
-        pelimoottori.vahennaKorttejaJaljella();
-        pelimoottori.alustaKorttejaJaljella();
-        assertEquals(16, pelimoottori.getKorttejaJaljella());
-    }
-
-    @Test
-    public void getKorttejaJaljellaTekstinaToimiiOikein() {
-        assertEquals("Kortteja jäljellä: 16", pelimoottori.getKorttejaJaljellaTekstina());
     }
 
     @Test
@@ -99,7 +74,7 @@ public class PelimoottoriTest {
 
     @Test
     public void onkoKorttiValittavissaToimiiOikein() {
-        Kortti kortti1 = poyta.getKorttiTaulukosta(0);
+        Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(0);
         kortti1.naytaKuvapuoli();
         assertFalse(pelimoottori.onkoKorttiValittavissa(0));
     }
@@ -107,7 +82,7 @@ public class PelimoottoriTest {
     @Test
     public void valitseKorttiToimiiOikein() {
         pelimoottori.valitseKortti(4);
-        assertTrue(pelimoottori.getValitutIndeksit().get(0) == 4 && poyta.getTaulukko()[4].nakyykoKuvapuoli());
+        assertTrue(pelimoottori.getValitutIndeksit().get(0) == 4 && pelimoottori.getPelipoyta().getTaulukko()[4].nakyykoKuvapuoli());
     }
 
     @Test
@@ -164,15 +139,15 @@ public class PelimoottoriTest {
     @Test
     public void jatketaankoPeliaToimiiJosTulisiJatkaa() {
 
-        pelimoottori.vahennaKorttejaJaljella();
+        pelimoottori.vahennaLoytamattomienKorttienMaaraa();
         assertTrue(pelimoottori.jatketaankoPelia());
     }
 
     @Test
     public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
 
-        while (pelimoottori.getKorttejaJaljella() > 1) {
-            pelimoottori.vahennaKorttejaJaljella();
+        while (pelimoottori.getParejaLoytymatta() > 1) {
+            pelimoottori.vahennaLoytamattomienKorttienMaaraa();
         }
 
         assertFalse(pelimoottori.jatketaankoPelia());
@@ -197,23 +172,30 @@ public class PelimoottoriTest {
     }
 
     @Test
+    public void loytyikoPariLisaaKortitLoytyneiksiOikein() {
+
+        pelimoottori.lisaaValittuihin(1);
+        pelimoottori.lisaaValittuihin(10);
+
+        pelimoottori.lisaaKortitLoytyneeksi(pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(0)), pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(1)));
+
+        assertTrue(pelimoottori.getKortti(1).equals(pelimoottori.getLoydetytKortit().get(0)) && pelimoottori.getKortti(10).equals(pelimoottori.getLoydetytKortit().get(1)));
+
+    }
+
+    @Test
     public void kaannaKaikkiKortitSelkapuolipuoliYlosToimiiOikein() {
 
         boolean ok = true;
         pelimoottori.kaannaKaikkiKortitSelkapuoliYlos();
 
         for (int i = 0; i < pelimoottori.getPelipoyta().getTaulukko().length; i++) {
-            if (pelimoottori.getPelipoyta().getTaulukko()[i].nakyy) {
+            if (pelimoottori.getPelipoyta().getTaulukko()[i].nakyykoKuvapuoli()) {
                 ok = false;
             }
         }
 
         assertTrue(ok);
-    }
-
-    @Test
-    public void alustaPelipoytaKuntoonToimiiOikein() {
-        
     }
 
 }

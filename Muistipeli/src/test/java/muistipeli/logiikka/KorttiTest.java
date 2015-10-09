@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.logiikka;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,24 +12,9 @@ public class KorttiTest {
 
     Kortti kortti;
 
-    public KorttiTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         kortti = new Kortti("5");
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -47,20 +24,31 @@ public class KorttiTest {
 
     @Test
     public void konstruktoriAsettaaNakyvyydenOikein() {
-        assertTrue(!kortti.nakyy);
+        assertTrue(!kortti.nakyykoKuvapuoli());
     }
 
     @Test
-    public void naytaKuvapuoliKaantaaKuvapuolen() {
+    public void nakyykoKuvapuoliToimiiOikeinKunKuvapuoliNakyy() {
         kortti.naytaKuvapuoli();
-        assertTrue(kortti.nakyy);
+        assertTrue(kortti.nakyykoKuvapuoli());
     }
 
     @Test
-    public void naytaSelkapuoliMetodiKaantaaSelkapuolen() {
+    public void nakyykoKuvapuoliToimiiOikeinKunSelkapuoliNakyy() {
+        assertFalse(kortti.nakyykoKuvapuoli());
+    }
+
+    @Test
+    public void naytaKuvapuoliToimiiOikein() {
+        kortti.naytaKuvapuoli();
+        assertTrue(kortti.nakyykoKuvapuoli());
+    }
+
+    @Test
+    public void naytaSelkapuoliToimiiOikein() {
         kortti.naytaKuvapuoli();
         kortti.naytaSelkapuoli();
-        assertFalse(kortti.nakyy);
+        assertFalse(kortti.nakyykoKuvapuoli());
 
     }
 

@@ -5,16 +5,15 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class Pisteet {
+public class YritysmaaraLaskuri {
 
-    private int yritykset;
+    private int yrityksia;
 
     /**
      * Konstruktori nollaa yritysmäärälaskurin.
      */
-    public Pisteet() {
-
-        this.yritykset = 0;
+    public YritysmaaraLaskuri() {
+        this.yrityksia = 0;
     }
 
     /**
@@ -22,16 +21,15 @@ public class Pisteet {
      */
     public void lisaaYritys() {
 
-        this.yritykset++;
+        this.yrityksia++;
     }
 
-    public int getYritykset() {
-
-        return this.yritykset;
+    public int getYritysmaara() {
+        return this.yrityksia;
     }
 
-    public String getYrityksetTekstina() {
-
-        return "Yrityksiä: " + this.getYritykset();
+    @Override
+    public String toString() {
+        return "Yrityksiä: " + this.getYritysmaara();
     }
 }
