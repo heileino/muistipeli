@@ -21,6 +21,7 @@ public class ParasTulosKirjanpitaja {
 
     /**
      * Konstruktori valmistelee parhaan tuloksen käsittelyä tiedostosta.
+     * @param tnimi
      */
     public ParasTulosKirjanpitaja(String tnimi) {
 
@@ -43,16 +44,16 @@ public class ParasTulosKirjanpitaja {
     /**
      * Metodi luo uuden parasta tulosta ylläpitävän tiedoston.
      */
-//    public void luoTiedosto() {
-//
-//        try {
-//            FileWriter kirjoittaja = new FileWriter(tiedosto);
-//            kirjoittaja.write("" + this.parasTulos);
-//            kirjoittaja.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void luoTiedosto() {
+
+        try {
+            FileWriter kirjoittaja = new FileWriter(tiedosto);
+            kirjoittaja.write("" + this.parasTulos);
+            kirjoittaja.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Metodi asettaa parametrina saadun tuloksen parhaimmaksi tulokseksi,
      * mikäli se on parempi kuin olemassa oleva paras tulos.

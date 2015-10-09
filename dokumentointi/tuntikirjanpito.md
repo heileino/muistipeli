@@ -51,3 +51,11 @@ to 1.10.2015
 pe 2.10.2015
 	(8h) testien viilaus, sekvenssikaavioiden tekeminen ja luokkakaavion päivitys
 
+ti 6.10.2015 graafisen käyttöliittymän hiomista
+	(2h)
+ke 7.10.2015 uusien ominaisuuksien koodaamista
+	(8h)
+to 8.10.2015 testaamista
+	(8h)
+pe 9.10.2015 kaavioiden piirtämistä
+	(2h)
