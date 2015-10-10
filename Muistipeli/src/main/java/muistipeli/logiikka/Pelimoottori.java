@@ -154,7 +154,12 @@ public class Pelimoottori {
      * @return
      */
     public boolean onUusiParasTulos() {
-        return getYritystenMaaraLukuna() < parasTulos.getParasTulos();
+        if (this.parasTulos.getParasTulos() == 0) {
+            return true;
+        } else {
+            return getYritystenMaaraLukuna() < parasTulos.getParasTulos();
+        }
+
     }
 
     public void asetaParasTulos() {

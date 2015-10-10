@@ -32,10 +32,6 @@ public class ParasTulosKirjanpito {
      */
     public void setParasTulos(int tulos) {
 
-        if (tulos !=0 || this.parasTulos <= tulos) {
-            return;
-        }
-
         this.parasTulos = tulos;
 
         tiedostonkasittelija.kirjoitaTiedostoon("" + this.parasTulos);
