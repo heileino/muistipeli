@@ -31,7 +31,7 @@ public class Pelimoottori {
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
         parejaLoytamatta = new ParejaLoytymattaKirjanpito(PARIENMAARA);
-        parasTulos = new ParasTulosKirjanpito("parasTulos.txt");
+        parasTulos = new ParasTulosKirjanpito("parastulos");
         yrityslaskuri = new YritysmaaraLaskuri();
     }
 
@@ -140,7 +140,7 @@ public class Pelimoottori {
      * @return palauttaa boolean totuusarvon pelin jatkumisesta
      */
     public boolean jatketaankoPelia() {
-        return parejaLoytamatta.getParejaLoytymatta() > 1;
+        return parejaLoytamatta.getParejaLoytymatta() > 0;
     }
 
     public void vahennaLoytamattomienParienMaaraa() {
