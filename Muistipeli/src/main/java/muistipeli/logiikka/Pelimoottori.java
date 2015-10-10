@@ -18,6 +18,7 @@ public class Pelimoottori {
     private ParejaLoytymattaKirjanpito parejaLoytamatta;
     private ParasTulosKirjanpito parasTulos;
     private final int PARIENMAARA = 8;
+    private final String TIEDOSTONIMI = "parastulos.txt";
 
     /**
      * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
@@ -31,7 +32,7 @@ public class Pelimoottori {
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
         parejaLoytamatta = new ParejaLoytymattaKirjanpito(PARIENMAARA);
-        parasTulos = new ParasTulosKirjanpito("parastulos");
+        parasTulos = new ParasTulosKirjanpito(TIEDOSTONIMI);
         yrityslaskuri = new YritysmaaraLaskuri();
     }
 

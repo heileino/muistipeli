@@ -32,7 +32,7 @@ public class ParasTulosKirjanpito {
      */
     public void setParasTulos(int tulos) {
 
-        if (tulos < 0 || this.parasTulos <= tulos) {
+        if (tulos !=0 || this.parasTulos <= tulos) {
             return;
         }
 
@@ -46,7 +46,7 @@ public class ParasTulosKirjanpito {
      *
      */
     public void lataaParasTulos() {
-        ;
+        
         this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta());
     }
 
