@@ -6,21 +6,23 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class ParasTulosKirjanpito {
+public class ParasTulos {
 
     private int parasTulos;
 
     private TiedostonKasittelija tiedostonkasittelija;
+    private String tiedostonimi;
 
     /**
      * Konstruktori alustaa parhaan tuloksen.
      *
      * @param tiedostonimi
      */
-    public ParasTulosKirjanpito(String tiedostonimi) {
+    public ParasTulos(String tiedostonimi) {
 
+        this.tiedostonimi = tiedostonimi;
         this.parasTulos = 9999;
-        tiedostonkasittelija = new TiedostonKasittelija(tiedostonimi);
+        tiedostonkasittelija = new TiedostonKasittelija();
 
     }
 
@@ -30,25 +32,36 @@ public class ParasTulosKirjanpito {
      *
      * @param tulos kuinka monella yrityksellä peli on pelattu läpi.
      */
-    public void setParasTulos(int tulos) {
+    public void setParasTulos(String tiedostonimi, int tulos) {
 
-        this.parasTulos = tulos;
+        if (tulos < this.parasTulos) {
+            this.parasTulos = tulos;
+        }
 
-        tiedostonkasittelija.kirjoitaTiedostoon("" + this.parasTulos);
+        tiedostonkasittelija.kirjoitaTiedostoon(tiedostonimi, "" + this.parasTulos);
     }
 
     /**
      * Metodin lataa tiedostosta parhaan tuloksen luokan ilmentymän käyttöön
      *
+     * @param tiedostonimi
      */
-    public void lataaParasTulos() {
-        
-        this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta());
+    public void lataaParasTulos(String tiedostonimi) {
+
+        this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta(tiedostonimi));
     }
 
     public int getParasTulos() {
 
         return this.parasTulos;
+    }
+
+    public String getTiedostonimi() {
+        return this.tiedostonimi;
+    }
+
+    public void setTiedostonimi(String nimi) {
+        this.tiedostonimi = nimi;
     }
 
     @Override

@@ -15,18 +15,18 @@ import java.util.Scanner;
 public class TiedostonKasittelija {
 
     //private String tiedostopolku;
-    private File tiedosto;
+    private String tiedostopolku;
 
-    public TiedostonKasittelija(final String tiedostonimi) {
+    public TiedostonKasittelija() {
 
         AccessController.doPrivileged(new PrivilegedAction() {
 
             @Override
             public Object run() {
-                String tiedostopolku = System.getProperty("user.home")
+                tiedostopolku = System.getProperty("user.home")
                         + File.separator
-                        + "." + tiedostonimi;
-                tiedosto = new File(tiedostopolku);
+                        + ".";
+
                 return null;
             }
 
@@ -34,21 +34,21 @@ public class TiedostonKasittelija {
 
     }
 
-    public void luoTiedosto() {
+    public void luoTiedosto(String tiedostonimi) {
 
         try {
-            FileWriter kirjoittaja = new FileWriter(tiedosto);
-            kirjoittaja.write("" + 0);
+            FileWriter kirjoittaja = new FileWriter(tiedostopolku + tiedostonimi);
+            kirjoittaja.write("" + 9999);
             kirjoittaja.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void kirjoitaTiedostoon(String teksti) {
+    public void kirjoitaTiedostoon(String tiedostonimi, String teksti) {
 
         try {
-            FileWriter kirjoittaja = new FileWriter(tiedosto);
+            FileWriter kirjoittaja = new FileWriter(tiedostopolku + tiedostonimi);
             kirjoittaja.write(teksti);
             kirjoittaja.close();
         } catch (IOException e) {
@@ -56,13 +56,14 @@ public class TiedostonKasittelija {
         }
     }
 
-    public String lueTiedostosta() {
+    public String lueTiedostosta(String tiedostonimi) {
 
         Scanner lukija;
         String luettu = "";
+        File tiedosto = new File(tiedostopolku+tiedostonimi);
 
         if (!tiedosto.isFile()) {
-            luoTiedosto();
+            luoTiedosto(tiedostopolku+tiedostonimi);
         }
 
         try {

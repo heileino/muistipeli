@@ -15,10 +15,10 @@ public class Pelimoottori {
     private YritysmaaraLaskuri yrityslaskuri;
     private List<Kortti> loydetytKortit;
     private List<Integer> valitutIndeksit;
-    private ParejaLoytymattaKirjanpito parejaLoytamatta;
-    private ParasTulosKirjanpito parasTulos;
+    private LoytamattomatKorttiparit parejaLoytamatta;
+    private ParasTulos parasTulos;
     private final int PARIENMAARA = 8;
-    private final String TIEDOSTONIMI = "parastulos.txt";
+    private String tiedostonimi;
 
     /**
      * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
@@ -28,12 +28,13 @@ public class Pelimoottori {
     public Pelimoottori() {
 
         pelipoyta = new Pelipoyta();
-
+        this.tiedostonimi = "parastulos.txt";
         loydetytKortit = new ArrayList<>();
         valitutIndeksit = new ArrayList<>();
-        parejaLoytamatta = new ParejaLoytymattaKirjanpito(PARIENMAARA);
-        parasTulos = new ParasTulosKirjanpito(TIEDOSTONIMI);
+        parejaLoytamatta = new LoytamattomatKorttiparit(PARIENMAARA);
+        parasTulos = new ParasTulos(tiedostonimi);
         yrityslaskuri = new YritysmaaraLaskuri();
+
     }
 
     /**
@@ -44,7 +45,7 @@ public class Pelimoottori {
 
         pelipoyta.asetaKortitTaulukkoon();
         pelipoyta.sekoitaTaulukonKortit();
-        parasTulos.lataaParasTulos();
+        parasTulos.lataaParasTulos(tiedostonimi);
     }
 
     /**
@@ -163,12 +164,12 @@ public class Pelimoottori {
     }
 
     public void asetaParasTulos() {
-        parasTulos.setParasTulos(getYritystenMaaraLukuna());
+        parasTulos.setParasTulos(this.tiedostonimi, getYritystenMaaraLukuna());
 
     }
 
     public void lataaParasTulos() {
-        parasTulos.lataaParasTulos();
+        parasTulos.lataaParasTulos(this.tiedostonimi);
     }
 
     public Kortti getKortti(int indeksi) {
@@ -196,6 +197,10 @@ public class Pelimoottori {
         for (int i = 0; i < pelipoyta.getTaulukko().length; i++) {
             pelipoyta.getTaulukko()[i].naytaSelkapuoli();
         }
+    }
+    
+    public ParasTulos getParasTulos(){
+        return this.parasTulos;
     }
 
     /*

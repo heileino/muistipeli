@@ -11,13 +11,13 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class ParejaLoytymattaKirjanpitajaTest {
+public class LoytamattomatKorttiparitTest {
 
-    ParejaLoytymattaKirjanpito laskuri;
+    LoytamattomatKorttiparit laskuri;
 
     @Before
     public void setUp() {
-        laskuri = new ParejaLoytymattaKirjanpito(8);
+        laskuri = new LoytamattomatKorttiparit(8);
     }
 
     @Test
@@ -27,13 +27,13 @@ public class ParejaLoytymattaKirjanpitajaTest {
 
     @Test
     public void konstruktoriAsettaaKorttejaLoytamattaOikeinKunParametriLaitonNolla() {
-        ParejaLoytymattaKirjanpito uusiLaskuri = new ParejaLoytymattaKirjanpito(0);
+        LoytamattomatKorttiparit uusiLaskuri = new LoytamattomatKorttiparit(0);
         assertEquals(0, uusiLaskuri.getParejaLoytymatta());
     }
 
     @Test
     public void konstruktoriAsettaaKorttejaLoytamattaOikeinKunParametriLaitonMiinusYksi() {
-        ParejaLoytymattaKirjanpito uusiLaskuri = new ParejaLoytymattaKirjanpito(-1);
+        LoytamattomatKorttiparit uusiLaskuri = new LoytamattomatKorttiparit(-1);
         assertEquals(0, uusiLaskuri.getParejaLoytymatta());
     }
 

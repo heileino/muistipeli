@@ -16,11 +16,13 @@ import static org.junit.Assert.*;
 public class PelimoottoriTest {
 
     Pelimoottori pelimoottori;
+    
 
     @Before
     public void setUp() {
         pelimoottori = new Pelimoottori();
         pelimoottori.getPelipoyta().asetaKortitTaulukkoon();
+        pelimoottori.getParasTulos().setTiedostonimi("testiparas.txt");
     }
 
     @Test
@@ -128,13 +130,13 @@ public class PelimoottoriTest {
         assertEquals("Yrityksiä: 0", pelimoottori.getYritystenMaaraTekstina());
     }
 
-    @Test
-    public void getYritystenMaaraTekstinaToimiiOikeinKahdella() {
-        pelimoottori.lisaaValintayritys();
-        pelimoottori.lisaaValintayritys();
-
-        assertEquals("Yrityksiä: 2", pelimoottori.getYritystenMaaraTekstina());
-    }
+//    @Test
+//    public void getYritystenMaaraTekstinaToimiiOikeinKahdella() {
+//        pelimoottori.lisaaValintayritys();
+//        pelimoottori.lisaaValintayritys();
+//
+//        assertEquals("Yrityksiä: 2", pelimoottori.getYritystenMaaraTekstina());
+//    }
 
     @Test
     public void jatketaankoPeliaToimiiJosTulisiJatkaa() {
@@ -146,7 +148,7 @@ public class PelimoottoriTest {
     @Test
     public void jatketaankoPeliaToimiiJosEiTulisiJatkaa() {
 
-        while (pelimoottori.getParejaLoytymatta() > 1) {
+        while (pelimoottori.getParejaLoytymatta() > 0) {
             pelimoottori.vahennaLoytamattomienParienMaaraa();
         }
 
