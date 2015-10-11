@@ -37,6 +37,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private JLabel yritysLabel, korttejaJaljellaLabel, parasTulosLabel;
     private int ikkunanLeveys;
     private int ikkunanKorkeus;
+    private Kuva kuvat;
 
     /**
      * Konstruktori luo uuden pelimoottorin ja peliruudukon.
@@ -53,7 +54,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         parasTulosLabel = new JLabel();
         ikkunanLeveys = 700;
         ikkunanKorkeus = 450;
-
+        this.kuvat = new Kuva();
     }
 
     @Override
@@ -97,6 +98,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
         for (int i = 0; i < peliruudukko.length; i++) {
             this.peliruudukko[i] = new JButton("" + (i + 1));
+//            this.peliruudukko[i] = new JButton(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
             paneeli.add(peliruudukko[i]);
             peliruudukko[i].addActionListener(this);
         }
@@ -149,6 +151,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                     pelimoottori.getValitutPaikat().lisaaValittuihin(i);
                     pelimoottori.getPelipoyta().paljastaKortinKuva(i);
                     peliruudukko[i].setText(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString());
+//                    peliruudukko[i].setIcon(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
 
                     if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
 

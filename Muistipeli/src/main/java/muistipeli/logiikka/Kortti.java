@@ -1,5 +1,7 @@
 package muistipeli.logiikka;
 
+import javax.swing.ImageIcon;
+
 /**
  * Luokka kuvaa yksittäistä muistikorttia. Luokan kaksi keskeistä ominaisuutta
  ovat kortin TUNNUS ja asento. Asennolla tarkoitetaan sitä, onko kortin kuva-
@@ -58,7 +60,8 @@ public class Kortti {
 
         return TUNNUS;
     }
-
+    
+    
     @Override
     public String toString() {
 
