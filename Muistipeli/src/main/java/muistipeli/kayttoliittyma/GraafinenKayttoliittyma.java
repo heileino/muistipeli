@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -97,8 +98,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     public void piirraPeliruudut(JPanel paneeli) {
 
         for (int i = 0; i < peliruudukko.length; i++) {
-            this.peliruudukko[i] = new JButton("" + (i + 1));
+//            this.peliruudukko[i] = new JButton("" + (i + 1));
 //            this.peliruudukko[i] = new JButton(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
+            this.peliruudukko[i] = new JButton(kuvat.getKuva("selkapuoli"));
             paneeli.add(peliruudukko[i]);
             peliruudukko[i].addActionListener(this);
         }
@@ -112,6 +114,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         aloitaNappi.addActionListener(this);
 
         lopetaNappi.setText("Lopeta");
+
         lopetaNappi.setBackground(Color.RED);
         paneeli.add(lopetaNappi);
 
@@ -150,8 +153,8 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 } else {
                     pelimoottori.getValitutPaikat().lisaaValittuihin(i);
                     pelimoottori.getPelipoyta().paljastaKortinKuva(i);
-                    peliruudukko[i].setText(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString());
-//                    peliruudukko[i].setIcon(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
+//                    peliruudukko[i].setText(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString());
+                    peliruudukko[i].setIcon(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
 
                     if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
 
@@ -168,17 +171,18 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                             pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
                             JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
-                            lisaaTekstiNappiin(valinta1, "");
-                            lisaaTekstiNappiin(valinta2, "");
-
+//                            lisaaTekstiNappiin(valinta1, "");
+//                            lisaaTekstiNappiin(valinta2, "");
                         } else {
                             kaannaKortitNurin(kortti1, kortti2);
 
                             JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
 
-                            lisaaTekstiNappiin(valinta1, "" + (pelimoottori.getValitutPaikat().getValitutIndeksit().get(0) + 1));
-                            lisaaTekstiNappiin(valinta2, "" + (pelimoottori.getValitutPaikat().getValitutIndeksit().get(1) + 1));
+                            peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)].setIcon(new ImageIcon("C:\\Users\\Heikki\\Documents\\GitHub\\muistipeli\\Muistipeli\\src\\main\\java\\muistipeli\\kayttoliittyma\\small_icon.gif"));
+                            peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)].setIcon(new ImageIcon("C:\\Users\\Heikki\\Documents\\GitHub\\muistipeli\\Muistipeli\\src\\main\\java\\muistipeli\\kayttoliittyma\\small_icon.gif"));
 
+//                            lisaaTekstiNappiin(valinta1, "" + (pelimoottori.getValitutPaikat().getValitutIndeksit().get(0) + 1));
+//                            lisaaTekstiNappiin(valinta2, "" + (pelimoottori.getValitutPaikat().getValitutIndeksit().get(1) + 1));
                         }
 
                         pelimoottori.getValitutPaikat().tyhjaaValitutIndeksit();
@@ -217,10 +221,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
      * @param nappi
      * @param teksti
      */
-    public void lisaaTekstiNappiin(JButton nappi, String teksti) {
-        nappi.setText(teksti);
-    }
-
+//    public void lisaaTekstiNappiin(JButton nappi, String teksti) {
+//        nappi.setText(teksti);
+//    }
     public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
         pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti1));
         pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti2));
@@ -229,7 +232,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private void kaannaKaikkiKortitNurin() {
 
         for (int i = 0; i < peliruudukko.length; i++) {
-            lisaaTekstiNappiin(peliruudukko[i], "" + (i + 1));
+            //lisaaTekstiNappiin(peliruudukko[i], "" + (i + 1));
+
+            peliruudukko[i].setIcon(kuvat.getKuva("selkakuva"));
         }
     }
 

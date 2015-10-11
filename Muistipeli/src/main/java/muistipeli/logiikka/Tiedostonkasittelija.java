@@ -17,6 +17,12 @@ public class Tiedostonkasittelija {
 
     private File tiedosto;
 
+    /**
+     * Konstruktori luo parametrina annetusta tiedostonimestä tiedostopolun ja
+     * luo näistä File-luokan ilmentymän.
+     *
+     * @param tiedostonimi
+     */
     public Tiedostonkasittelija(final String tiedostonimi) {
 
         AccessController.doPrivileged(new PrivilegedAction() {
@@ -36,6 +42,10 @@ public class Tiedostonkasittelija {
 
     }
 
+    /**
+     * Metodi luo tiedoston. Metodia tarvitaan varmistamaan, että
+     * lueTiedostosta-metodilla on aina jotakin luettavaa.
+     */
     public void luoTiedosto() {
 
         try {
@@ -48,6 +58,11 @@ public class Tiedostonkasittelija {
         }
     }
 
+    /**
+     * Metodi kirjoittaa parametrina saadun merkkijonon tiedostoon
+     *
+     * @param teksti
+     */
     public void kirjoitaTiedostoon(String teksti) {
 
         try {
@@ -59,6 +74,12 @@ public class Tiedostonkasittelija {
         }
     }
 
+    /**
+     * Metodi lukee ilmentymämuuttujana olevan tiedoston sisällön ja palauttaa
+     * sen merkkijonona.
+     *
+     * @return String-merkkijono
+     */
     public String lueTiedostosta() {
 
         Scanner lukija;
