@@ -53,6 +53,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         parasTulosLabel = new JLabel();
         ikkunanLeveys = 700;
         ikkunanKorkeus = 450;
+
     }
 
     @Override
@@ -114,13 +115,13 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
         lopetaNappi.addActionListener(this);
 
-        yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
+        yritysLabel.setText(pelimoottori.getYritysmaaraLaskuri().toString());
         paneeli.add(yritysLabel);
 
-        korttejaJaljellaLabel.setText(pelimoottori.getParejaLoytamattaTekstina());
+        korttejaJaljellaLabel.setText(pelimoottori.getLoytamattomatKorttiparit().toString());
         paneeli.add(korttejaJaljellaLabel);
 
-        parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
+        parasTulosLabel.setText(pelimoottori.getParasTulos().toString());
         paneeli.add(parasTulosLabel);
 
     }
@@ -142,12 +143,12 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
             if (e.getSource() == peliruudukko[i]) {
 
-                if (!pelimoottori.onkoKorttiValittavissa(i)) {
+                if (!onkoKorttiValittavissa(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta! Valitse toinen kortti");
                 } else {
                     pelimoottori.getValitutPaikat().lisaaValittuihin(i);
                     pelimoottori.getPelipoyta().paljastaKortinKuva(i);
-                    peliruudukko[i].setText(pelimoottori.getKortti(i).toString());
+                    peliruudukko[i].setText(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString());
 
                     if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
 
@@ -156,19 +157,19 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                         valinta1 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)];
                         valinta2 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)];
 
-                        Kortti kortti1 = pelimoottori.getKortti(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
-                        Kortti kortti2 = pelimoottori.getKortti(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
+                        Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
+                        Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
 
-                        if (pelimoottori.loytyikoPari()) {
+                        if (loytyikoPari()) {
                             pelimoottori.getLoytyneetKortit().lisaaKortitLoytyneeksi(kortti1, kortti2);
-                            pelimoottori.vahennaLoytamattomienParienMaaraa();
+                            pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
                             JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
                             lisaaTekstiNappiin(valinta1, "");
                             lisaaTekstiNappiin(valinta2, "");
 
                         } else {
-                            pelimoottori.kaannaKortitNurin(kortti1, kortti2);
+                            kaannaKortitNurin(kortti1, kortti2);
 
                             JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
 
@@ -183,14 +184,14 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
             }
         }
 
-        this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
-        this.korttejaJaljellaLabel.setText(pelimoottori.getParejaLoytamattaTekstina());
+        this.yritysLabel.setText(pelimoottori.getYritysmaaraLaskuri().toString());
+        this.korttejaJaljellaLabel.setText(pelimoottori.getLoytamattomatKorttiparit().toString());
 
-        if (!pelimoottori.jatketaankoPelia()) {
-            if (pelimoottori.onUusiParasTulos()) {
+        if (!jatketaankoPelia()) {
+            if (onUusiParasTulos()) {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Teit uuden ennätyksen, " + pelimoottori.getYritysmaaraLaskuri().getYritysmaara() + " yritystä");
                 lopetaPeli();
-                this.parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
+                this.parasTulosLabel.setText(pelimoottori.getParasTulos().toString());
             } else {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelimoottori.getYritysmaaraLaskuri().getYritysmaara() + " yritystä.");
             }
@@ -202,7 +203,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private void aloitaUudelleen() {
         this.pelimoottori = new Pelimoottori();
         pelaaPeli();
-        pelimoottori.kaannaKaikkiKortitSelkapuoliYlos();
+        pelimoottori.getPelipoyta().kaannaKaikkiKortitSelkapuoliYlos();
         kaannaKaikkiKortitNurin();
     }
 
@@ -215,6 +216,11 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
      */
     public void lisaaTekstiNappiin(JButton nappi, String teksti) {
         nappi.setText(teksti);
+    }
+
+    public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
+        pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti1));
+        pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti2));
     }
 
     private void kaannaKaikkiKortitNurin() {
@@ -236,10 +242,47 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
     private void lopetaPeli() {
 
-        if (pelimoottori.onUusiParasTulos()) {
-            pelimoottori.asetaParasTulos();
-            pelimoottori.lataaParasTulos();
+        if (onUusiParasTulos()) {
+            pelimoottori.getParasTulos().setParasTulos(pelimoottori.getYritysmaaraLaskuri().getYritysmaara());
+            pelimoottori.getParasTulos().lataaParasTulos();
         }
 
+    }
+
+    /**
+     * Yksityinen metodi testaa, onko pelin tulos parempi kuin nykyinen paras
+     * tulos.
+     *
+     * @return
+     */
+    private boolean onUusiParasTulos() {
+        if (pelimoottori.getParasTulos().getParasTulos() == 0) {
+            return true;
+        } else {
+            return pelimoottori.getYritysmaaraLaskuri().getYritysmaara() < pelimoottori.getParasTulos().getParasTulos();
+        }
+
+    }
+
+    private boolean onkoKorttiValittavissa(int i) {
+        Kortti valittuKortti = pelimoottori.getPelipoyta().getKorttiTaulukosta(i);
+        return !valittuKortti.nakyykoKuvapuoli();
+    }
+
+    public boolean loytyikoPari() {
+        Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
+        Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
+
+        return pelimoottori.getPelipoyta().onkoKorteillaSamaTunnus(kortti1, kortti2);
+    }
+
+    /**
+     * Yksityinen metodi selvittää, jatketaanko peliä vielä. Se tapahtuu
+     * tarkistamalla jäljellä olevien korttien määrän.
+     *
+     * @return palauttaa boolean totuusarvon pelin jatkumisesta
+     */
+    private boolean jatketaankoPelia() {
+        return pelimoottori.getLoytamattomatKorttiparit().getParejaLoytymatta() > 0;
     }
 }

@@ -13,13 +13,13 @@ import java.util.Collections;
 public class Pelipoyta {
 
     private final Kortti[] korttitaulukko;
-
+    private int TAULUKON_KOKO=16;
     /**
      * Konstruktori luo uuden korttitaulukon.
      */
     public Pelipoyta() {
 
-        korttitaulukko = new Kortti[16];
+        korttitaulukko = new Kortti[TAULUKON_KOKO];
     }
 
     /**
@@ -30,11 +30,11 @@ public class Pelipoyta {
      * @see muistipeli.logiikka.Kortti
      */
     public void asetaKortitTaulukkoon() {
-        int puolikasTaulukonPituus=korttitaulukko.length/2;
+        int puolikasTaulukonPituus = korttitaulukko.length / 2;
         for (int i = 0; i < puolikasTaulukonPituus; i++) {
             korttitaulukko[i] = new Kortti("" + (i + 1));
         }
-        
+
         for (int i = puolikasTaulukonPituus; i < korttitaulukko.length; i++) {
             korttitaulukko[i] = new Kortti("" + ((i - korttitaulukko.length / 2) + 1));
         }
@@ -121,6 +121,15 @@ public class Pelipoyta {
     }
 
     public Kortti getKorttiTaulukosta(int indeksi) {
+    
         return this.getTaulukko()[indeksi];
+    }
+    
+
+    public void kaannaKaikkiKortitSelkapuoliYlos() {
+
+        for (int i = 0; i < getTaulukko().length; i++) {
+            getTaulukko()[i].naytaSelkapuoli();
+        }
     }
 }

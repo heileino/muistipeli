@@ -16,7 +16,6 @@ public class ParasTulos {
     /**
      * Konstruktori alustaa parhaan tuloksen.
      *
-     * @param tiedostonimi
      */
     public ParasTulos(String tiedostonimi) {
 

@@ -5,14 +5,14 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class YritysmaaraLaskuri {
+public class Yritysmaaralaskuri {
 
     private int yrityksia;
 
     /**
      * Konstruktori nollaa yritysmäärälaskurin.
      */
-    public YritysmaaraLaskuri() {
+    public Yritysmaaralaskuri() {
         this.yrityksia = 0;
     }
 

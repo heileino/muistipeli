@@ -8,13 +8,13 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class YritysmaaraLaskuriTest {
+public class YritysmaaralaskuriTest {
 
-    YritysmaaraLaskuri laskuri;
+    Yritysmaaralaskuri laskuri;
 
     @Before
     public void setUp() {
-        laskuri = new YritysmaaraLaskuri();
+        laskuri = new Yritysmaaralaskuri();
     }
 
     @Test
