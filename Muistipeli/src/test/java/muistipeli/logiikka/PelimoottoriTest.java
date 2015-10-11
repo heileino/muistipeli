@@ -31,11 +31,8 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void konstruktoriLuoUudenLoydetytKortitListan() {
-        Kortti kortti1 = pelimoottori.getPelipoyta().getTaulukko()[0];
-        Kortti kortti2 = pelimoottori.getPelipoyta().getTaulukko()[15];
-        pelimoottori.lisaaKortitLoytyneeksi(kortti1, kortti2);
-        assertEquals("kortti_1", pelimoottori.getLoydetytKortit().get(0).toString());
+    public void konstruktoriLuoUudenLoydetytKortitOlion() {
+        assertTrue(pelimoottori.getLoytyneetKortit().getLoydetytKortit().isEmpty());
     }
 
     @Test
@@ -44,27 +41,9 @@ public class PelimoottoriTest {
         assertEquals((Integer) 2, pelimoottori.getValitutIndeksit().get(0));
     }
 
-    @Test
-    public void onkoJoLoydettyToimiiKunKorttiEiOleLoytynyt() {
-        Kortti testikortti = pelimoottori.getPelipoyta().getTaulukko()[0];
-        assertFalse(pelimoottori.onkoKorttiJoLoytyneissa(testikortti));
-    }
+    
 
-    @Test
-    public void onkoJoLoydettyToimiiKunKorttiOnLoytynyt() {
-        Kortti testikortti1 = pelimoottori.getPelipoyta().getTaulukko()[15];
-        Kortti testikortti2 = pelimoottori.getPelipoyta().getTaulukko()[0];
-        pelimoottori.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
-        assertTrue(pelimoottori.onkoKorttiJoLoytyneissa(testikortti1));
-    }
-
-    @Test
-    public void lisaaKorttiLoytyneisiinToimiiOikein() {
-        Kortti testikortti1 = pelimoottori.getPelipoyta().getTaulukko()[7];
-        Kortti testikortti2 = pelimoottori.getPelipoyta().getTaulukko()[5];
-        pelimoottori.lisaaKortitLoytyneeksi(testikortti1, testikortti2);
-        assertEquals(testikortti1, pelimoottori.getLoydetytKortit().get(0));
-    }
+    
 
     @Test
     public void tyhjaaValitutIndeksitToimiiOikein() {
@@ -173,17 +152,9 @@ public class PelimoottoriTest {
         assertFalse(pelimoottori.loytyikoPari());
     }
 
-    @Test
-    public void loytyikoPariLisaaKortitLoytyneiksiOikein() {
+        
+    
 
-        pelimoottori.lisaaValittuihin(1);
-        pelimoottori.lisaaValittuihin(10);
-
-        pelimoottori.lisaaKortitLoytyneeksi(pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(0)), pelimoottori.getKortti(pelimoottori.getValitutIndeksit().get(1)));
-
-        assertTrue(pelimoottori.getKortti(1).equals(pelimoottori.getLoydetytKortit().get(0)) && pelimoottori.getKortti(10).equals(pelimoottori.getLoydetytKortit().get(1)));
-
-    }
 
     @Test
     public void kaannaKaikkiKortitSelkapuolipuoliYlosToimiiOikein() {

@@ -46,7 +46,7 @@ public class ParasTulos {
      *
      * @param tiedostonimi
      */
-    public void lataaParasTulos(String tiedostonimi) {
+    public void lataaParasTulos() {
 
         this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta());
     }

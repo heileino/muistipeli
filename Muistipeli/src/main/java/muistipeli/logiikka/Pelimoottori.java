@@ -13,7 +13,7 @@ public class Pelimoottori {
 
     private Pelipoyta pelipoyta;
     private YritysmaaraLaskuri yrityslaskuri;
-    private List<Kortti> loydetytKortit;
+    private LoytyneetKortit loytyneetKortit;
     private List<Integer> valitutIndeksit;
     private LoytamattomatKorttiparit parejaLoytamatta;
     private ParasTulos parasTulos;
@@ -29,47 +29,12 @@ public class Pelimoottori {
 
         pelipoyta = new Pelipoyta();
         this.tiedostonimi = "parastulos.txt";
-        loydetytKortit = new ArrayList<>();
+        loytyneetKortit = new LoytyneetKortit();
         valitutIndeksit = new ArrayList<>();
         parejaLoytamatta = new LoytamattomatKorttiparit(PARIENMAARA);
         parasTulos = new ParasTulos(tiedostonimi);
         yrityslaskuri = new YritysmaaraLaskuri();
 
-    }
-
-    /**
-     * Metodi täyttää pelipöydän korteilla ja sekoittaa ne satunnaiseen
-     * järjestykseen
-     */
-    public void alustaPoytaPelikuntoon() {
-
-        pelipoyta.asetaKortitTaulukkoon();
-        pelipoyta.sekoitaTaulukonKortit();
-        parasTulos.lataaParasTulos(tiedostonimi);
-    }
-
-    /**
-     * Metodi testaa, onko parametrina annettu kortti löydettyjen korttien
-     * listassa.
-     *
-     * @param kortti Pelitaulukossa oleva Kortti-luokan ilmentymä.
-     *
-     * @return boolean-totuusarvo siitä, onko parametrina annettu kortti jo
-     * löydettyjen korttien listassa.
-     */
-    public boolean onkoKorttiJoLoytyneissa(Kortti kortti) {
-        return (this.loydetytKortit.contains(kortti));
-    }
-
-    /**
-     * Metodi lisää valitut kortit löytyneiden korttien listalle.
-     *
-     * @param kortti1 ensimmäisenä valittu kortti
-     * @param kortti2 toisena valittu kortti
-     */
-    public void lisaaKortitLoytyneeksi(Kortti kortti1, Kortti kortti2) {
-        this.loydetytKortit.add(kortti1);
-        this.loydetytKortit.add(kortti2);
     }
 
     /**
@@ -161,7 +126,11 @@ public class Pelimoottori {
     }
 
     public void lataaParasTulos() {
-        parasTulos.lataaParasTulos(this.tiedostonimi);
+        parasTulos.lataaParasTulos();
+    }
+
+    public LoytyneetKortit getLoytyneetKortit() {
+        return this.loytyneetKortit;
     }
 
     public Kortti getKortti(int indeksi) {
@@ -174,10 +143,6 @@ public class Pelimoottori {
 
     public int getYritystenMaaraLukuna() {
         return yrityslaskuri.getYritysmaara();
-    }
-
-    public List<Kortti> getLoydetytKortit() {
-        return this.loydetytKortit;
     }
 
     public List<Integer> getValitutIndeksit() {
@@ -193,6 +158,10 @@ public class Pelimoottori {
 
     public ParasTulos getParasTulos() {
         return this.parasTulos;
+    }
+
+    public String getTiedostonimi() {
+        return this.tiedostonimi;
     }
 
     /*
