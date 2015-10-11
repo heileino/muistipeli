@@ -22,7 +22,7 @@ public class ParasTulos {
 
         this.tiedostonimi = tiedostonimi;
         this.parasTulos = 9999;
-        tiedostonkasittelija = new TiedostonKasittelija();
+        tiedostonkasittelija = new TiedostonKasittelija(tiedostonimi);
 
     }
 
@@ -32,13 +32,13 @@ public class ParasTulos {
      *
      * @param tulos kuinka monella yrityksellä peli on pelattu läpi.
      */
-    public void setParasTulos(String tiedostonimi, int tulos) {
+    public void setParasTulos(int tulos) {
 
         if (tulos < this.parasTulos) {
             this.parasTulos = tulos;
         }
 
-        tiedostonkasittelija.kirjoitaTiedostoon(tiedostonimi, "" + this.parasTulos);
+        tiedostonkasittelija.kirjoitaTiedostoon("" + this.parasTulos);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ParasTulos {
      */
     public void lataaParasTulos(String tiedostonimi) {
 
-        this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta(tiedostonimi));
+        this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta());
     }
 
     public int getParasTulos() {

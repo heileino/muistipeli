@@ -14,19 +14,20 @@ import java.util.Scanner;
  */
 public class TiedostonKasittelija {
 
-    //private String tiedostopolku;
-    private String tiedostopolku;
+    private File tiedosto;
 
-    public TiedostonKasittelija() {
+    public TiedostonKasittelija(final String tiedostonimi) {
 
         AccessController.doPrivileged(new PrivilegedAction() {
 
             @Override
             public Object run() {
-                tiedostopolku = System.getProperty("user.home")
+                String tiedostopolku = System.getProperty("user.home")
                         + File.separator
-                        + ".";
+                        + "."
+                        + tiedostonimi;
 
+                tiedosto = new File(tiedostopolku);
                 return null;
             }
 
@@ -34,10 +35,11 @@ public class TiedostonKasittelija {
 
     }
 
-    public void luoTiedosto(String tiedostonimi) {
+    public void luoTiedosto() {
 
         try {
-            FileWriter kirjoittaja = new FileWriter(tiedostopolku + tiedostonimi);
+
+            FileWriter kirjoittaja = new FileWriter(tiedosto);
             kirjoittaja.write("" + 9999);
             kirjoittaja.close();
         } catch (IOException e) {
@@ -45,10 +47,10 @@ public class TiedostonKasittelija {
         }
     }
 
-    public void kirjoitaTiedostoon(String tiedostonimi, String teksti) {
+    public void kirjoitaTiedostoon(String teksti) {
 
         try {
-            FileWriter kirjoittaja = new FileWriter(tiedostopolku + tiedostonimi);
+            FileWriter kirjoittaja = new FileWriter(tiedosto);
             kirjoittaja.write(teksti);
             kirjoittaja.close();
         } catch (IOException e) {
@@ -56,14 +58,13 @@ public class TiedostonKasittelija {
         }
     }
 
-    public String lueTiedostosta(String tiedostonimi) {
+    public String lueTiedostosta() {
 
         Scanner lukija;
         String luettu = "";
-        File tiedosto = new File(tiedostopolku+tiedostonimi);
 
         if (!tiedosto.isFile()) {
-            luoTiedosto(tiedostopolku+tiedostonimi);
+            luoTiedosto();
         }
 
         try {

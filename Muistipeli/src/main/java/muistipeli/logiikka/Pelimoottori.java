@@ -119,15 +119,7 @@ public class Pelimoottori {
         Kortti kortti1 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(0));
         Kortti kortti2 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(1));
 
-        if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
-//            lisaaKortitLoytyneeksi(kortti1, kortti2);
-//            vahennaLoytamattomienParienMaaraa();
-            return true;
-
-        } else {
-//            kaannaKortitNurin(kortti1, kortti2);
-            return false;
-        }
+        return pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2);
     }
 
     public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
@@ -164,7 +156,7 @@ public class Pelimoottori {
     }
 
     public void asetaParasTulos() {
-        parasTulos.setParasTulos(this.tiedostonimi, getYritystenMaaraLukuna());
+        parasTulos.setParasTulos(getYritystenMaaraLukuna());
 
     }
 
@@ -198,8 +190,8 @@ public class Pelimoottori {
             pelipoyta.getTaulukko()[i].naytaSelkapuoli();
         }
     }
-    
-    public ParasTulos getParasTulos(){
+
+    public ParasTulos getParasTulos() {
         return this.parasTulos;
     }
 
