@@ -19,7 +19,7 @@ public class YritysmaaraLaskuri {
     /**
      * Metodi lisää pelaajalle yhden yrityksen lisää.
      */
-    public void lisaaYritys() {
+    public void lisaaValintayritys() {
 
         this.yrityksia++;
     }

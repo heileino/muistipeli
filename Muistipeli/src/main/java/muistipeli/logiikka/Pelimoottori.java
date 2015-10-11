@@ -14,41 +14,25 @@ public class Pelimoottori {
     private Pelipoyta pelipoyta;
     private YritysmaaraLaskuri yrityslaskuri;
     private LoytyneetKortit loytyneetKortit;
-    private List<Integer> valitutIndeksit;
+    private ValitutPaikat valitutPaikat;
     private LoytamattomatKorttiparit parejaLoytamatta;
     private ParasTulos parasTulos;
     private final int PARIENMAARA = 8;
     private String tiedostonimi;
 
     /**
-     * Konstruktori luo uuden pelipöydän, löydettyjen korttien listan,
-     * valittujen taulukkoindeksien listan, pistelaskurin ja parasta tulosta
-     * säilyttävän muuttujan.
+     * Konstruktori
      */
     public Pelimoottori() {
 
         pelipoyta = new Pelipoyta();
         this.tiedostonimi = "parastulos.txt";
         loytyneetKortit = new LoytyneetKortit();
-        valitutIndeksit = new ArrayList<>();
+        valitutPaikat = new ValitutPaikat();
         parejaLoytamatta = new LoytamattomatKorttiparit(PARIENMAARA);
         parasTulos = new ParasTulos(tiedostonimi);
         yrityslaskuri = new YritysmaaraLaskuri();
 
-    }
-
-    /**
-     * Metodi lisää yhdellä valintakerralla valitun kortin valittujen korttien
-     * listalle.
-     *
-     * @param indeksi valitun kortin sijainti taulukossa.
-     */
-    public void lisaaValittuihin(int indeksi) {
-        this.valitutIndeksit.add(indeksi);
-    }
-
-    public void tyhjaaValitutIndeksit() {
-        this.valitutIndeksit = new ArrayList<>();
     }
 
     public boolean onkoKorttiValittavissa(int i) {
@@ -56,24 +40,7 @@ public class Pelimoottori {
         return !valittuKortti.nakyykoKuvapuoli();
     }
 
-    public void valitseKortti(int i) {
-        lisaaValittuihin(i);
-        pelipoyta.paljastaKortinKuva(i);
-    }
-
-    /**
-     * Metodi kertoo, kuinka monta korttia on valittu kyseisellä yrityskerralla.
-     *
-     * @return int-tyypin luku, joka kertoo valittujen indeksien määrän.
-     */
-    public int montakoValittu() {
-        return getValitutIndeksit().size();
-    }
-
-    public void lisaaValintayritys() {
-        yrityslaskuri.lisaaYritys();
-    }
-
+    
     /**
      * Tutkitaan valittuja kortteja ja tehdään pelin sääntöjen mukaisia
      * toimenpiteitä.
@@ -81,8 +48,8 @@ public class Pelimoottori {
      * @return totuusarvo siitä, löytyikö pari vai ei.
      */
     public boolean loytyikoPari() {
-        Kortti kortti1 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(0));
-        Kortti kortti2 = pelipoyta.getKorttiTaulukosta(getValitutIndeksit().get(1));
+        Kortti kortti1 = pelipoyta.getKorttiTaulukosta(this.valitutPaikat.getValitutIndeksit().get(0));
+        Kortti kortti2 = pelipoyta.getKorttiTaulukosta(this.valitutPaikat.getValitutIndeksit().get(1));
 
         return pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2);
     }
@@ -115,13 +82,13 @@ public class Pelimoottori {
         if (this.parasTulos.getParasTulos() == 0) {
             return true;
         } else {
-            return getYritystenMaaraLukuna() < parasTulos.getParasTulos();
+            return this.yrityslaskuri.getYritysmaara() < parasTulos.getParasTulos();
         }
 
     }
 
     public void asetaParasTulos() {
-        parasTulos.setParasTulos(getYritystenMaaraLukuna());
+        parasTulos.setParasTulos(this.yrityslaskuri.getYritysmaara());
 
     }
 
@@ -137,17 +104,6 @@ public class Pelimoottori {
         return pelipoyta.getKorttiTaulukosta(indeksi);
     }
 
-    public Pelipoyta getPelipoyta() {
-        return this.pelipoyta;
-    }
-
-    public int getYritystenMaaraLukuna() {
-        return yrityslaskuri.getYritysmaara();
-    }
-
-    public List<Integer> getValitutIndeksit() {
-        return this.valitutIndeksit;
-    }
 
     public void kaannaKaikkiKortitSelkapuoliYlos() {
 
@@ -156,16 +112,12 @@ public class Pelimoottori {
         }
     }
 
-    public ParasTulos getParasTulos() {
-        return this.parasTulos;
-    }
-
     public String getTiedostonimi() {
         return this.tiedostonimi;
     }
 
     /*
-     Merkkijonoja palauttavia Gettereitä käyttöliittymiä varten.
+     Merkkijonoja palauttavia gettereitä käyttöliittymien käyttöön.
      */
     public String getParasTulosTekstina() {
         return this.parasTulos.toString();
@@ -186,4 +138,22 @@ public class Pelimoottori {
         return this.parejaLoytamatta.getParejaLoytymatta();
     }
 
+    /**
+     * Olioita palauttavia gettereitä käyttöliittymien käyttöön.
+     */
+    public ParasTulos getParasTulos() {
+        return this.parasTulos;
+    }
+
+    public Pelipoyta getPelipoyta() {
+        return this.pelipoyta;
+    }
+    
+    public ValitutPaikat getValitutPaikat() {
+        return this.valitutPaikat;
+    }
+    
+    public YritysmaaraLaskuri getYritysmaaraLaskuri(){
+        return this.yrityslaskuri;
+    }
 }

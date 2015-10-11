@@ -1,4 +1,3 @@
-
 package muistipeli.logiikka;
 
 import org.junit.Before;
@@ -25,7 +24,7 @@ public class YritysmaaraLaskuriTest {
 
     @Test
     public void lisaaYritysToimiiOikein() {
-        laskuri.lisaaYritys();
+        laskuri.lisaaValintayritys();
         assertEquals(1, laskuri.getYritysmaara());
     }
 
@@ -33,4 +32,5 @@ public class YritysmaaraLaskuriTest {
     public void toStringToimiiOikein() {
         assertEquals("Yrityksiä: " + laskuri.getYritysmaara(), laskuri.toString());
     }
+
 }
