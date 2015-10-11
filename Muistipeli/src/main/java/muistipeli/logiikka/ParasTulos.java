@@ -10,7 +10,7 @@ public class ParasTulos {
 
     private int parasTulos;
 
-    private TiedostonKasittelija tiedostonkasittelija;
+    private Tiedostonkasittelija tiedostonkasittelija;
     private String tiedostonimi;
 
     /**
@@ -21,7 +21,7 @@ public class ParasTulos {
 
         this.tiedostonimi = tiedostonimi;
         this.parasTulos = 9999;
-        tiedostonkasittelija = new TiedostonKasittelija(tiedostonimi);
+        tiedostonkasittelija = new Tiedostonkasittelija(tiedostonimi);
 
     }
 

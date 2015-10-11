@@ -8,15 +8,16 @@ import java.security.PrivilegedAction;
 import java.util.Scanner;
 
 /**
- * Luokka hoitaa tiedoston kirjoittamiseen liittyvät toiminnot
+ * Luokka hoitaa tiedoston luomiseen, kirjoittamiseen ja lukemiseen liittyvät
+ * toiminnot
  *
  * @author Heikki Leinonen
  */
-public class TiedostonKasittelija {
+public class Tiedostonkasittelija {
 
     private File tiedosto;
 
-    public TiedostonKasittelija(final String tiedostonimi) {
+    public Tiedostonkasittelija(final String tiedostonimi) {
 
         AccessController.doPrivileged(new PrivilegedAction() {
 
@@ -42,7 +43,7 @@ public class TiedostonKasittelija {
             FileWriter kirjoittaja = new FileWriter(tiedosto);
             kirjoittaja.write("" + 9999);
             kirjoittaja.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -53,7 +54,7 @@ public class TiedostonKasittelija {
             FileWriter kirjoittaja = new FileWriter(tiedosto);
             kirjoittaja.write(teksti);
             kirjoittaja.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
