@@ -12,6 +12,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -150,39 +152,43 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
                 if (!onkoKorttiValittavissa(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta! Valitse toinen kortti");
+                    return;
                 } else {
                     pelimoottori.getValitutPaikat().lisaaValittuihin(i);
                     pelimoottori.getPelipoyta().paljastaKortinKuva(i);
-//                    peliruudukko[i].setText(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString());
                     peliruudukko[i].setIcon(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
+                }
 
-                    if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
+                if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
 
-                        pelimoottori.getYritysmaaraLaskuri().lisaaValintayritys();
+                    pelimoottori.getYritysmaaraLaskuri().lisaaValintayritys();
 
-                        valinta1 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)];
-                        valinta2 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)];
+                    valinta1 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)];
+                    valinta2 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)];
 
-                        Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
-                        Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
+                    Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
+                    Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
 
-                        if (loytyikoPari()) {
-                            pelimoottori.getLoytyneetKortit().lisaaKortitLoytyneeksi(kortti1, kortti2);
-                            pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
-                            JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
+                    if (loytyikoPari()) {
+                        pelimoottori.getLoytyneetKortit().lisaaKortitLoytyneeksi(kortti1, kortti2);
+                        pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
+                        JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
 
-                        } else {
-                            kaannaKortitNurin(kortti1, kortti2);
+                    } else {
 
-                            JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
+                        kaannaKortitNurin(kortti1, kortti2);
 
-                            peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)].setIcon(kuvat.getKuva("selkakortti"));
-                            peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)].setIcon(kuvat.getKuva("selkakortti"));
+                        JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
+                        peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)].setIcon(kuvat.getKuva("selkakortti"));
+                        peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)].setIcon(kuvat.getKuva("selkakortti"));
 
-                        }
-
-                        pelimoottori.getValitutPaikat().tyhjaaValitutIndeksit();
                     }
+                    pelimoottori.getValitutPaikat().tyhjaaValitutIndeksit();
+
+                    break;
+
+                } else {
+                    return;
                 }
             }
         }
@@ -199,6 +205,13 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Käytit " + pelimoottori.getYritysmaaraLaskuri().getYritysmaara() + " yritystä.");
             }
 
+            int jatkohalu = JOptionPane.showConfirmDialog(getFrame(), "Haluatko pelata uudelleen?", null, JOptionPane.YES_NO_OPTION);
+            if (jatkohalu == 0) {
+                aloitaUudelleen();
+            } else {
+                System.exit(0);
+            }
+
         }
 
     }
@@ -210,7 +223,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         kaannaKaikkiKortitNurin();
     }
 
-    public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
+    private void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
         pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti1));
         pelimoottori.getPelipoyta().piilotaKortinKuva(pelimoottori.getPelipoyta().getKortinIndeksi(kortti2));
     }
@@ -258,11 +271,13 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     }
 
     private boolean onkoKorttiValittavissa(int i) {
+
         Kortti valittuKortti = pelimoottori.getPelipoyta().getKorttiTaulukosta(i);
         return !valittuKortti.nakyykoKuvapuoli();
     }
 
-    public boolean loytyikoPari() {
+    private boolean loytyikoPari() {
+
         Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
         Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
 
