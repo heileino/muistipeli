@@ -126,7 +126,7 @@ public class Pelipoyta {
     }
     
 
-    public void kaannaKaikkiKortitSelkapuoliYlos() {
+    public void kaannaKaikkiKortitSelkapuolelle() {
 
         for (int i = 0; i < getTaulukko().length; i++) {
             getTaulukko()[i].naytaSelkapuoli();

@@ -141,4 +141,28 @@ public class PelipoytaTest {
         assertTrue(poyta.getKortinIndeksi(null) == -1);
     }
 
+    @Test
+    public void getKorttiTaulukostaToimiiOikein() {
+
+        assertEquals("kortti_1", poyta.getKorttiTaulukosta(0).toString());
+    }
+
+    @Test
+    public void kaannaKaikkiKortitSelkapuolelleToimiiOikein() {
+        
+        boolean ok = true;
+
+        poyta.getKorttiTaulukosta(0).naytaKuvapuoli();
+        poyta.getKorttiTaulukosta(15).naytaKuvapuoli();
+        
+        poyta.kaannaKaikkiKortitSelkapuolelle();
+        
+        for (int i = 0; i < poyta.getTaulukko().length; i++) {
+            if (poyta.getKorttiTaulukosta(i).nakyykoKuvapuoli()) {
+                ok = false;
+            }
+        }
+
+        assertTrue(ok);
+    }
 }

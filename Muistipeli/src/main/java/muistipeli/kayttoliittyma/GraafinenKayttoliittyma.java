@@ -203,7 +203,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private void aloitaUudelleen() {
         this.pelimoottori = new Pelimoottori();
         pelaaPeli();
-        pelimoottori.getPelipoyta().kaannaKaikkiKortitSelkapuoliYlos();
+        pelimoottori.getPelipoyta().kaannaKaikkiKortitSelkapuolelle();
         kaannaKaikkiKortitNurin();
     }
 
