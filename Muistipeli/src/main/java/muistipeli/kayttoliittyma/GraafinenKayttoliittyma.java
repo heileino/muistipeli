@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,12 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import muistipeli.logiikka.*;
 
@@ -41,6 +44,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     private int ikkunanLeveys;
     private int ikkunanKorkeus;
     private Kuva kuvat;
+    private Timer ajastin;
 
     /**
      * Konstruktori luo uuden pelimoottorin ja peliruudukon.
@@ -57,7 +61,8 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         parasTulosLabel = new JLabel();
         ikkunanLeveys = 700;
         ikkunanKorkeus = 450;
-        this.kuvat = new Kuva();
+        kuvat = new Kuva();
+        ajastin = new Timer(2000, this);
     }
 
     @Override
@@ -136,6 +141,9 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getSource() == ajastin) {
+        }
+
         if (e.getSource() == lopetaNappi) {
             System.exit(0);
         }
@@ -157,40 +165,39 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                     pelimoottori.getValitutPaikat().lisaaValittuihin(i);
                     pelimoottori.getPelipoyta().paljastaKortinKuva(i);
                     peliruudukko[i].setIcon(kuvat.getKuva(pelimoottori.getPelipoyta().getKorttiTaulukosta(i).toString()));
+
                 }
 
-                if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
-
-                    pelimoottori.getYritysmaaraLaskuri().lisaaValintayritys();
-
-                    valinta1 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)];
-                    valinta2 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)];
-
-                    Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
-                    Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
-
-                    if (loytyikoPari()) {
-                        pelimoottori.getLoytyneetKortit().lisaaKortitLoytyneeksi(kortti1, kortti2);
-                        pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
-                        JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
-
-                    } else {
-
-                        kaannaKortitNurin(kortti1, kortti2);
-
-                        JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt. Jatka painamalla OK");
-                        peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)].setIcon(kuvat.getKuva("selkakortti"));
-                        peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)].setIcon(kuvat.getKuva("selkakortti"));
-
-                    }
-                    pelimoottori.getValitutPaikat().tyhjaaValitutIndeksit();
-
-                    break;
-
-                } else {
-                    return;
-                }
             }
+        }
+
+        if (pelimoottori.getValitutPaikat().montakoValittu() > 1) {
+
+            pelimoottori.getYritysmaaraLaskuri().lisaaValintayritys();
+
+            valinta1 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)];
+            valinta2 = peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)];
+
+            Kortti kortti1 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(0));
+            Kortti kortti2 = pelimoottori.getPelipoyta().getKorttiTaulukosta(pelimoottori.getValitutPaikat().getValitutIndeksit().get(1));
+
+            if (loytyikoPari()) {
+                pelimoottori.getLoytyneetKortit().lisaaKortitLoytyneeksi(kortti1, kortti2);
+                pelimoottori.getLoytamattomatKorttiparit().vahennaParejaLoytymatta();
+                JOptionPane.showMessageDialog(getFrame(), "Pari löytyi!");
+
+            } else {
+                JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt");
+//                ajastin.start();
+//                ajastin.setRepeats(false);
+
+                peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(0)].setIcon(kuvat.getKuva("selkakortti"));
+                peliruudukko[pelimoottori.getValitutPaikat().getValitutIndeksit().get(1)].setIcon(kuvat.getKuva("selkakortti"));
+                kaannaKortitNurin(kortti1, kortti2);
+            }
+
+            pelimoottori.getValitutPaikat().tyhjaaValitutIndeksit();
+
         }
 
         this.yritysLabel.setText(pelimoottori.getYritysmaaraLaskuri().toString());
