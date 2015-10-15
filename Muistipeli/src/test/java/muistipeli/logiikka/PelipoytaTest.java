@@ -18,7 +18,7 @@ public class PelipoytaTest {
     @Before
     public void setUp() {
 
-        poyta = new Pelipoyta();
+        poyta = new Pelipoyta(16);
         poyta.asetaKortitTaulukkoon();
     }
 

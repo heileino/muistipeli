@@ -13,12 +13,13 @@ import java.util.Collections;
 public class Pelipoyta {
 
     private final Kortti[] korttitaulukko;
-    private int TAULUKON_KOKO=16;
+    private int TAULUKON_KOKO;
+
     /**
      * Konstruktori luo uuden korttitaulukon.
      */
-    public Pelipoyta() {
-
+    public Pelipoyta(int koko) {
+        this.TAULUKON_KOKO = koko;
         korttitaulukko = new Kortti[TAULUKON_KOKO];
     }
 
@@ -58,6 +59,10 @@ public class Pelipoyta {
      * @param indeksi2 toisen valitun paikan numero
      * @return totuusarvo kahden kortin tunnuksen samuusvertailusta.
      */
+    public boolean nakyykoKortinKuvapuoli(int i) {
+        return getKorttiTaulukosta(i).nakyykoKuvapuoli();
+    }
+
     public boolean onkoKorteillaSamaTunnus(int indeksi1, int indeksi2) {
 
         return this.korttitaulukko[indeksi1].getTunnus().equals(this.korttitaulukko[indeksi2].getTunnus());
@@ -121,10 +126,9 @@ public class Pelipoyta {
     }
 
     public Kortti getKorttiTaulukosta(int indeksi) {
-    
+
         return this.getTaulukko()[indeksi];
     }
-    
 
     public void kaannaKaikkiKortitSelkapuolelle() {
 
