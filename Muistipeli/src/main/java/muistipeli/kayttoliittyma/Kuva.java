@@ -43,7 +43,6 @@ public class Kuva {
         kuva6 = luoImageIcon("/images/lammas.jpg");
         kuva7 = luoImageIcon("/images/siili.jpg");
         selkakuva = luoImageIcon("/images/kortin_selka.jpg");
-      
 
     }
 
@@ -67,6 +66,8 @@ public class Kuva {
                 return kuva6;
             case "kortti_8":
                 return kuva7;
+            case "selkakuva":
+                return selkakuva;
             default:
                 return selkakuva;
         }

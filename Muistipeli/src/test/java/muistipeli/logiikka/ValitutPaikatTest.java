@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class ValitutPaikatTest {
 
-    ValitutPaikat valinnat;
+    ValittujenPaikkaindeksienSailio valinnat;
 
     public ValitutPaikatTest() {
     }
@@ -28,7 +28,7 @@ public class ValitutPaikatTest {
 
     @Before
     public void setUp() {
-        valinnat = new ValitutPaikat();
+        valinnat = new ValittujenPaikkaindeksienSailio();
     }
 
     @After

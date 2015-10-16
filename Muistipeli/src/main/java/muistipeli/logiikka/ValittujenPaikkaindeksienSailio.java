@@ -9,11 +9,11 @@ import java.util.List;
  *
  * @author Heikki Leinonen
  */
-public class ValitutPaikat {
+public class ValittujenPaikkaindeksienSailio {
 
     private List<Integer> valitutIndeksit;
 
-    public ValitutPaikat() {
+    public ValittujenPaikkaindeksienSailio() {
 
         this.valitutIndeksit = new ArrayList<>();
     }

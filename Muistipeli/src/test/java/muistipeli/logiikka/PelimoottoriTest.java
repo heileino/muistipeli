@@ -16,8 +16,7 @@ import static org.junit.Assert.*;
 public class PelimoottoriTest {
 
     Pelimoottori pelimoottori;
-    
-    
+
     @Before
     public void setUp() {
         pelimoottori = new Pelimoottori();
@@ -26,23 +25,115 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void getLoytamattomatKorttiparitToimiiOikein() {
-        assertNotNull(pelimoottori.getLoytamattomatKorttiparit());
+    public void konstruktoriAsettaaKorttienMaaranJaLuoPelipoydanTaulukonOikein() {
+        assertTrue(pelimoottori.getPelipoyta().getTaulukko().length == 16);
+    }
+
+    @Test
+    public void konstruktoriAsettaaTiedostonNimenOikein() {
+        assertEquals("parastulos.txt", pelimoottori.getTiedostonimi());
+    }
+
+    @Test
+    public void konstruktoriLuoUudenLoytyneetKortitOlion() {
+        assertTrue(pelimoottori.getLoytyneet().getLoydetytKortit().isEmpty());
+    }
+
+    @Test
+    public void konstruktoriLuoUudenParasTulosOlion() {
+        assertEquals("parastulos.txt", pelimoottori.getParhaanTuloksenTilasto().getTiedostonimi());
+    }
+
+    @Test
+    public void konstruktoriLuoUudenValittujenPaikkaindeksienSailioOlion() {
+        assertTrue(pelimoottori.getValittujenPaikkaindeksienSailio().getValitutIndeksit().isEmpty());
+    }
+
+    @Test
+    public void konstruktoriLuoUudenYritysmaaralaskurin() {
+        assertTrue(pelimoottori.getYritysmaaraLukuna() == 0);
+    }
+
+    @Test
+    public void valintaOkToimiiKunValintaOnLaillinen() {
+        pelimoottori.valitseKortti(0);
+        assertTrue(pelimoottori.valintaOk(1));
+    }
+
+    @Test
+    public void valintaOkToimiiKunValintaOnLaiton() {
+        pelimoottori.valitseKortti(0);
+        assertFalse(pelimoottori.valintaOk(0));
+    }
+
+    @Test
+    public void valintaOkValitseeKortinOikein() {
+        pelimoottori.valintaOk(0);
+        assertTrue(pelimoottori.getValinnanIndeksi(0) == 0 && pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0));
+    }
+
+    @Test
+    public void onkoKorttiValittavissaToimiiOikeinKunKorttiOnLaillinen() {
+        pelimoottori.valitseKortti(15);
+        assertTrue(pelimoottori.onkoKorttiValittavissa(14));
+    }
+
+    @Test
+    public void onkoKorttiValittavissaToimiiOikeinKunKorttiOnLaiton() {
+        pelimoottori.valitseKortti(15);
+        assertFalse(pelimoottori.onkoKorttiValittavissa(15));
+    }
+
+    @Test
+    public void valitseKorttiToimiiOikein() {
+        pelimoottori.valitseKortti(10);
+        assertTrue(pelimoottori.getValinnanIndeksi(0) == 10 && pelimoottori.getPelipoyta().getKorttiTaulukosta(10).nakyykoKuvapuoli());
+    }
+
+    @Test
+    public void valintaankoToinenKorttiToimiiOikeinKunValittavaToinen() {
+        pelimoottori.valitseKortti(15);
+        assertTrue(pelimoottori.valitaankoToinenKortti());
+    }
+
+    @Test
+    public void valintaankoToinenKorttiToimiiOikeinKunEiValitaToista() {
+        pelimoottori.valitseKortti(0);
+        pelimoottori.valitseKortti(15);
+        assertFalse(pelimoottori.valitaankoToinenKortti());
+    }
+
+    @Test
+    public void valintaankoToinenKorttiLisaaValintaYrityksenJosEiValitaToista() {
+        pelimoottori.valitseKortti(0);
+        pelimoottori.valitseKortti(15);
+        pelimoottori.valitaankoToinenKortti();
+        assertTrue(pelimoottori.getYritysmaaraLukuna() == 1);
+    }
+
+    @Test
+    public void getLoytamattomienKorttiparienLukumaaraToimiiOikein() {
+        assertNotNull(pelimoottori.getLoytymattomienParienLukumaara());
+    }
+
+    @Test
+    public void getLoytamattomienKorttiparienMaaraTekstinaToimiiOikein() {
+        assertEquals("Pareja jäljellä: " + 8, pelimoottori.getLoytamattomienKorttiparienMaaraTekstina());
     }
 
     @Test
     public void getLoytyneetKortitToimiiOikein() {
-        assertNotNull(pelimoottori.getLoytyneetKortit());
+        assertNotNull(pelimoottori.getLoytyneet());
     }
 
     @Test
-    public void getParasTulosToimiiOikein() {
-        assertNotNull(pelimoottori.getParasTulos());
+    public void getParhaanTuloksenTilastoToimiiOikein() {
+        assertNotNull(pelimoottori.getParhaanTuloksenTilasto());
     }
 
     @Test
-    public void getValitutPaikatToimiiOikein() {
-        assertNotNull(pelimoottori.getValitutPaikat());
+    public void getValittujenPaikkaindeksienSailioToimiiOikein() {
+        assertNotNull(pelimoottori.getValittujenPaikkaindeksienSailio());
     }
 
     @Test

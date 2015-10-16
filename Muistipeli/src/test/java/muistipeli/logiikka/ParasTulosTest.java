@@ -10,12 +10,12 @@ import static org.junit.Assert.*;
  */
 public class ParasTulosTest {
 
-    ParasTulos parasTulos;
+    ParhaanTuloksenTilasto parasTulos;
 
     @Before
     public void setUp() {
 
-        parasTulos = new ParasTulos("testiparas.txt");
+        parasTulos = new ParhaanTuloksenTilasto("testiparas.txt");
 
     }
 

@@ -2,42 +2,47 @@ package muistipeli.logiikka;
 
 /**
  * Luokka toimii linkkinä käyttöliittymäluokkien ja muiden logiikka-luokkien
- * välillä tarjoamalla eri luokkien ilmentymiä palauttavia get-metodeita.
+ * välillä. Luokka tarjoaa metodeita, joilla peli etenee alusta loppuun.
  *
  * @author Heikki Leinonen
  */
 public class Pelimoottori {
 
-    private Pelipoyta pelipoyta;
-    private Yritysmaaralaskuri yrityslaskuri;
-    private LoytyneetKortit loytyneetKortit;
-    private ValitutPaikat valitutPaikat;
-    private ParasTulos parasTulos;
     private final int KORTTIEN_MAARA;
-    private String tiedostonimi = "parastulos.txt";
+    private String parasTulosTiedostonNimi;
+    private Pelipoyta pelipoyta;
+    private LoytyneetKortit loytyneetKortit;
+    private ParhaanTuloksenTilasto parasTilasto;
+    private ValittujenPaikkaindeksienSailio valittujenIndeksienSailio;
+    private Yritysmaaralaskuri yrityslaskuri;
 
     /**
-     * Konstruktori
+     * Konstruktori luo apuvälineet muistipelin pelaamiseen. Näitä ovat uusi
+     * pelipöytä sekä löytyneiden korttien, parhaan tuloksen, valittujen
+     * paikkojen ja yritysten laskemiseen käytetyt tilastointioliot.
      */
     public Pelimoottori() {
-        this.KORTTIEN_MAARA = 16;
+
+        KORTTIEN_MAARA = 16;
+        parasTulosTiedostonNimi = "parastulos.txt";
         pelipoyta = new Pelipoyta(KORTTIEN_MAARA);
         loytyneetKortit = new LoytyneetKortit();
-        valitutPaikat = new ValitutPaikat();
-        parasTulos = new ParasTulos(tiedostonimi);
+        parasTilasto = new ParhaanTuloksenTilasto(parasTulosTiedostonNimi);
+        valittujenIndeksienSailio = new ValittujenPaikkaindeksienSailio();
         yrityslaskuri = new Yritysmaaralaskuri();
-
     }
 
     public boolean valintaOk(int i) {
-
         if (!onkoKorttiValittavissa(i)) {
             return false;
         }
-        this.valitutPaikat.lisaaValittuihin(i);
-        this.pelipoyta.paljastaKortinKuva(i);
-
+        valitseKortti(i);
         return true;
+    }
+
+    public void valitseKortti(int i) {
+        this.valittujenIndeksienSailio.lisaaValittuihin(i);
+        this.pelipoyta.paljastaKortinKuva(i);
     }
 
     /**
@@ -60,7 +65,7 @@ public class Pelimoottori {
      */
     public boolean valitaankoToinenKortti() {
 
-        if (this.valitutPaikat.montakoValittu() > 1) {
+        if (this.valittujenIndeksienSailio.montakoValittu() > 1) {
             this.yrityslaskuri.lisaaValintayritys();
             return false;
         } else {
@@ -79,9 +84,8 @@ public class Pelimoottori {
      * @return tosi jos pari löytyi.
      */
     public boolean ovatkoValinnatPareja() {
-
-        Kortti kortti1 = this.pelipoyta.getKorttiTaulukosta(this.valitutPaikat.getValitutIndeksit().get(0));
-        Kortti kortti2 = this.pelipoyta.getKorttiTaulukosta(this.valitutPaikat.getValitutIndeksit().get(1));
+        Kortti kortti1 = getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = getKorttiValittujenKorttienJoukosta(1);
 
         if (this.pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
             pariLoytynyt(kortti1, kortti2);
@@ -91,6 +95,10 @@ public class Pelimoottori {
         kaannaKortitNurin(kortti1, kortti2);
 
         return false;
+    }
+
+    public Kortti getKorttiValittujenKorttienJoukosta(int valinnanIndeksi) {
+        return this.pelipoyta.getKorttiTaulukosta(this.valittujenIndeksienSailio.getValitutIndeksit().get(valinnanIndeksi));
     }
 
     /**
@@ -109,8 +117,13 @@ public class Pelimoottori {
         this.pelipoyta.piilotaKortinKuva(this.pelipoyta.getKortinIndeksi(kortti2));
     }
 
+    /**
+     * Palauttaa kyseisellä pelin hetkellä löytämättä olevien parien lukumäärän.
+     *
+     * @return parien määrä.
+     */
     public int getLoytymattomienParienLukumaara() {
-        return (this.KORTTIEN_MAARA - this.loytyneetKortit.getLoydetytKortit().size()) / 2;
+        return (KORTTIEN_MAARA - getLoytyneet().getLoydetytKortit().size()) / 2;
     }
 
     /**
@@ -125,16 +138,22 @@ public class Pelimoottori {
         return getLoytymattomienParienLukumaara() > 0;
     }
 
+    /**
+     * Metodi tekee pelin aloittamiseen tarvittavat alkutoimet. Näitä ovat
+     * pelipöydän täyttäminen korteilla, niiden sekoittaminen satunnaiseen
+     * järjestykseen ja tähän asti saadun parhaan tuloksen lataaminen ohjelmaan.
+     * käyttöön.
+     */
     public void pelaaPeli() {
         this.pelipoyta.asetaKortitTaulukkoon();
         this.pelipoyta.sekoitaTaulukonKortit();
-        this.parasTulos.lataaParasTulos();
+        this.parasTilasto.lataaParasTulos();
     }
 
     public boolean onUusiParasTulos() {
-        if (this.yrityslaskuri.getYritysmaara() < this.parasTulos.getParasTulos() || this.parasTulos.getParasTulos() == 0) {
-            this.parasTulos.setParasTulos(this.yrityslaskuri.getYritysmaara());
-            this.parasTulos.lataaParasTulos();
+        if (this.yrityslaskuri.getYritysmaara() < this.parasTilasto.getParasTulos() || this.parasTilasto.getParasTulos() == 0) {
+            this.parasTilasto.setParasTulos(this.yrityslaskuri.getYritysmaara());
+            this.parasTilasto.lataaParasTulos();
             return true;
         } else {
             return false;
@@ -151,11 +170,11 @@ public class Pelimoottori {
     }
 
     public void nollaaValitutKortit() {
-        this.valitutPaikat = new ValitutPaikat();
+        this.valittujenIndeksienSailio = new ValittujenPaikkaindeksienSailio();
     }
 
     public String getTiedostonimi() {
-        return this.tiedostonimi;
+        return this.parasTulosTiedostonNimi;
     }
 
     public String getYritystenMaaraTekstina() {
@@ -167,7 +186,7 @@ public class Pelimoottori {
     }
 
     public String getParasTulosTekstina() {
-        return this.parasTulos.toString();
+        return this.parasTilasto.toString();
     }
 
     public int getYritysmaaraLukuna() {
@@ -175,11 +194,29 @@ public class Pelimoottori {
     }
 
     public int getValinnanIndeksi(int jarjestysnro) {
-        return this.valitutPaikat.getValitutIndeksit().get(jarjestysnro);
+        return this.valittujenIndeksienSailio.getValitutIndeksit().get(jarjestysnro);
     }
-    
-    public Pelipoyta getPelipoyta(){
+
+    public Pelipoyta getPelipoyta() {
         return this.pelipoyta;
     }
+
+    public LoytyneetKortit getLoytyneet() {
+        return this.loytyneetKortit;
+    }
+
+    public ParhaanTuloksenTilasto getParhaanTuloksenTilasto() {
+        return this.parasTilasto;
+    }
+
+    public ValittujenPaikkaindeksienSailio getValittujenPaikkaindeksienSailio() {
+        return this.valittujenIndeksienSailio;
+    }
+    
+    public Yritysmaaralaskuri getYritysmaaraLaskuri(){
+        return this.yrityslaskuri;
+    }
+    
+    
 
 }

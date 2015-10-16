@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import muistipeli.logiikka.*;
+import muistipeli.logiikka.Pelimoottori;
 
 /**
  * Luokka tarjoaa muistipelille graafisen käyttöliittymän.
@@ -88,7 +88,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     public void piirraPeliruudut(JPanel paneeli) {
 
         for (int i = 0; i < peliruudukko.length; i++) {
-            this.peliruudukko[i] = new JButton(kuvat.getKuva("selkapuoli"));
+            this.peliruudukko[i] = new JButton(kuvat.getKuva("selkakuva"));
             paneeli.add(peliruudukko[i]);
             peliruudukko[i].addActionListener(this);
         }
@@ -123,7 +123,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == lopetaNappi) {
-
             System.exit(0);
         }
 
@@ -134,7 +133,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         for (int i = 0; i < peliruudukko.length; i++) {
 
             if (e.getSource() == peliruudukko[i]) {
-
                 if (!pelimoottori.valintaOk(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta!");
                     return;
@@ -151,19 +149,15 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(getFrame(), "Paria ei löytynyt");
 
-                    peliruudukko[pelimoottori.getValinnanIndeksi(0)].setIcon(kuvat.getKuva("selkakortti"));
-                    peliruudukko[pelimoottori.getValinnanIndeksi(1)].setIcon(kuvat.getKuva("selkakortti"));
-
+                    kaannaValitutKortitSelkapuolelle();
                 }
 
-                this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
-                this.korttejaJaljellaLabel.setText("Pareja jäljellä: " + pelimoottori.getLoytymattomienParienLukumaara());
+                paivitaTilastot();
                 break;
             }
         }
 
         if (!pelimoottori.jatkuukoPeli()) {
-
             if (pelimoottori.onUusiParasTulos()) {
                 this.parasTulosLabel.setText(pelimoottori.getParasTulosTekstina());
                 JOptionPane.showMessageDialog(getFrame(), "Peli päättyi. Teit uuden ennätyksen, " + pelimoottori.getYritysmaaraLukuna() + " yritystä");
@@ -179,19 +173,28 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         }
     }
 
+    protected void kaannaValitutKortitSelkapuolelle() {
+        peliruudukko[pelimoottori.getValinnanIndeksi(0)].setIcon(kuvat.getKuva("selkakuva"));
+        peliruudukko[pelimoottori.getValinnanIndeksi(1)].setIcon(kuvat.getKuva("selkakuva"));
+    }
+
     protected void uudelleenAloitus() {
+
         pakotaKaikkiKortitNurin();
         pelimoottori = new Pelimoottori();
-        this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
-        this.korttejaJaljellaLabel.setText("Pareja jäljellä: " + pelimoottori.getLoytymattomienParienLukumaara());
+        paivitaTilastot();
         pelimoottori.pelaaPeli();
     }
 
-    private void pakotaKaikkiKortitNurin() {
+    protected void paivitaTilastot() {
+        this.yritysLabel.setText(pelimoottori.getYritystenMaaraTekstina());
+        this.korttejaJaljellaLabel.setText("Pareja jäljellä: " + pelimoottori.getLoytymattomienParienLukumaara());
+    }
 
-        for (int i = 0; i < peliruudukko.length; i++) {
+    protected void pakotaKaikkiKortitNurin() {
 
-            peliruudukko[i].setIcon(kuvat.getKuva("selkakuva"));
+        for (JButton nappi : peliruudukko) {
+            nappi.setIcon(kuvat.getKuva("selkakuva"));
         }
     }
 }

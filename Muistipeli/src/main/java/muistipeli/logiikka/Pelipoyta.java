@@ -136,4 +136,8 @@ public class Pelipoyta {
             getTaulukko()[i].naytaSelkapuoli();
         }
     }
+    
+    public boolean getKortinKuvapuolenNakyvyys(int indeksi){
+        return getTaulukko()[indeksi].nakyykoKuvapuoli();
+    }
 }

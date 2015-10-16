@@ -6,7 +6,7 @@ package muistipeli.logiikka;
  *
  * @author Heikki Leinonen
  */
-public class ParasTulos {
+public class ParhaanTuloksenTilasto {
 
     private int parasTulos;
 
@@ -17,7 +17,7 @@ public class ParasTulos {
      * Konstruktori alustaa parhaan tuloksen.
      *
      */
-    public ParasTulos(String tiedostonimi) {
+    public ParhaanTuloksenTilasto(String tiedostonimi) {
 
         this.tiedostonimi = tiedostonimi;
         this.parasTulos = 9999;
