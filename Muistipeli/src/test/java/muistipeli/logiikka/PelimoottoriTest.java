@@ -112,6 +112,70 @@ public class PelimoottoriTest {
     }
 
     @Test
+    public void getKortinTunnisteToimiiOikein() {
+        assertEquals("kortti_1", pelimoottori.getKortinTunniste(0));
+    }
+
+    @Test
+    public void ovatkoValinnatParejaToimiiOikeinKunValinnatOvatPareja() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(8);
+
+        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
+
+        assertTrue(pelimoottori.ovatkoValinnatPareja());
+
+    }
+
+    @Test
+    public void ovatkoValinnatParejaToimiiOikeinKunValinnatEivatOlePareja() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
+
+        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
+
+        assertFalse(pelimoottori.ovatkoValinnatPareja());
+    }
+
+    @Test
+    public void ovatkoValinnatParejaKaantaaKortitNurin() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
+
+        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
+
+        pelimoottori.ovatkoValinnatPareja();
+
+        assertTrue(!kortti1.nakyykoKuvapuoli() && !kortti2.nakyykoKuvapuoli());
+    }
+
+    @Test
+    public void ovatkoValinnatParejakutsuuPariLoytynyt() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(8);
+
+        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
+
+        pelimoottori.ovatkoValinnatPareja();
+        assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1)&&pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
+
+    }
+
+    @Test
+    public void onkoKorteillaSamaTunnusToimiiOikeinKunSama() {
+
+    }
+
+    @Test
+    public void onkoKorteillaSamaTunnusToimiiOikeinKunEiSama() {
+
+    }
+
+    @Test
     public void getLoytamattomienKorttiparienLukumaaraToimiiOikein() {
         assertNotNull(pelimoottori.getLoytymattomienParienLukumaara());
     }

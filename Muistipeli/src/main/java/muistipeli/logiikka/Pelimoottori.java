@@ -87,7 +87,7 @@ public class Pelimoottori {
         Kortti kortti1 = getKorttiValittujenKorttienJoukosta(0);
         Kortti kortti2 = getKorttiValittujenKorttienJoukosta(1);
 
-        if (this.pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
+        if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
             pariLoytynyt(kortti1, kortti2);
             return true;
         }
