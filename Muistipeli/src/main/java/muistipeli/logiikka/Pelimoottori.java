@@ -177,5 +177,9 @@ public class Pelimoottori {
     public int getValinnanIndeksi(int jarjestysnro) {
         return this.valitutPaikat.getValitutIndeksit().get(jarjestysnro);
     }
+    
+    public Pelipoyta getPelipoyta(){
+        return this.pelipoyta;
+    }
 
 }

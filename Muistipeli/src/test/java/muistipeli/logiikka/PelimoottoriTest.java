@@ -16,7 +16,8 @@ import static org.junit.Assert.*;
 public class PelimoottoriTest {
 
     Pelimoottori pelimoottori;
-
+    
+    
     @Before
     public void setUp() {
         pelimoottori = new Pelimoottori();
