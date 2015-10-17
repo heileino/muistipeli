@@ -47,7 +47,7 @@ public class Tiedostonkasittelija {
             kirjoittaja.write("" + 9999);
             kirjoittaja.close();
         } catch (Exception e) {
-            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
+
         }
     }
 
@@ -63,7 +63,7 @@ public class Tiedostonkasittelija {
             kirjoittaja.write(teksti);
             kirjoittaja.close();
         } catch (Exception e) {
-            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
+
         }
     }
 
@@ -89,7 +89,7 @@ public class Tiedostonkasittelija {
             }
             lukija.close();
         } catch (Exception e) {
-            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
+
         }
         return luettu;
     }
