@@ -20,8 +20,6 @@ public class Main {
     public static void main(String[] args) {
         GraafinenKayttoliittyma gui = new GraafinenKayttoliittyma();
         SwingUtilities.invokeLater(gui);
-//        Tekstikayttoliittyma tkayttis = new Tekstikayttoliittyma(poyta);
-
     }
 
 }
