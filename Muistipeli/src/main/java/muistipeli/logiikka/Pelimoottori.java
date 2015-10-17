@@ -36,9 +36,11 @@ public class Pelimoottori {
      * Metodi valitsee taulukon indeksiä vastaavan kortin valituksi, mikäli se
      * on valintakelpoinen.
      *
+     * @param i korttitaulukon indeksi
+     *
      * @see muistipeli.logiikka.Pelimoottori#onkoKorttiValittavissa(int)
      * @see muistipeli.logiikka.Pelimoottori#valitseKortti(int)
-     * @param i korttitaulukon indeksi
+     *
      * @return tosi jos valinta onnistuu
      */
     public boolean ValitaanKorttiJosMahdollista(int i) {
@@ -53,10 +55,12 @@ public class Pelimoottori {
      * Metodi lisää valitun kortin valittujen korttien säiliöön ja muuttaa
      * valitun kortin näkyvyyden kuvaksi.
      *
+     * @param i korttitaulukon indeksi
+     *
      * @see
      * muistipeli.logiikka.ValittujenPaikkaindeksienSailio#lisaaValittuihin(int)
      * @see muistipeli.logiikka.Pelipoyta#paljastaKortinKuva(int)
-     * @param i korttitaulukon indeksi
+     *
      */
     public void valitseKortti(int i) {
         this.valittujenIndeksienSailio.lisaaValittuihin(i);
@@ -64,13 +68,16 @@ public class Pelimoottori {
     }
 
     /**
-     * Kertoo taulukon tietyssä paikassa olevan kortin asennon. Kortin täytyy olla selkäpuoli ylöspäin, jotta 
+     * Kertoo taulukon tietyssä paikassa oleva kortti valittavissa. Kortin on
+     * valittavissa, mikäli sen asento on selkäpuoli ylöspäin.
      *
      * @param i korttitaulukon indeksi
+     *
+     * @see muistipeli.logiikka.Pelipoyta#nakyykoKortinKuvapuoli(int)
+     *
      * @return totuusarvo kortin kuvapuolen näkyvyydestä.
      */
     public boolean onkoKorttiValittavissa(int i) {
-
         return !pelipoyta.nakyykoKortinKuvapuoli(i);
     }
 
@@ -79,7 +86,10 @@ public class Pelimoottori {
      * ovat toisen kortin valinta, mikäli kortteja on valittu vain yksi tai
      * jatko korttien vertailuun.
      *
-     * @return totuusarvo siitä, onko toisen kortin valinnalle tarvetta.
+     * @see muistipeli.logiikka.ValittujenPaikkaindeksienSailio#montakoValittu()
+     * @see muistipeli.logiikka.Yritysmaaralaskuri#lisaaValintayritys()
+     *
+     * @return tosi, jos toisen kortin valinnalle on tarvetta
      */
     public boolean valitaankoToinenKortti() {
 
@@ -96,10 +106,21 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi tarkistaa ovatko valittujen korttien listalla olevat kortit samaa
-     * paria. Mikäli kortit ovat samat,
+     * Metodi lisaa yhdellä yrityskerralla valitut kortit löydettyjen korttien
+     * listalle, mikäli ne ovat pari tai kääntää korttien selkäpuolet esiin,
+     * mikäli valitut kortit eivät ole pareja.
      *
-     * @return tosi jos pari löytyi.
+     * @see
+     * muistipeli.logiikka.Pelipoyta#onkoKorteillaSamaTunnus(muistipeli.logiikka.Kortti,
+     * muistipeli.logiikka.Kortti)
+     * @see
+     * muistipeli.logiikka.Pelimoottori#pariLoytynyt(muistipeli.logiikka.Kortti,
+     * muistipeli.logiikka.Kortti)
+     * @see
+     * muistipeli.logiikka.Pelimoottori#kaannaKortitNurin(muistipeli.logiikka.Kortti,
+     * muistipeli.logiikka.Kortti)
+     *
+     * @return tosi, jos pari löytyy
      */
     public boolean ovatkoValinnatPareja() {
         Kortti kortti1 = getKorttiValittujenKorttienJoukosta(0);
@@ -115,21 +136,39 @@ public class Pelimoottori {
         return false;
     }
 
+    /**
+     * Metodi palauttaa kortin yhdellä yrityskerralla valittujen kahden kortin
+     * joukosta.
+     *
+     * @param valinnanIndeksi
+     * @return valintaindeksiä vastaava kortti
+     */
     public Kortti getKorttiValittujenKorttienJoukosta(int valinnanIndeksi) {
         return this.pelipoyta.getKorttiTaulukosta(this.valittujenIndeksienSailio.getValitutIndeksit().get(valinnanIndeksi));
     }
 
     /**
-     * Metodin tehtävä on kutsua parin löytymisestä seuraavia pelisääntöjen
-     * mukaisia toimenpiteitä.
+     * Metodi lisaa löytyneet parit löytyneitä pareja ylläpitävään listaan
      *
-     * @param kortti1
-     * @param kortti2
+     * @see
+     * muistipeli.logiikka.LoytyneetKortit#lisaaKortitLoytyneeksi(muistipeli.logiikka.Kortti,
+     * muistipeli.logiikka.Kortti)
+     *
+     * @param kortti1 ensimmäinen löydetty muistikortti
+     * @param kortti2 toinen löydetty muistikortti
      */
     public void pariLoytynyt(Kortti kortti1, Kortti kortti2) {
         this.loytyneetKortit.lisaaKortitLoytyneeksi(kortti1, kortti2);
     }
 
+    /**
+     * Metodi kaantaa parametrina saamansa kortit selkäpuolelle.
+     *
+     * @see muistipeli.logiikka.
+     * 
+     * @param kortti1 muistikortti
+     * @param kortti2 muistikortti
+     */
     public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
         this.pelipoyta.piilotaKortinKuva(this.pelipoyta.getKortinIndeksi(kortti1));
         this.pelipoyta.piilotaKortinKuva(this.pelipoyta.getKortinIndeksi(kortti2));
