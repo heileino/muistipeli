@@ -64,7 +64,7 @@ public class Pelimoottori {
     }
 
     /**
-     * Kertoo taulukon tietyssä paikassa olevan kortin asennon.
+     * Kertoo taulukon tietyssä paikassa olevan kortin asennon. Kortin täytyy olla selkäpuoli ylöspäin, jotta 
      *
      * @param i korttitaulukon indeksi
      * @return totuusarvo kortin kuvapuolen näkyvyydestä.
