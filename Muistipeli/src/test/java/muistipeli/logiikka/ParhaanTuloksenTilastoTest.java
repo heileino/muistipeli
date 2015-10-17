@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class ParasTulosTest {
+public class ParhaanTuloksenTilastoTest {
 
     ParhaanTuloksenTilasto parasTulos;
 
@@ -28,7 +28,7 @@ public class ParasTulosTest {
     @Test
     public void toStringToimiiOikeinAlkuarvolla() {
 
-        assertEquals("Paras tulos: - ", parasTulos.toString());
+        assertEquals("Paras tulos: -", parasTulos.toString());
     }
 
     @Test

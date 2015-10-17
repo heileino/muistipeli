@@ -133,9 +133,6 @@ public class PelimoottoriTest {
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
 
-        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
-        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
-
         assertFalse(pelimoottori.ovatkoValinnatPareja());
     }
 
@@ -144,12 +141,13 @@ public class PelimoottoriTest {
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
 
+        pelimoottori.getPelipoyta().getKorttiTaulukosta(0).naytaKuvapuoli();
+        pelimoottori.getPelipoyta().getKorttiTaulukosta(15).naytaKuvapuoli();
+
         Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
         Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
 
-        pelimoottori.ovatkoValinnatPareja();
-
-        assertTrue(!kortti1.nakyykoKuvapuoli() && !kortti2.nakyykoKuvapuoli());
+        assertTrue(!pelimoottori.ovatkoValinnatPareja() && !kortti1.nakyykoKuvapuoli() && !kortti2.nakyykoKuvapuoli());
     }
 
     @Test
@@ -161,18 +159,63 @@ public class PelimoottoriTest {
         Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
 
         pelimoottori.ovatkoValinnatPareja();
-        assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1)&&pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
+        assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1) && pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
 
     }
 
     @Test
-    public void onkoKorteillaSamaTunnusToimiiOikeinKunSama() {
+    public void pariLoytynytToimiiOikein() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(8);
 
+        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
+        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
+
+        pelimoottori.pariLoytynyt(kortti1, kortti2);
+        assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1) && pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
     }
 
     @Test
-    public void onkoKorteillaSamaTunnusToimiiOikeinKunEiSama() {
+    public void kaannaKortitNurinToimiiOikein() {
+        pelimoottori.getPelipoyta().paljastaKortinKuva(0);
+        pelimoottori.getPelipoyta().paljastaKortinKuva(15);
 
+        pelimoottori.kaannaKortitNurin(pelimoottori.getPelipoyta().getKorttiTaulukosta(0), pelimoottori.getPelipoyta().getKorttiTaulukosta(15));
+
+        assertTrue(!pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0) && !pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(15));
+    }
+
+    @Test
+    public void jatkuukoPeliToimiiOikeinKunJatketaan() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(4);
+        pelimoottori.getLoytyneet().lisaaKortitLoytyneeksi(pelimoottori.getPelipoyta().getKorttiTaulukosta(0), pelimoottori.getPelipoyta().getKorttiTaulukosta(1));
+        assertTrue(pelimoottori.jatkuukoPeli() && pelimoottori.getValittujenPaikkaindeksienSailio().getValitutIndeksit().isEmpty());
+    }
+
+    @Test
+    public void jatkuukoPeliToimiiOikeinKunEiJatketa() {
+        for (int i = 0; i < 8; i++) {
+            pelimoottori.getLoytyneet().lisaaKortitLoytyneeksi(pelimoottori.getPelipoyta().getKorttiTaulukosta(i), pelimoottori.getPelipoyta().getKorttiTaulukosta(i));
+        }
+        assertTrue(!pelimoottori.jatkuukoPeli());
+    }
+
+    @Test
+    public void pelaaPeliToimiiOikeinAsemmattamallaKortitTaulukkoon() {
+        Pelimoottori pelimoottori2 = new Pelimoottori();
+        pelimoottori2.pelaaPeli();
+        assertTrue(pelimoottori2.getPelipoyta().getKorttiTaulukosta(0) instanceof Kortti && pelimoottori2.getPelipoyta().getKorttiTaulukosta(15) instanceof Kortti);
+    }
+
+    @Test
+    public void getYritystenMaaraTekstinaToimiiOikein() {
+        assertEquals("Yrityksiä: 0", pelimoottori.getYritystenMaaraTekstina());
+    }
+
+    @Test
+    public void getParasTulosTekstinaToimiiOikein() {
+
+        assertEquals("Paras tulos: -", pelimoottori.getParasTulosTekstina());
     }
 
     @Test

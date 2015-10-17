@@ -28,6 +28,39 @@ public class PelipoytaTest {
         assertEquals(16, poyta.getTaulukko().length);
     }
 
+//    @Test
+//    public void asetaKortitTaulukkoonToimiiOikeinAlkuosassa() {
+//        boolean ok = true;
+//
+//        int puolikasTaulukonPituus = poyta.getTaulukko().length / 2;
+//
+//        for (int i = 0; i < puolikasTaulukonPituus; i++) {
+//
+//            if (poyta.getTaulukko()[i].toString().equals("kortti_9")) {
+//                ok = false;
+//            }
+//        }
+//
+//        assertTrue(ok);
+//    }
+//
+//    @Test
+//    public void asetaKortitTaulukkoonToimiiOikeinIndeksienOsalta() {
+//        boolean ok = true;
+//
+//        int puolikasTaulukonPituus = poyta.getTaulukko().length / 2;
+//
+//        for (int i = 0; i < puolikasTaulukonPituus; i++) {
+//
+//            if (i >= puolikasTaulukonPituus) {
+//                ok = false;
+//            }
+//
+//        }
+//        assertTrue(ok);
+//    }
+
+
     @Test
     public void taulukonPituudenPuolitusToimiiOikein() {
 
@@ -149,14 +182,14 @@ public class PelipoytaTest {
 
     @Test
     public void kaannaKaikkiKortitSelkapuolelleToimiiOikein() {
-        
+
         boolean ok = true;
 
         poyta.getKorttiTaulukosta(0).naytaKuvapuoli();
         poyta.getKorttiTaulukosta(15).naytaKuvapuoli();
-        
+
         poyta.kaannaKaikkiKortitSelkapuolelle();
-        
+
         for (int i = 0; i < poyta.getTaulukko().length; i++) {
             if (poyta.getKorttiTaulukosta(i).nakyykoKuvapuoli()) {
                 ok = false;

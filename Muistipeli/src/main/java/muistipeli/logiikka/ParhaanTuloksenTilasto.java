@@ -66,7 +66,7 @@ public class ParhaanTuloksenTilasto {
     @Override
     public String toString() {
         if (getParasTulos() == 9999) {
-            return "Paras tulos: - ";
+            return "Paras tulos: -";
         }
         return "Paras tulos: " + getParasTulos();
     }
