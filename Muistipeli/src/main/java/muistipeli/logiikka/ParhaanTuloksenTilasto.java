@@ -2,7 +2,7 @@ package muistipeli.logiikka;
 
 /**
  * Luokka pitää kirjaa parhaasta pelisuorituksesta, eli pienimmistä
- * yritysmääristä, joilla peli on pelattu onnistuneesti läpi.
+ * yritysmääristä, jolla peli on pelattu onnistuneesti läpi.
  *
  * @author Heikki Leinonen
  */
@@ -14,8 +14,10 @@ public class ParhaanTuloksenTilasto {
     private String tiedostonimi;
 
     /**
-     * Konstruktori alustaa parhaan tuloksen.
+     * Konstruktori alustaa parhaan tuloksen ja asettaa paremetrina saadun nimen
+     * parasta tulosta kirjaavan tiedoston nimeksi.
      *
+     * @param tiedostonimi parhaan tuloksen kirjaavan tiedoston nimi
      */
     public ParhaanTuloksenTilasto(String tiedostonimi) {
 
@@ -41,17 +43,14 @@ public class ParhaanTuloksenTilasto {
     }
 
     /**
-     * Metodin lataa tiedostosta parhaan tuloksen luokan ilmentymän käyttöön
+     * Metodin lataa tiedostosta siellä olevan tuloksen luokan ilmentymän käyttöön.
      *
-     * @param tiedostonimi
      */
     public void lataaParasTulos() {
-
         this.parasTulos = Integer.parseInt(tiedostonkasittelija.lueTiedostosta());
     }
 
     public int getParasTulos() {
-
         return this.parasTulos;
     }
 

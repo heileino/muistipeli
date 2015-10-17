@@ -2,13 +2,12 @@ package muistipeli.logiikka;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Scanner;
 
 /**
- * Luokka hoitaa tiedoston luomiseen, kirjoittamiseen ja lukemiseen liittyvät
+ * Luokka toteuttaa tiedoston luomiseen, kirjoittamiseen ja lukemiseen liittyvät
  * toiminnot
  *
  * @author Heikki Leinonen
@@ -21,25 +20,20 @@ public class Tiedostonkasittelija {
      * Konstruktori luo parametrina annetusta tiedostonimestä tiedostopolun ja
      * luo näistä File-luokan ilmentymän.
      *
-     * @param tiedostonimi
+     * @param tiedostonimi haluttu tiedostonimi
      */
     public Tiedostonkasittelija(final String tiedostonimi) {
-
         AccessController.doPrivileged(new PrivilegedAction() {
-
             @Override
             public Object run() {
                 String tiedostopolku = System.getProperty("user.home")
                         + File.separator
                         + "."
                         + tiedostonimi;
-
                 tiedosto = new File(tiedostopolku);
                 return null;
             }
-
         });
-
     }
 
     /**
@@ -49,19 +43,18 @@ public class Tiedostonkasittelija {
     public void luoTiedosto() {
 
         try {
-
             FileWriter kirjoittaja = new FileWriter(tiedosto);
             kirjoittaja.write("" + 9999);
             kirjoittaja.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
         }
     }
 
     /**
      * Metodi kirjoittaa parametrina saadun merkkijonon tiedostoon
      *
-     * @param teksti
+     * @param teksti tiedostoon talletettavaksi haluttu teksti
      */
     public void kirjoitaTiedostoon(String teksti) {
 
@@ -70,7 +63,7 @@ public class Tiedostonkasittelija {
             kirjoittaja.write(teksti);
             kirjoittaja.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
         }
     }
 
@@ -78,7 +71,7 @@ public class Tiedostonkasittelija {
      * Metodi lukee ilmentymämuuttujana olevan tiedoston sisällön ja palauttaa
      * sen merkkijonona.
      *
-     * @return String-merkkijono
+     * @return tiedostosta luettu sisältö
      */
     public String lueTiedostosta() {
 
@@ -96,10 +89,8 @@ public class Tiedostonkasittelija {
             }
             lukija.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Virhe tiedostonkäsittelyssä: " + e.getMessage());
         }
-
         return luettu;
     }
-
 }

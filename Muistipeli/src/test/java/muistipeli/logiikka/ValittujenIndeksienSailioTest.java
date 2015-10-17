@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
  *
  * @author Heikki Leinonen
  */
-public class ValittujenPaikkaindeksienSailioTest {
+public class ValittujenIndeksienSailioTest {
 
-    ValittujenPaikkaindeksienSailio valinnat;
+    ValittujenIndeksienSailio valinnat;
 
-    public ValittujenPaikkaindeksienSailioTest() {
+    public ValittujenIndeksienSailioTest() {
     }
 
     @BeforeClass
@@ -28,7 +28,7 @@ public class ValittujenPaikkaindeksienSailioTest {
 
     @Before
     public void setUp() {
-        valinnat = new ValittujenPaikkaindeksienSailio();
+        valinnat = new ValittujenIndeksienSailio();
     }
 
     @After

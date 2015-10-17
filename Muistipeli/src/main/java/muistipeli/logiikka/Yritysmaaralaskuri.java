@@ -20,7 +20,6 @@ public class Yritysmaaralaskuri {
      * Metodi lisää pelaajalle yhden yrityksen lisää.
      */
     public void lisaaValintayritys() {
-
         this.yrityksia++;
     }
 

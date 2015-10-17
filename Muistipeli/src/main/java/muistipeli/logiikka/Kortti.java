@@ -1,11 +1,9 @@
 package muistipeli.logiikka;
 
-import javax.swing.ImageIcon;
-
 /**
  * Luokka kuvaa yksittäistä muistikorttia. Luokan kaksi keskeistä ominaisuutta
- ovat kortin TUNNUS ja asento. Asennolla tarkoitetaan sitä, onko kortin kuva-
- vai selkäpuoli esillä
+ * ovat kortin tunnus ja asento. Asennolla tarkoitetaan sitä, onko kortin kuva-
+ * vai selkäpuoli esillä
  *
  * @author Heikki Leinonen
  */
@@ -21,7 +19,6 @@ public class Kortti {
      * @param tunnus korttiparin yksilöivä merkkijono
      */
     public Kortti(String tunnus) {
-
         kuvapuoliNakyy = false;
         this.TUNNUS = tunnus;
     }
@@ -40,7 +37,6 @@ public class Kortti {
      * Metodi asettaa kyseisen kortin selkäpuolen näkyvyyden epätodeksi;
      */
     public void naytaSelkapuoli() {
-
         if (kuvapuoliNakyy) {
             kuvapuoliNakyy = false;
         }
@@ -52,7 +48,6 @@ public class Kortti {
      * @return boolean-totuusarvo kuvapuolen näkyvyydestä
      */
     public boolean nakyykoKuvapuoli() {
-
         return this.kuvapuoliNakyy;
     }
 
@@ -60,11 +55,9 @@ public class Kortti {
 
         return TUNNUS;
     }
-    
-    
+
     @Override
     public String toString() {
-
         return "kortti_" + TUNNUS;
     }
 }

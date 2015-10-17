@@ -9,12 +9,14 @@ import java.util.List;
  *
  * @author Heikki Leinonen
  */
-public class ValittujenPaikkaindeksienSailio {
+public class ValittujenIndeksienSailio {
 
     private List<Integer> valitutIndeksit;
 
-    public ValittujenPaikkaindeksienSailio() {
-
+    /**
+     * Konstruktori luo uuden valittuja indeksejä säilövän luettelon.
+     */
+    public ValittujenIndeksienSailio() {
         this.valitutIndeksit = new ArrayList<>();
     }
 
@@ -22,20 +24,23 @@ public class ValittujenPaikkaindeksienSailio {
      * Metodi lisää yhdellä valintakerralla valitun kortin valittujen korttien
      * listalle.
      *
-     * @param indeksi valitun kortin sijainti taulukossa.
+     * @param indeksi valitun kortin sijainti taulukossa
      */
     public void lisaaValittuihin(int indeksi) {
         this.valitutIndeksit.add(indeksi);
     }
 
+    /**
+     * Metodi tyhjentää valittujen korttien indeksejä säilövän listan sisällön.
+     */
     public void tyhjaaValitutIndeksit() {
         this.valitutIndeksit = new ArrayList<>();
     }
-    
+
     /**
      * Metodi kertoo, kuinka monta korttia on valittu kyseisellä yrityskerralla.
      *
-     * @return int-tyypin luku, joka kertoo valittujen indeksien määrän.
+     * @return valittujen indeksien määrän kertova luku
      */
     public int montakoValittu() {
         return getValitutIndeksit().size();

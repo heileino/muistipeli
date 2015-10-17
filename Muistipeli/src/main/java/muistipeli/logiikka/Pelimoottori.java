@@ -13,7 +13,7 @@ public class Pelimoottori {
     private Pelipoyta pelipoyta;
     private LoytyneetKortit loytyneetKortit;
     private ParhaanTuloksenTilasto parasTilasto;
-    private ValittujenPaikkaindeksienSailio valittujenIndeksienSailio;
+    private ValittujenIndeksienSailio valittujenIndeksienSailio;
     private Yritysmaaralaskuri yrityslaskuri;
 
     /**
@@ -28,7 +28,7 @@ public class Pelimoottori {
         pelipoyta = new Pelipoyta(KORTTIEN_MAARA);
         loytyneetKortit = new LoytyneetKortit();
         parasTilasto = new ParhaanTuloksenTilasto(parasTulosTiedostonNimi);
-        valittujenIndeksienSailio = new ValittujenPaikkaindeksienSailio();
+        valittujenIndeksienSailio = new ValittujenIndeksienSailio();
         yrityslaskuri = new Yritysmaaralaskuri();
     }
 
@@ -240,7 +240,7 @@ public class Pelimoottori {
 
     /**
      * Metodi joko käynnistää tai lopettaa pelin. Parametrilla 0 käynnistetään uusi peli. Muilla numeroilla palautetaan epätosi.
-     * @param käyttäjän toivettava vastaava numero.
+     * @param jatkohalu käyttäjän toivettava vastaava numero
      * @return tosi, jos parametri on 0
      */
     public boolean aloitetaankoUusiPeli(int jatkohalu) {
@@ -250,8 +250,12 @@ public class Pelimoottori {
         return false;
     }
 
+    
+    /**
+     * Metodi tyhjentää valittuja kortteja säilövän listan uutta yrityskierrosta varten.
+     */
     public void nollaaValitutKortit() {
-        this.valittujenIndeksienSailio = new ValittujenPaikkaindeksienSailio();
+        this.valittujenIndeksienSailio = new ValittujenIndeksienSailio();
     }
 
     /**
@@ -302,7 +306,7 @@ public class Pelimoottori {
         return this.parasTilasto;
     }
 
-    public ValittujenPaikkaindeksienSailio getValittujenPaikkaindeksienSailio() {
+    public ValittujenIndeksienSailio getValittujenPaikkaindeksienSailio() {
         return this.valittujenIndeksienSailio;
     }
 
