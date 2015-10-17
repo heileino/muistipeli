@@ -63,8 +63,8 @@ public class Pelimoottori {
      *
      */
     public void valitseKortti(int i) {
-        this.valittujenIndeksienSailio.lisaaValittuihin(i);
-        this.pelipoyta.paljastaKortinKuva(i);
+        valittujenIndeksienSailio.lisaaValittuihin(i);
+        pelipoyta.paljastaKortinKuva(i);
     }
 
     /**
@@ -101,6 +101,16 @@ public class Pelimoottori {
         }
     }
 
+    /**
+     * Metodi välittää kutsujalle parametrina annettua taulukon indeksiä
+     * vastaavan kortin tunnisteen.
+     *
+     * @param i taulukon indeksi
+     *
+     * @see muistipeli.logiikka.Pelipoyta#getKorttiTaulukosta(int)
+     *
+     * @return kortin tunniste
+     */
     public String getKortinTunniste(int i) {
         return this.pelipoyta.getKorttiTaulukosta(i).toString();
     }
@@ -164,8 +174,8 @@ public class Pelimoottori {
     /**
      * Metodi kaantaa parametrina saamansa kortit selkäpuolelle.
      *
-     * @see muistipeli.logiikka.
-     * 
+     * @see muistipeli.logiikka.Pelipoyta#piilotaKortinKuva(int)
+     *
      * @param kortti1 muistikortti
      * @param kortti2 muistikortti
      */
@@ -175,7 +185,8 @@ public class Pelimoottori {
     }
 
     /**
-     * Palauttaa kyseisellä pelin hetkellä löytämättä olevien parien lukumäärän.
+     * Metodi palauttaa kyseisellä pelin hetkellä löytämättä olevien parien
+     * lukumäärän.
      *
      * @return parien määrä.
      */
@@ -200,6 +211,10 @@ public class Pelimoottori {
      * pelipöydän täyttäminen korteilla, niiden sekoittaminen satunnaiseen
      * järjestykseen ja tähän asti saadun parhaan tuloksen lataaminen ohjelmaan.
      * käyttöön.
+     *
+     * @see muistipeli.logiikka.Pelipoyta#asetaKortitTaulukkoon()
+     * @see muistipeli.logiikka.Pelipoyta#sekoitaTaulukonKortit()
+     * @see muistipeli.logiikka.ParhaanTuloksenTilasto#lataaParasTulos()
      */
     public void pelaaPeli() {
         this.pelipoyta.asetaKortitTaulukkoon();
@@ -207,6 +222,12 @@ public class Pelimoottori {
         this.parasTilasto.lataaParasTulos();
     }
 
+    /**
+     * Metodi tarkastaa onko pelattu tulos paras. Jos tulos on parempi kuin
+     * voimassa oleva paras tulos, metodi korvaa vanhan tuloksen uudella.
+     *
+     * @return tosi, jos pelin tulos on parempi kuin voimassa oleva paras tulos
+     */
     public boolean onUusiParasTulos() {
         if (this.yrityslaskuri.getYritysmaara() < this.parasTilasto.getParasTulos() || this.parasTilasto.getParasTulos() == 0) {
             this.parasTilasto.setParasTulos(this.yrityslaskuri.getYritysmaara());
@@ -217,6 +238,11 @@ public class Pelimoottori {
         }
     }
 
+    /**
+     * Metodi joko käynnistää tai lopettaa pelin. Parametrilla 0 käynnistetään uusi peli. Muilla numeroilla palautetaan epätosi.
+     * @param käyttäjän toivettava vastaava numero.
+     * @return tosi, jos parametri on 0
+     */
     public boolean aloitetaankoUusiPeli(int jatkohalu) {
         if (jatkohalu == 0) {
             return true;
@@ -228,20 +254,32 @@ public class Pelimoottori {
         this.valittujenIndeksienSailio = new ValittujenPaikkaindeksienSailio();
     }
 
+    /**
+     * Metodi palauttaa vielä löytämättä olevien korttien määrän
+     * käyttöliittymien käytettäväksi sanallisessa muodossa.
+     *
+     * @return sanallinen ilmoitus löytämättä olevien korttien määrästä
+     */
+    public String getLoytamattomienKorttiparienMaaraTekstina() {
+        return "Pareja jäljellä: " + getLoytymattomienParienLukumaara();
+    }
+
+    /**
+     * Metodi palauttaa parhaan tuloksen käyttöliittymien käytettäväksi
+     * sanallisessa muodossa.
+     *
+     * @return sanallinen ilmoitus parhaasta tuloksesta
+     */
+    public String getParasTulosTekstina() {
+        return this.parasTilasto.toString();
+    }
+
     public String getTiedostonimi() {
         return this.parasTulosTiedostonNimi;
     }
 
     public String getYritystenMaaraTekstina() {
         return this.yrityslaskuri.toString();
-    }
-
-    public String getLoytamattomienKorttiparienMaaraTekstina() {
-        return "Pareja jäljellä: " + getLoytymattomienParienLukumaara();
-    }
-
-    public String getParasTulosTekstina() {
-        return this.parasTilasto.toString();
     }
 
     public int getYritysmaaraLukuna() {
