@@ -57,18 +57,18 @@ public class PelimoottoriTest {
     @Test
     public void valintaOkToimiiKunValintaOnLaillinen() {
         pelimoottori.valitseKortti(0);
-        assertTrue(pelimoottori.valintaOk(1));
+        assertTrue(pelimoottori.ValitaanKorttiJosMahdollista(1));
     }
 
     @Test
     public void valintaOkToimiiKunValintaOnLaiton() {
         pelimoottori.valitseKortti(0);
-        assertFalse(pelimoottori.valintaOk(0));
+        assertFalse(pelimoottori.ValitaanKorttiJosMahdollista(0));
     }
 
     @Test
     public void valintaOkValitseeKortinOikein() {
-        pelimoottori.valintaOk(0);
+        pelimoottori.ValitaanKorttiJosMahdollista(0);
         assertTrue(pelimoottori.getValinnanIndeksi(0) == 0 && pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0));
     }
 
@@ -228,6 +228,16 @@ public class PelimoottoriTest {
         assertEquals("Pareja jäljellä: " + 8, pelimoottori.getLoytamattomienKorttiparienMaaraTekstina());
     }
 
+    @Test
+    public void aloitetaankoUusiPeliToimiiOikeinKunKayttajaHaluaaJatkaa() {
+        assertTrue(pelimoottori.aloitetaankoUusiPeli(0));
+    }
+
+    @Test
+    public void aloitetaankoUusiPeliToimiiOikeinKunKayttajaEiHaluaJatkaa() {
+        assertFalse(pelimoottori.aloitetaankoUusiPeli(1));
+    }
+    
     @Test
     public void getLoytyneetKortitToimiiOikein() {
         assertNotNull(pelimoottori.getLoytyneet());

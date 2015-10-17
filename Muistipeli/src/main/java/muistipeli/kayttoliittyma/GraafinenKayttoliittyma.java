@@ -133,7 +133,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         for (int i = 0; i < peliruudukko.length; i++) {
 
             if (e.getSource() == peliruudukko[i]) {
-                if (!pelimoottori.valintaOk(i)) {
+                if (!pelimoottori.ValitaanKorttiJosMahdollista(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta!");
                     return;
                 } else {
@@ -169,6 +169,8 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
             if (pelimoottori.aloitetaankoUusiPeli(jatkohalu)) {
                 uudelleenAloitus();
+            }else{
+                System.exit(0);
             }
         }
     }

@@ -32,7 +32,16 @@ public class Pelimoottori {
         yrityslaskuri = new Yritysmaaralaskuri();
     }
 
-    public boolean valintaOk(int i) {
+    /**
+     * Metodi valitsee taulukon indeksiä vastaavan kortin valituksi, mikäli se
+     * on valintakelpoinen.
+     *
+     * @see muistipeli.logiikka.Pelimoottori#onkoKorttiValittavissa(int)
+     * @see muistipeli.logiikka.Pelimoottori#valitseKortti(int)
+     * @param i korttitaulukon indeksi
+     * @return tosi jos valinta onnistuu
+     */
+    public boolean ValitaanKorttiJosMahdollista(int i) {
         if (!onkoKorttiValittavissa(i)) {
             return false;
         }
@@ -40,6 +49,15 @@ public class Pelimoottori {
         return true;
     }
 
+    /**
+     * Metodi lisää valitun kortin valittujen korttien säiliöön ja muuttaa
+     * valitun kortin näkyvyyden kuvaksi.
+     *
+     * @see
+     * muistipeli.logiikka.ValittujenPaikkaindeksienSailio#lisaaValittuihin(int)
+     * @see muistipeli.logiikka.Pelipoyta#paljastaKortinKuva(int)
+     * @param i korttitaulukon indeksi
+     */
     public void valitseKortti(int i) {
         this.valittujenIndeksienSailio.lisaaValittuihin(i);
         this.pelipoyta.paljastaKortinKuva(i);
@@ -163,8 +181,6 @@ public class Pelimoottori {
     public boolean aloitetaankoUusiPeli(int jatkohalu) {
         if (jatkohalu == 0) {
             return true;
-        } else {
-            System.exit(0);
         }
         return false;
     }
@@ -212,11 +228,9 @@ public class Pelimoottori {
     public ValittujenPaikkaindeksienSailio getValittujenPaikkaindeksienSailio() {
         return this.valittujenIndeksienSailio;
     }
-    
-    public Yritysmaaralaskuri getYritysmaaraLaskuri(){
+
+    public Yritysmaaralaskuri getYritysmaaraLaskuri() {
         return this.yrityslaskuri;
     }
-    
-    
 
 }
