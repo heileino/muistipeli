@@ -7,3 +7,10 @@ Käyttäjän toiminnot:
 	- ensimmäisen kortin valitseminen
 	- toisen kortin valitseminen
 	- pelin lopettaminen
+
+Rakenteen kuvaus: Sovellus koostuu kolmesta pakkauksesta: logiikka, kayttoliittyma ja main. Logiikka-pakkauksen keskeinen luokka on Pelimoottori-luokka,
+joka tarjoaa palveluita käyttöliittymille.  Sovelluksen rakenne on toteutettu niin, että käyttöliittymillä on pääsy ainoastaan Pelimoottori-luokan palveluihin. 
+Pelimoottori-luokka hyödyntää puolestaan luokkien LoytyneetKortit, ParhaanTuloksenTilasto, Pelipoyta, ValittujenIndeksienSailio ja Yritysmaaralaskuriluokan tarjoamia 
+palveluja. Pelipöydällä on suora yhteys Kortti-luokkan tarjoamiin palveluihin. Kayttoliittymapakkauksessa on GraafinenKayttoliittyma-luokka, joka hyödyntää 
+Pelimoottori-luokan lisäksi samassa pakkauksessa olevan Kuva-luokan palveluja. Main-pakkauksessa oleva main-luokka käynnistää sovelluksen luomallaan
+GraafinenKayttoliittyma-oliolla.

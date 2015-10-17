@@ -73,4 +73,7 @@ ke 14.10.2015 luokkarakenteen hiomista
 to 15.10.2015 koodin hiomista
 	(3h)
 pe 16.10.2015 uusien testien kirjoittamista
+	(5h)
+la 17.10.2015 JavaDocin täydennystä
 	(4h)
+
