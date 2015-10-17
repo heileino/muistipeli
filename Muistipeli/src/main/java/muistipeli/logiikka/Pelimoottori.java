@@ -66,7 +66,7 @@ public class Pelimoottori {
     /**
      * Kertoo taulukon tietyssä paikassa olevan kortin asennon.
      *
-     * @param i
+     * @param i korttitaulukon indeksi
      * @return totuusarvo kortin kuvapuolen näkyvyydestä.
      */
     public boolean onkoKorttiValittavissa(int i) {
