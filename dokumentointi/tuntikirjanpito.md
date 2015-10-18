@@ -75,5 +75,7 @@ to 15.10.2015 koodin hiomista
 pe 16.10.2015 uusien testien kirjoittamista
 	(5h)
 la 17.10.2015 JavaDocin täydennystä
-	(4h)
+	(7h)
+su 18.10.2015 Palautuksen viimeistelyä
+	(8h)
 
