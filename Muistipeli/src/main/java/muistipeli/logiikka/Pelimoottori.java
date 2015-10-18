@@ -38,9 +38,6 @@ public class Pelimoottori {
      *
      * @param i korttitaulukon indeksi
      *
-     * @see muistipeli.logiikka.Pelimoottori#onkoKorttiValittavissa(int)
-     * @see muistipeli.logiikka.Pelimoottori#valitseKortti(int)
-     *
      * @return tosi jos valinta onnistuu
      */
     public boolean valitaanKorttiJosMahdollista(int i) {
@@ -57,10 +54,6 @@ public class Pelimoottori {
      *
      * @param i korttitaulukon indeksi
      *
-     * @see
-     * muistipeli.logiikka.ValittujenPaikkaindeksienSailio#lisaaValittuihin(int)
-     * @see muistipeli.logiikka.Pelipoyta#paljastaKortinKuva(int)
-     *
      */
     public void valitseKortti(int i) {
         valittujenIndeksienSailio.lisaaValittuihin(i);
@@ -73,8 +66,6 @@ public class Pelimoottori {
      *
      * @param i korttitaulukon indeksi
      *
-     * @see muistipeli.logiikka.Pelipoyta#nakyykoKortinKuvapuoli(int)
-     *
      * @return totuusarvo kortin kuvapuolen näkyvyydestä.
      */
     public boolean onkoKorttiValittavissa(int i) {
@@ -86,9 +77,6 @@ public class Pelimoottori {
      * ovat toisen kortin valinta, mikäli kortteja on valittu vain yksi tai
      * jatko korttien vertailuun.
      *
-     * @see muistipeli.logiikka.ValittujenPaikkaindeksienSailio#montakoValittu()
-     * @see muistipeli.logiikka.Yritysmaaralaskuri#lisaaValintayritys()
-     *
      * @return tosi, jos toisen kortin valinnalle on tarvetta
      */
     public boolean valitaankoToinenKortti() {
@@ -96,9 +84,8 @@ public class Pelimoottori {
         if (this.valittujenIndeksienSailio.montakoValittu() > 1) {
             this.yrityslaskuri.lisaaValintayritys();
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**
@@ -106,8 +93,6 @@ public class Pelimoottori {
      * vastaavan kortin tunnisteen.
      *
      * @param i taulukon indeksi
-     *
-     * @see muistipeli.logiikka.Pelipoyta#getKorttiTaulukosta(int)
      *
      * @return kortin tunniste
      */
@@ -120,29 +105,16 @@ public class Pelimoottori {
      * listalle, mikäli ne ovat pari tai kääntää korttien selkäpuolet esiin,
      * mikäli valitut kortit eivät ole pareja.
      *
-     * @see
-     * muistipeli.logiikka.Pelipoyta#onkoKorteillaSamaTunnus(muistipeli.logiikka.Kortti,
-     * muistipeli.logiikka.Kortti)
-     * @see
-     * muistipeli.logiikka.Pelimoottori#pariLoytynyt(muistipeli.logiikka.Kortti,
-     * muistipeli.logiikka.Kortti)
-     * @see
-     * muistipeli.logiikka.Pelimoottori#kaannaKortitNurin(muistipeli.logiikka.Kortti,
-     * muistipeli.logiikka.Kortti)
-     *
      * @return tosi, jos pari löytyy
      */
     public boolean ovatkoValinnatPareja() {
         Kortti kortti1 = getKorttiValittujenKorttienJoukosta(0);
         Kortti kortti2 = getKorttiValittujenKorttienJoukosta(1);
-
         if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
             pariLoytynyt(kortti1, kortti2);
             return true;
         }
-
         kaannaKortitNurin(kortti1, kortti2);
-
         return false;
     }
 
@@ -151,6 +123,7 @@ public class Pelimoottori {
      * joukosta.
      *
      * @param valinnanIndeksi
+     *
      * @return valintaindeksiä vastaava kortti
      */
     public Kortti getKorttiValittujenKorttienJoukosta(int valinnanIndeksi) {
@@ -159,10 +132,6 @@ public class Pelimoottori {
 
     /**
      * Metodi lisaa löytyneet parit löytyneitä pareja ylläpitävään listaan
-     *
-     * @see
-     * muistipeli.logiikka.LoytyneetKortit#lisaaKortitLoytyneeksi(muistipeli.logiikka.Kortti,
-     * muistipeli.logiikka.Kortti)
      *
      * @param kortti1 ensimmäinen löydetty muistikortti
      * @param kortti2 toinen löydetty muistikortti
@@ -173,8 +142,6 @@ public class Pelimoottori {
 
     /**
      * Metodi kaantaa parametrina saamansa kortit selkäpuolelle.
-     *
-     * @see muistipeli.logiikka.Pelipoyta#piilotaKortinKuva(int)
      *
      * @param kortti1 muistikortti
      * @param kortti2 muistikortti
@@ -198,7 +165,6 @@ public class Pelimoottori {
      * Metodi selvittää, jatketaanko peliä vielä päättyneen yrityksen jälkeen.
      * Peli jatkuu, mikä korttipareja on vielä löytymättä.
      *
-     *
      * @return tosi jos peli jatkuu
      */
     public boolean jatkuukoPeli() {
@@ -212,9 +178,6 @@ public class Pelimoottori {
      * järjestykseen ja tähän asti saadun parhaan tuloksen lataaminen ohjelmaan.
      * käyttöön.
      *
-     * @see muistipeli.logiikka.Pelipoyta#asetaKortitTaulukkoon()
-     * @see muistipeli.logiikka.Pelipoyta#sekoitaTaulukonKortit()
-     * @see muistipeli.logiikka.ParhaanTuloksenTilasto#lataaParasTulos()
      */
     public void pelaaPeli() {
         this.pelipoyta.asetaKortitTaulukkoon();
@@ -233,14 +196,16 @@ public class Pelimoottori {
             this.parasTilasto.setParasTulos(this.yrityslaskuri.getYritysmaara());
             this.parasTilasto.lataaParasTulos();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
-     * Metodi joko käynnistää tai lopettaa pelin. Parametrilla 0 käynnistetään uusi peli. Muilla numeroilla palautetaan epätosi.
+     * Metodi joko käynnistää tai lopettaa pelin. Parametrilla 0 käynnistetään
+     * uusi peli. Muilla numeroilla palautetaan epätosi.
+     *
      * @param jatkohalu käyttäjän toivettava vastaava numero
+     *
      * @return tosi, jos parametri on 0
      */
     public boolean aloitetaankoUusiPeli(int jatkohalu) {
@@ -249,9 +214,10 @@ public class Pelimoottori {
         }
         return false;
     }
-   
+
     /**
-     * Metodi tyhjentää valittuja kortteja säilövän listan uutta yrityskierrosta varten.
+     * Metodi tyhjentää valittuja kortteja säilövän listan uutta yrityskierrosta
+     * varten.
      */
     public void nollaaValitutKortit() {
         this.valittujenIndeksienSailio = new ValittujenIndeksienSailio();
