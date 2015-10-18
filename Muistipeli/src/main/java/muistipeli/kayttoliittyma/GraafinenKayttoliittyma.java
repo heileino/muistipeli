@@ -64,7 +64,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     }
 
     private void luoKomponentit(Container container) {
-
         this.peliPaneeli.setLayout(new GridLayout(4, 4));
         piirraPeliruudut(peliPaneeli);
 
@@ -86,7 +85,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
      * @param paneeli määrittää mihin paikkaan peliruudut piirretään.
      */
     public void piirraPeliruudut(JPanel paneeli) {
-
         for (int i = 0; i < peliruudukko.length; i++) {
             this.peliruudukko[i] = new JButton(kuvat.getKuva("selkakuva"));
             paneeli.add(peliruudukko[i]);
@@ -95,7 +93,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     }
 
     public void piirraHallintapaneeli(JPanel paneeli) {
-
         aloitaNappi.setText("Aloita uudestaan");
         aloitaNappi.setBackground(Color.GREEN);
         paneeli.add(aloitaNappi);
@@ -133,7 +130,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
         for (int i = 0; i < peliruudukko.length; i++) {
 
             if (e.getSource() == peliruudukko[i]) {
-                if (!pelimoottori.ValitaanKorttiJosMahdollista(i)) {
+                if (!pelimoottori.valitaanKorttiJosMahdollista(i)) {
                     JOptionPane.showMessageDialog(getFrame(), "Virheellinen valinta!");
                     return;
                 } else {
@@ -169,7 +166,7 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
 
             if (pelimoottori.aloitetaankoUusiPeli(jatkohalu)) {
                 uudelleenAloitus();
-            }else{
+            } else {
                 System.exit(0);
             }
         }
@@ -181,7 +178,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     }
 
     protected void uudelleenAloitus() {
-
         pakotaKaikkiKortitNurin();
         pelimoottori = new Pelimoottori();
         paivitaTilastot();
@@ -194,7 +190,6 @@ public class GraafinenKayttoliittyma implements Runnable, ActionListener {
     }
 
     protected void pakotaKaikkiKortitNurin() {
-
         for (JButton nappi : peliruudukko) {
             nappi.setIcon(kuvat.getKuva("selkakuva"));
         }

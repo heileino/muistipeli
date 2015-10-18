@@ -57,18 +57,18 @@ public class PelimoottoriTest {
     @Test
     public void valintaOkToimiiKunValintaOnLaillinen() {
         pelimoottori.valitseKortti(0);
-        assertTrue(pelimoottori.ValitaanKorttiJosMahdollista(1));
+        assertTrue(pelimoottori.valitaanKorttiJosMahdollista(1));
     }
 
     @Test
     public void valintaOkToimiiKunValintaOnLaiton() {
         pelimoottori.valitseKortti(0);
-        assertFalse(pelimoottori.ValitaanKorttiJosMahdollista(0));
+        assertFalse(pelimoottori.valitaanKorttiJosMahdollista(0));
     }
 
     @Test
     public void valintaOkValitseeKortinOikein() {
-        pelimoottori.ValitaanKorttiJosMahdollista(0);
+        pelimoottori.valitaanKorttiJosMahdollista(0);
         assertTrue(pelimoottori.getValinnanIndeksi(0) == 0 && pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0));
     }
 

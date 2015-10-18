@@ -9,7 +9,7 @@ package muistipeli.logiikka;
  */
 public class Kortti {
 
-    private final String TUNNUS;
+    private final String tunnus;
     private boolean kuvapuoliNakyy;
 
     /**
@@ -20,7 +20,7 @@ public class Kortti {
      */
     public Kortti(String tunnus) {
         kuvapuoliNakyy = false;
-        this.TUNNUS = tunnus;
+        this.tunnus = tunnus;
     }
 
     /**
@@ -30,7 +30,6 @@ public class Kortti {
         if (!kuvapuoliNakyy) {
             kuvapuoliNakyy = true;
         }
-
     }
 
     /**
@@ -53,11 +52,11 @@ public class Kortti {
 
     public String getTunnus() {
 
-        return TUNNUS;
+        return tunnus;
     }
 
     @Override
     public String toString() {
-        return "kortti_" + TUNNUS;
+        return "kortti_" + tunnus;
     }
 }

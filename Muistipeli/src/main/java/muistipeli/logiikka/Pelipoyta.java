@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Pelipoyta {
 
     private final Kortti[] korttitaulukko;
-    private final int TAULUKON_KOKO;
+    private final int taulukonKoko;
 
     /**
      * Konstruktori luo uuden korttitaulukon.
@@ -21,8 +21,8 @@ public class Pelipoyta {
      * @param koko pelipöytää kuvaavan korttitaulukon koko
      */
     public Pelipoyta(int koko) {
-        this.TAULUKON_KOKO = koko;
-        korttitaulukko = new Kortti[TAULUKON_KOKO];
+        this.taulukonKoko = koko;
+        korttitaulukko = new Kortti[taulukonKoko];
     }
 
     /**

@@ -8,7 +8,7 @@ package muistipeli.logiikka;
  */
 public class Pelimoottori {
 
-    private final int KORTTIEN_MAARA;
+    private final int korttienMaara;
     private String parasTulosTiedostonNimi;
     private Pelipoyta pelipoyta;
     private LoytyneetKortit loytyneetKortit;
@@ -23,9 +23,9 @@ public class Pelimoottori {
      */
     public Pelimoottori() {
 
-        KORTTIEN_MAARA = 16;
+        korttienMaara = 16;
         parasTulosTiedostonNimi = "parastulos.txt";
-        pelipoyta = new Pelipoyta(KORTTIEN_MAARA);
+        pelipoyta = new Pelipoyta(korttienMaara);
         loytyneetKortit = new LoytyneetKortit();
         parasTilasto = new ParhaanTuloksenTilasto(parasTulosTiedostonNimi);
         valittujenIndeksienSailio = new ValittujenIndeksienSailio();
@@ -43,7 +43,7 @@ public class Pelimoottori {
      *
      * @return tosi jos valinta onnistuu
      */
-    public boolean ValitaanKorttiJosMahdollista(int i) {
+    public boolean valitaanKorttiJosMahdollista(int i) {
         if (!onkoKorttiValittavissa(i)) {
             return false;
         }
@@ -191,7 +191,7 @@ public class Pelimoottori {
      * @return parien määrä.
      */
     public int getLoytymattomienParienLukumaara() {
-        return (KORTTIEN_MAARA - getLoytyneet().getLoydetytKortit().size()) / 2;
+        return (korttienMaara - getLoytyneet().getLoydetytKortit().size()) / 2;
     }
 
     /**
@@ -249,8 +249,7 @@ public class Pelimoottori {
         }
         return false;
     }
-
-    
+   
     /**
      * Metodi tyhjentää valittuja kortteja säilövän listan uutta yrityskierrosta varten.
      */
@@ -313,5 +312,4 @@ public class Pelimoottori {
     public Yritysmaaralaskuri getYritysmaaraLaskuri() {
         return this.yrityslaskuri;
     }
-
 }
