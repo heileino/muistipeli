@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="5.7">
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/main/Main.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/LoytyneetKortit.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/ValittujenIndeksienSailio.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Yritysmaaralaskuri.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Kortti.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Pelimoottori.java">
+<error line="1" severity="error" message="Tiedoston pituus on 281 riviÃ¤ (suurin sallittu on 200)." source="com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck"/>
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Tiedostonkasittelija.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/ParhaanTuloksenTilasto.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Pelipoyta.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/kayttoliittyma/Kuva.java">
+</file>
+<file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/kayttoliittyma/GraafinenKayttoliittyma.java">
+</file>
+</checkstyle>
