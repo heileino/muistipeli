@@ -141,8 +141,8 @@ public class PelimoottoriTest {
         pelimoottori.getPelipoyta().paljastaKortinKuva(0);
         pelimoottori.getPelipoyta().paljastaKortinKuva(15);
 
-        pelimoottori.kaannaKortitNurin(pelimoottori.getPelipoyta().getKorttiTaulukosta(0), pelimoottori.getPelipoyta().getKorttiTaulukosta(15));
-
+        pelimoottori.getPelipoyta().piilotaKortinKuva(0);
+        pelimoottori.getPelipoyta().piilotaKortinKuva(15);
         assertTrue(!pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0) && !pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(15));
     }
 
@@ -175,7 +175,6 @@ public class PelimoottoriTest {
 
     @Test
     public void getParasTulosTekstinaToimiiOikein() {
-
         assertEquals("Paras tulos: -", pelimoottori.getParasTulosTekstina());
     }
 

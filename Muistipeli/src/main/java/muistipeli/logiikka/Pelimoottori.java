@@ -48,9 +48,8 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi tarkistaa pelitilanteen yhden yrityskerran sisällä. Vaihtoehtoina
-     * ovat toisen kortin valinta, mikäli kortteja on valittu vain yksi tai
-     * jatko korttien vertailuun.
+     * Metodi tarkistaa pelitilanteen yrityskerran sisällä. Vaihtoehtoina ovat
+     * toisen kortin valinta tai jatkaminen korttien vertailuun.
      *
      * @return tosi, jos toisen kortin valinnalle on tarvetta
      */
@@ -63,21 +62,20 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi välittää kutsujalle parametrina annettua taulukon indeksiä
-     * vastaavan kortin tunnisteen.
+     * Metodi välittää kutsujalle taulukon indeksiä vastaavan kortin tunnisteen.
      *
      * @param i taulukon indeksi
      *
      * @return kortin tunniste
      */
     public String getKortinTunniste(int i) {
-        return this.pelipoyta.getKorttiTaulukosta(i).toString();
+        return pelipoyta.getKorttiTaulukosta(i).toString();
     }
 
     /**
-     * Metodi lisaa yhdellä yrityskerralla valitut kortit löydettyjen korttien
-     * listalle, mikäli ne ovat pari tai vaihtoehtoisesti kääntää korttien
-     * selkäpuolet esiin, mikäli valitut kortit eivät ole pareja.
+     * Metodi lisää valittujen korttien listalla olevat kortit löydettyjen
+     * korttien listalle, mikäli ne ovat pari tai kääntää korttien selkäpuolet
+     * esiin, mikäli valitut kortit eivät ole pareja.
      *
      * @return tosi, jos pari löytyy
      */
@@ -85,46 +83,34 @@ public class Pelimoottori {
         Kortti kortti1 = getKorttiValittujenKorttienJoukosta(0);
         Kortti kortti2 = getKorttiValittujenKorttienJoukosta(1);
         if (pelipoyta.onkoKorteillaSamaTunnus(kortti1, kortti2)) {
-            this.loytyneetKortit.lisaaKortitLoytyneeksi(kortti1, kortti2);
+            loytyneetKortit.lisaaKortitLoytyneeksi(kortti1, kortti2);
             return true;
         }
-        kaannaKortitNurin(kortti1, kortti2);
+        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti1));
+        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti2));
         return false;
     }
 
     /**
-     * Metodi kaantaa parametrina saamansa kortit selkäpuolelle.
+     * Metodi päättää yhden yrityskerran nollaamalla valitut taulukkoindeksit ja
+     * selvittää, jatketaanko peliä vielä päättyneen yrityksen jälkeen. Peli
+     * jatkuu, mikäli korttipareja on vielä löytymättä.
      *
-     * @param kortti1 muistikortti
-     * @param kortti2 muistikortti
-     */
-    public void kaannaKortitNurin(Kortti kortti1, Kortti kortti2) {
-        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti1));
-        pelipoyta.piilotaKortinKuva(pelipoyta.getKortinIndeksi(kortti2));
-    }
-
-    /**
-     * Metodi selvittää, jatketaanko peliä vielä päättyneen yrityksen jälkeen.
-     * Peli jatkuu, mikä korttipareja on vielä löytymättä.
-     *
-     * @return tosi jos peli jatkuu
+     * @return tosi, jos peli jatkuu
      */
     public boolean jatkuukoPeli() {
-        nollaaValitutKortit();
+        valittujenIndeksienSailio = new ValittujenIndeksienSailio();
         return getLoytymattomienParienLukumaara() > 0;
     }
 
     /**
-     * Metodi tekee pelin aloittamiseen tarvittavat alkutoimet. Näitä ovat
-     * pelipöydän täyttäminen korteilla, niiden sekoittaminen satunnaiseen
+     * Metodi täyttää pelipöydän korteilla, sekoittaa ne satunnaiseen
      * järjestykseen ja tähän asti saadun parhaan tuloksen lataaminen ohjelmaan.
-     * käyttöön.
-     *
      */
     public void pelaaPeli() {
-        this.pelipoyta.asetaKortitTaulukkoon();
-        this.pelipoyta.sekoitaTaulukonKortit();
-        this.parasTilasto.lataaParasTulos();
+        pelipoyta.asetaKortitTaulukkoon();
+        pelipoyta.sekoitaTaulukonKortit();
+        parasTilasto.lataaParasTulos();
     }
 
     /**
@@ -134,17 +120,16 @@ public class Pelimoottori {
      * @return tosi, jos pelin tulos on parempi kuin voimassa oleva paras tulos
      */
     public boolean onUusiParasTulos() {
-        if (this.yrityslaskuri.getYritysmaara() < this.parasTilasto.getParasTulos() || this.parasTilasto.getParasTulos() == 0) {
-            this.parasTilasto.setParasTulos(this.yrityslaskuri.getYritysmaara());
-            this.parasTilasto.lataaParasTulos();
+        if (yrityslaskuri.getYritysmaara() < parasTilasto.getParasTulos() || parasTilasto.getParasTulos() == 0) {
+            parasTilasto.setParasTulos(yrityslaskuri.getYritysmaara());
+            parasTilasto.lataaParasTulos();
             return true;
         }
         return false;
     }
 
     /**
-     * Metodi joko käynnistää tai lopettaa pelin. Parametrilla 0 käynnistetään
-     * uusi peli. Muilla numeroilla palautetaan epätosi.
+     * Metodi joko käynnistää tai lopettaa pelin.
      *
      * @param jatkohalu käyttäjän toivettava vastaava numero
      *
@@ -155,51 +140,22 @@ public class Pelimoottori {
     }
 
     /**
-     * Metodi tyhjentää valittuja kortteja säilövän listan uutta yrityskierrosta
-     * varten.
-     */
-    public void nollaaValitutKortit() {
-        this.valittujenIndeksienSailio = new ValittujenIndeksienSailio();
-    }
-
-    /**
-     * Metodi palauttaa kortin yhdellä yrityskerralla valittujen kahden kortin
-     * joukosta.
+     * Metodi laskee ja palauttaa löytämättä olevien korttien lukumäärän
      *
-     * @param valinnanIndeksi valitun kortin sijainti korttitaulukossa
-     *
-     * @return valintaindeksiä vastaava kortti
-     */
-    public Kortti getKorttiValittujenKorttienJoukosta(int valinnanIndeksi) {
-        return this.pelipoyta.getKorttiTaulukosta(this.valittujenIndeksienSailio.getValitutIndeksit().get(valinnanIndeksi));
-    }
-
-    /**
-     * Metodi palauttaa vielä löytämättä olevien korttien määrän
-     * käyttöliittymien käytettäväksi sanallisessa muodossa.
-     *
-     * @return sanallinen ilmoitus löytämättä olevien korttien määrästä
-     */
-    public String getLoytamattomienKorttiparienMaaraTekstina() {
-        return "Pareja jäljellä: " + getLoytymattomienParienLukumaara();
-    }
-
-    /**
-     * Metodi palauttaa kyseisellä pelin hetkellä löytämättä olevien parien
-     * lukumäärän.
-     *
-     * @return parien määrä.
+     * @return löytämättömien korttien lukumäärä
      */
     public int getLoytymattomienParienLukumaara() {
         return (korttienMaara - getLoytyneet().getLoydetytKortit().size()) / 2;
     }
 
-    /**
-     * Metodi palauttaa parhaan tuloksen käyttöliittymien käytettäväksi
-     * sanallisessa muodossa.
-     *
-     * @return sanallinen ilmoitus parhaasta tuloksesta
-     */
+    public Kortti getKorttiValittujenKorttienJoukosta(int valinnanIndeksi) {
+        return this.pelipoyta.getKorttiTaulukosta(this.valittujenIndeksienSailio.getValitutIndeksit().get(valinnanIndeksi));
+    }
+
+    public String getLoytamattomienKorttiparienMaaraTekstina() {
+        return "Pareja jäljellä: " + getLoytymattomienParienLukumaara();
+    }
+
     public String getParasTulosTekstina() {
         return this.parasTilasto.toString();
     }

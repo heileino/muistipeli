@@ -11,7 +11,6 @@
 <file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Kortti.java">
 </file>
 <file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Pelimoottori.java">
-<error line="1" severity="error" message="Tiedoston pituus on 281 riviÃ¤ (suurin sallittu on 200)." source="com.puppycrawl.tools.checkstyle.checks.sizes.FileLengthCheck"/>
 </file>
 <file name="/home/heikki/muistipeli/Muistipeli/src/main/java/muistipeli/logiikka/Tiedostonkasittelija.java">
 </file>
