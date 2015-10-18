@@ -32,5 +32,4 @@ public class YritysmaaralaskuriTest {
     public void toStringToimiiOikein() {
         assertEquals("Yrityksiä: " + laskuri.getYritysmaara(), laskuri.toString());
     }
-
 }

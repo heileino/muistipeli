@@ -112,6 +112,16 @@ public class Pelipoyta {
         korttitaulukko[indeksi].naytaSelkapuoli();
     }
 
+    /**
+     * Metodi asettaa kaikkien korttitaulukossa olevien korttien näkyvyydeksi
+     * selkäpuolen.
+     */
+    public void kaannaKaikkiKortitSelkapuolelle() {
+        for (Kortti kortti : getTaulukko()) {
+            kortti.naytaSelkapuoli();
+        }
+    }
+
     public Kortti[] getTaulukko() {
 
         return korttitaulukko;
@@ -145,16 +155,6 @@ public class Pelipoyta {
      */
     public Kortti getKorttiTaulukosta(int indeksi) {
         return getTaulukko()[indeksi];
-    }
-
-    /**
-     * Metodi asettaa kaikkien korttitaulukossa olevien korttien näkyvyydeksi
-     * selkäpuolen.
-     */
-    public void kaannaKaikkiKortitSelkapuolelle() {
-        for (int i = 0; i < getTaulukko().length; i++) {
-            getTaulukko()[i].naytaSelkapuoli();
-        }
     }
 
     /**

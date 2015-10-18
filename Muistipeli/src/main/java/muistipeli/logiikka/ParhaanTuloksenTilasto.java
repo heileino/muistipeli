@@ -9,7 +9,6 @@ package muistipeli.logiikka;
 public class ParhaanTuloksenTilasto {
 
     private int parasTulos;
-
     private Tiedostonkasittelija tiedostonkasittelija;
     private String tiedostonimi;
 
@@ -20,11 +19,9 @@ public class ParhaanTuloksenTilasto {
      * @param tiedostonimi parhaan tuloksen kirjaavan tiedoston nimi
      */
     public ParhaanTuloksenTilasto(String tiedostonimi) {
-
         this.tiedostonimi = tiedostonimi;
         this.parasTulos = 9999;
         tiedostonkasittelija = new Tiedostonkasittelija(tiedostonimi);
-
     }
 
     /**
@@ -38,12 +35,12 @@ public class ParhaanTuloksenTilasto {
         if (tulos < this.parasTulos) {
             this.parasTulos = tulos;
         }
-
         tiedostonkasittelija.kirjoitaTiedostoon("" + this.parasTulos);
     }
 
     /**
-     * Metodin lataa tiedostosta siellä olevan tuloksen luokan ilmentymän käyttöön.
+     * Metodin lataa tiedostosta siellä olevan tuloksen luokan ilmentymän
+     * käyttöön.
      *
      */
     public void lataaParasTulos() {

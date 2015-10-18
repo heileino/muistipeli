@@ -51,7 +51,6 @@ public class Kortti {
     }
 
     public String getTunnus() {
-
         return tunnus;
     }
 

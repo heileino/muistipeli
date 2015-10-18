@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.logiikka;
 
 import org.junit.Before;
@@ -11,7 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Heikki
+ * @author Heikki Leinonen
  */
 public class PelimoottoriTest {
 
@@ -21,7 +16,6 @@ public class PelimoottoriTest {
     public void setUp() {
         pelimoottori = new Pelimoottori();
         pelimoottori.getPelipoyta().asetaKortitTaulukkoon();
-        // pelimoottori.getParasTulos().setTiedostonimi("testiparas.txt");
     }
 
     @Test
@@ -55,58 +49,40 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void valintaOkToimiiKunValintaOnLaillinen() {
-        pelimoottori.valitseKortti(0);
+    public void valitaanJosMahdollistaToimiiKunValintaOnLaillinen() {
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
         assertTrue(pelimoottori.valitaanKorttiJosMahdollista(1));
     }
 
     @Test
-    public void valintaOkToimiiKunValintaOnLaiton() {
-        pelimoottori.valitseKortti(0);
+    public void valitaanJosMahdollistaToimiiKunValintaOnLaiton() {
+        pelimoottori.valitaanKorttiJosMahdollista(0);
         assertFalse(pelimoottori.valitaanKorttiJosMahdollista(0));
     }
 
     @Test
-    public void valintaOkValitseeKortinOikein() {
+    public void valitaanJosMahdollistaValitseeKortinOikein() {
         pelimoottori.valitaanKorttiJosMahdollista(0);
         assertTrue(pelimoottori.getValinnanIndeksi(0) == 0 && pelimoottori.getPelipoyta().getKortinKuvapuolenNakyvyys(0));
     }
 
     @Test
-    public void onkoKorttiValittavissaToimiiOikeinKunKorttiOnLaillinen() {
-        pelimoottori.valitseKortti(15);
-        assertTrue(pelimoottori.onkoKorttiValittavissa(14));
-    }
-
-    @Test
-    public void onkoKorttiValittavissaToimiiOikeinKunKorttiOnLaiton() {
-        pelimoottori.valitseKortti(15);
-        assertFalse(pelimoottori.onkoKorttiValittavissa(15));
-    }
-
-    @Test
-    public void valitseKorttiToimiiOikein() {
-        pelimoottori.valitseKortti(10);
-        assertTrue(pelimoottori.getValinnanIndeksi(0) == 10 && pelimoottori.getPelipoyta().getKorttiTaulukosta(10).nakyykoKuvapuoli());
-    }
-
-    @Test
     public void valintaankoToinenKorttiToimiiOikeinKunValittavaToinen() {
-        pelimoottori.valitseKortti(15);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
         assertTrue(pelimoottori.valitaankoToinenKortti());
     }
 
     @Test
     public void valintaankoToinenKorttiToimiiOikeinKunEiValitaToista() {
-        pelimoottori.valitseKortti(0);
-        pelimoottori.valitseKortti(15);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
         assertFalse(pelimoottori.valitaankoToinenKortti());
     }
 
     @Test
     public void valintaankoToinenKorttiLisaaValintaYrityksenJosEiValitaToista() {
-        pelimoottori.valitseKortti(0);
-        pelimoottori.valitseKortti(15);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
+        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(15);
         pelimoottori.valitaankoToinenKortti();
         assertTrue(pelimoottori.getYritysmaaraLukuna() == 1);
     }
@@ -120,9 +96,6 @@ public class PelimoottoriTest {
     public void ovatkoValinnatParejaToimiiOikeinKunValinnatOvatPareja() {
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
         pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(8);
-
-        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
-        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
 
         assertTrue(pelimoottori.ovatkoValinnatPareja());
 
@@ -161,18 +134,6 @@ public class PelimoottoriTest {
         pelimoottori.ovatkoValinnatPareja();
         assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1) && pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
 
-    }
-
-    @Test
-    public void pariLoytynytToimiiOikein() {
-        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(0);
-        pelimoottori.getValittujenPaikkaindeksienSailio().lisaaValittuihin(8);
-
-        Kortti kortti1 = pelimoottori.getKorttiValittujenKorttienJoukosta(0);
-        Kortti kortti2 = pelimoottori.getKorttiValittujenKorttienJoukosta(1);
-
-        pelimoottori.pariLoytynyt(kortti1, kortti2);
-        assertTrue(pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti1) && pelimoottori.getLoytyneet().onkoKorttiJoLoytyneissa(kortti2));
     }
 
     @Test
@@ -237,7 +198,7 @@ public class PelimoottoriTest {
     public void aloitetaankoUusiPeliToimiiOikeinKunKayttajaEiHaluaJatkaa() {
         assertFalse(pelimoottori.aloitetaankoUusiPeli(1));
     }
-    
+
     @Test
     public void getLoytyneetKortitToimiiOikein() {
         assertNotNull(pelimoottori.getLoytyneet());

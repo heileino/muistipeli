@@ -1,9 +1,6 @@
 package muistipeli.logiikka;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,25 +13,15 @@ public class LoytyneetKortitTest {
     LoytyneetKortit loytyneet;
     Pelimoottori pelimoottori;
 
-    public LoytyneetKortitTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         loytyneet = new LoytyneetKortit();
         pelimoottori = new Pelimoottori();
     }
 
-    @After
-    public void tearDown() {
+    @Test
+    public void konstruktoriLuoLoydettyjenKorttienListanOikein() {
+        assertTrue(loytyneet.getLoydetytKortit().isEmpty());
     }
 
     @Test

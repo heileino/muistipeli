@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package muistipeli.kayttoliittyma;
 
-import java.io.File;
-import java.net.URL;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,7 +18,6 @@ public class Kuva {
     private ImageIcon kuva6;
     private ImageIcon kuva7;
     private ImageIcon selkakuva;
-    //private ImageIcon[] kuvataulukko;
 
     /**
      * Konstruktori luo muistipelikorttien kuvista ImageIcon-olioita
@@ -75,7 +65,6 @@ public class Kuva {
     }
 
     protected static ImageIcon luoImageIcon(String polku) {
-
         ImageIcon kuva = new ImageIcon(Kuva.class.getResource(polku));
         return kuva;
     }

@@ -50,7 +50,7 @@ public class Tiedostonkasittelija {
             kirjoittaja.write("" + 9999);
             kirjoittaja.close();
         } catch (Exception e) {
-            loki.log(Level.OFF, "epaonnistunut tiedostoonkirjoitus", e);
+            loki.log(Level.OFF, "epaonnistunut tiedostonkäsittely", e);
         }
     }
 
